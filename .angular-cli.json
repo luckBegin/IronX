@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "iron-x"
+    "name": "project"
   },
   "apps": [
     {
@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.less",
+        "../node_modules/ng-zorro-antd/src/ng-zorro-antd.less"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -54,7 +55,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "less",
     "component": {}
   }
 }

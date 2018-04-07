@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('iron-x App', () => {
+describe('project App', () => {
   let page: AppPage;
 
   beforeEach(() => {

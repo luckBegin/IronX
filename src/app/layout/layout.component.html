@@ -1,0 +1,63 @@
+<div class="processBar" *ngIf = 'isFetch'></div>
+<div class="header">
+	<div class="logo">
+		<a href="/#">
+			<img [src]="logoImg" alt="">
+		</a>
+	</div>
+	<div class="top-nav-wrap">
+		<ul class="top-nav">
+			<li>
+				<div class="item" (click) = 'switchTogle()'>
+					<i class="anticon" [ngClass] = '{"anticon-menu-fold" : !togleSwitch , "anticon-menu-unfold" : togleSwitch }'></i>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="menu-list">
+		<ul class="top-nav">
+			<li
+				class="menu-item" 
+				[ngClass] = '{"active_menu" : idx == tabIndex }' 
+				*ngFor = 'let item of menuList;let idx = index'
+			>
+				<div 
+					*ngIf = 'item.type == "menu" ' 
+					(click) = 'selectMenu( item.type ,item ,idx )'
+				>
+					{{item.title}}
+				</div>
+
+				<div
+					*ngIf = 'item.type == "dropdown" '
+				>
+					<nz-dropdown>
+						<a class="dropDownLink" nz-dropdown>
+							{{item.title}}<i class="anticon anticon-down"></i>
+						</a>
+						<ul nz-menu>
+							<li 
+								nz-menu-item 
+								*ngFor = 'let items of item.data' 
+								(click) = 'selectMenu( item.type , items , idx)'
+							>
+								{{ items.title}}
+							</li>
+						</ul>
+					</nz-dropdown>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="contentWrap">
+	<div [ngClass]="{'aside' : !togleSwitch , 'aside_cool' : togleSwitch}">
+		<side-menu [togleSwitch] = 'togleSwitch' [menuData] = 'sideMenu'></side-menu>
+	</div>
+	<div class="content">
+		<router-outlet>
+			<tag-nav>
+			</tag-nav>
+		</router-outlet>
+	</div>
+</div>

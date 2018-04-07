@@ -1,0 +1,33 @@
+<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="togleSwitch">
+	<div *ngFor = 'let items of menuData'>
+		<li 
+			nz-menu-item
+			*ngIf = '!items.childs'
+			(click) = 'urlLink(items)'
+		>
+			<span title>
+				<i [className]="items.ico"></i>
+				<span>{{items.title}}</span>
+			</span>
+		</li>
+
+		<li 
+			nz-submenu
+			*ngIf = 'items.childs'
+		>
+			<span title>
+				<i [className]="items.ico"></i>
+				<span>{{items.title}}</span>
+			</span>
+			<ul>
+				<li 
+					nz-menu-item
+					*ngFor = 'let item of items.childs'
+					(click) = 'urlLink(item)'
+				>
+					{{item.title}}
+				</li>
+			</ul>
+		</li>
+	</div>
+</ul>
