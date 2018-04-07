@@ -6,10 +6,10 @@
 				{{ tableData.btnGroup.title }}
 			</th>
 			<th *ngFor = 'let item of tableData.tableTitle;let idx = index' style='position:relative;padding: 0 10px 0 0;'>
-				<div *ngIf = '!item.ico'>
+				<div *ngIf = '!item.sort'>
 					{{item.name}}
 				</div>
-				<div *ngIf = 'item.ico' (click) = 'setUp(item.icoFn ,idx)' style="cursor: pointer;user-select: none;">
+				<div *ngIf = 'item.sort' (click) = 'setUp(item.sortFn ,idx)' style="cursor: pointer;user-select: none;">
 					<div class="c-flex-row-center" style="position: relative;">
 						<span>{{item.name}}</span>
 						<div class="item_ico">

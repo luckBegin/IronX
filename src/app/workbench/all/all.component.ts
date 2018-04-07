@@ -27,9 +27,12 @@ export class AllComponent implements OnInit{
 			{ name : "渠道名称" , type:"select", reflect : "qudao" , data : [{
 				name : "123"
 			}] , fn:function($event,data){
+				console.log($event);
 				console.log(data);
 			}} ,
-			{ name : "渠道名称"  , type:"text" ,reflect : "qudao"},
+			{ name : "渠道名称"  , type:"text" ,reflect : "qudao" ,sort : true , sortFn : function($type){
+				console.log($type) ;
+			}},
 			{ name : "渠道名称"  , type:"checkbox" , fn : function(res){
 				console.log(res);
 			}}

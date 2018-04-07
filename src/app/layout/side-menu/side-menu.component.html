@@ -4,6 +4,7 @@
 			nz-menu-item
 			*ngIf = '!items.childs'
 			(click) = 'urlLink(items)'
+			style="margin-top: 0px;" 
 		>
 			<span title>
 				<i [className]="items.ico"></i>
@@ -14,6 +15,7 @@
 		<li 
 			nz-submenu
 			*ngIf = 'items.childs'
+			style="margin-top: 0px;" 
 		>
 			<span title>
 				<i [className]="items.ico"></i>
