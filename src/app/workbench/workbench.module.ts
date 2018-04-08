@@ -4,19 +4,23 @@ import { ShareModule } from '../share/share.module' ;
 import { RouterModule , Router ,Routes } from '@angular/router' ;
 import { IntoComponent } from './into/into.component' ;
 import { AllComponent } from './all/all.component' ;
-
+import { PrecheckComponent } from './precheck/precheck.component'
 
 const compoents = [
 	IntoComponent ,
-	AllComponent
+	AllComponent,
+	PrecheckComponent
 ];
 const routes  : Routes = [
 	{
 		path  : "into" ,
 		component : IntoComponent
 	},{
-		path  : "all" ,
+		path  : "all/:type" ,
 		component : AllComponent
+	},{
+		path : 'precheck' ,
+		component : PrecheckComponent
 	}
 ];
 @NgModule({

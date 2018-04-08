@@ -16,6 +16,7 @@ import { MenuService } from '../service/menu/menu.service' ;
 import { SessionStorageService } from '../service/storage/session_storage' ;
 import { LocalStorageService } from '../service/storage/local_storage' ;
 import { EmitService } from '../service/event-emit.service' ;
+import { MsgService } from '../service/msg/msg.service';
 
 // workbench
 import { WorkbenchAll } from '../service/workbench/all.service';
@@ -31,7 +32,8 @@ const services = [
     SessionStorageService,
     LocalStorageService,
     EmitService ,
-    NzMessageService
+    NzMessageService,
+    MsgService
 ];
 
 const workbench_services = [

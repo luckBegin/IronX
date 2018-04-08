@@ -89,10 +89,12 @@
     height: calc(~"100% - 64px");
     position: relative;
     top: 64px;
+    overflow-y: hidden;
 }
 .content {
     width:100%;
     flex:1 ;
+    overflow-y: scroll;
 }
 
 .menu-list{
@@ -114,7 +116,7 @@
     position: absolute;
     display: block;
     content: "";
-    width: calc(100% - 30px);
+    width: calc(~"100% - 30px");
     height: 1px;
     background: #fff;
     bottom: -8px;

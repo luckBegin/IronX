@@ -21,7 +21,7 @@
 			</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody style="font-size: 12px;">
 		<tr *ngFor = 'let data of tableData.data;let idx_2 = index ' class="t-body-tr">
 			<td *ngIf = 'tableData.showIndex'>
 				{{ idx_2 + 1 }}
@@ -59,7 +59,7 @@
 					</span>
 				</div>
 
-				<div *ngIf = 'item.type =="select" '>
+				<div *ngIf = 'item.type =="select" ' class="c-flex-row-center" style="width: 70px;">
 					<nz-select [ngModel] = 'item.data2' style="width: 120px;"  (ngModelChange) = 'item.fn($event , data)'>
 					  <nz-option
 					    *ngFor="let option of item.data"
@@ -70,8 +70,8 @@
 					</nz-select>
 				</div>
 
-				<div *ngIf = 'item.type == "checkbox" ' >
-					<label nz-checkbox [ngModel]='item.check' (ngModelChange) = 'item.fn(data)'></label>
+				<div *ngIf = 'item.type == "checkbox" ' style="padding: 0 10px;">
+					<label nz-checkbox ([ngModel])='item.check' (ngModelChange) = 'item.fn(data)'></label>
 				</div>
 			</td>
 		</tr>

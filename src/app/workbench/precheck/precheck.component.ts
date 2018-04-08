@@ -1,39 +1,37 @@
 import { Component ,OnInit } from '@angular/core';
 import { WorkbenchAll } from '../../service/workbench/all.service';
-import { AllSearchModel } from './all-search.model';
 import { dataFormat } from '../../format/dateFormat';
 import { MsgService } from '../../service/msg/msg.service' ;
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute } from '@angular/router';
+import { PrecheckSearchModel } from './precheck-search.model' ;
 let __this ;
 @Component({
 	selector : "app-all" ,
-	templateUrl : './all.component.html' ,
-	styleUrls : ['./all.component.less'] ,
+	templateUrl : './precheck.component.html' ,
+	styleUrls : ['./precheck.component.less'] ,
 })
-export class AllComponent implements OnInit{
+export class PrecheckComponent implements OnInit{
 	constructor(
 		private service : WorkbenchAll ,
 		private msg : MsgService ,
 		private routerInfo : ActivatedRoute
 	){} ;
-
 	ngOnInit(){
 		__this = this ;
 
-		this.activeState = this.routerInfo.snapshot.params['type'];
-		this.getData() ;
-
+		this.getList() ;
 	};
-	searchModel : AllSearchModel = new AllSearchModel() ;
 
-	totalSize : number = 0 ;
+	searchModel : PrecheckSearchModel = new PrecheckSearchModel();
 
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"select", reflect : "qudao" , data : [{
-				name : "123"
-			}] , fn:function($event,data){
+			{ name : "" , type:"checkbox" , check : true , fn : function(data){
+				console.log(data);
+			}} ,
+			{ name : "操作" , type:"select", reflect : "qudao" , data : [{name : "通过"},{name : "拒绝"}] , 
+			fn:function($event,data){
 				console.log($event);
 				console.log(data);
 			}} ,
@@ -55,8 +53,10 @@ export class AllComponent implements OnInit{
 		data : [],
 	};
 
-	getData() : void {
-		this.service.getOrderList(this.searchModel , this.activeState)
+	totalSize : number = 0 ;
+
+	getList(){
+		this.service.getOrderList(this.searchModel , 1)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
@@ -66,41 +66,6 @@ export class AllComponent implements OnInit{
 						this.msg.warn('获取数据列表出错');
 					};
 				}
-			);
-	};
-
-	pageChange($size : number , type : string) : void{
-		if(type == 'size'){
-			this.searchModel.pageSize = $size ;
-		};
-
-		if(type == 'page'){
-			this.searchModel.currentPage = $size ;
-		};
-
-		this.getData() ;
-	};
-
-	menuType : object[] = [
-		{desc:"待预审" , status : "1"} ,
-		{desc:"待补录" , status : "2"} ,
-		{desc:"待提交" , status : "3"} ,
-		{desc:"待初审" , status : "4"} ,
-		{desc:"待复审" , status : "5"} ,
-		{desc:"待终审" , status : "6"} ,
-		{desc:"待尽调" , status : "7"} ,
-		{desc:"待客户确认" , status : "8"} ,
-		{desc:"放款中" , status : "9"} ,
-		{desc:"待确认放款" , status : "10"} ,
-		{desc:"审批拒绝" , status : "11"} ,
-		{desc:"已取消" , status : "12"} ,
-		{desc:"已流单" , status : "13"} ,
-	] ;
-
-	activeState : number;
-	
-	changeType(idx : number) : void{
-		this.activeState = idx ;
-		this.getData();
+			)
 	}
 };

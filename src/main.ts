@@ -9,7 +9,7 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule,{
-        defaultEncapsulation: ViewEncapsulation.None,
+        defaultEncapsulation: ViewEncapsulation.Emulated,
         preserveWhitespaces: false
     })
   .catch(err => console.log(err));

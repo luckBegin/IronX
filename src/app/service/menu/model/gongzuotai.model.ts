@@ -11,7 +11,7 @@ export const gongzuotai : MenuItemModel[] = [
 		id :2 ,
 		title : "全部进件" ,
 		ico : "anticon anticon-plus-square-o" ,
-		url : `${prefix_url}/all`,
+		url : `${prefix_url}/all/1`,
 	},{
 		id :3 ,
 		title : "预审管理" ,

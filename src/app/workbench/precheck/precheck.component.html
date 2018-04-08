@@ -1,0 +1,7 @@
+<div class="c-content-wrap">
+	<c-table [tableData]='tableData'>
+	</c-table>
+	<div class="c-pag">
+		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+	</div>
+</div>
