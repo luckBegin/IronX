@@ -20,6 +20,9 @@ import { MsgService } from '../service/msg/msg.service';
 
 // workbench
 import { WorkbenchAll } from '../service/workbench/all.service';
+
+import { DepartService } from '../service/depart/depart.service' ;
+import { ProductService } from '../service/product/product.service' ;
 const layOut = [
     SideMenuComponent ,
     TagNavComponent ,
@@ -38,6 +41,14 @@ const services = [
 
 const workbench_services = [
     WorkbenchAll
+];
+
+const depart_services = [
+    DepartService
+];
+
+const product_services = [
+    ProductService
 ]
 @NgModule({
     imports: [
@@ -59,7 +70,9 @@ const workbench_services = [
     ],
     providers: [
         ...services,
-        ...workbench_services
+        ...workbench_services ,
+        ...depart_services,
+        ...product_services
     ]
 })
 export class ShareModule { }

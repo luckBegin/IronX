@@ -61,11 +61,22 @@ export class PrecheckComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.tableData['data'] = res['data'] ;
-						this.totalSize = res['page']['totalNumber'] ;
+						this.totalSize = res['page']?res['page']['totalNumber']:0 ;
+						this.isSearchLoad = false ;
 					}else{
 						this.msg.warn('获取数据列表出错');
 					};
 				}
 			)
+	};
+
+	isSearchLoad : boolean = false ;
+
+	search(){
+		this.getList() ;
+	};
+	reset(){
+		this.searchModel = new PrecheckSearchModel();
+		this.getList() ;
 	}
 };

@@ -20,7 +20,11 @@ export class WorkbenchAll{
 
 	getOrderType(){
 		let url = GLOBAL.API.workbench.orderType ;
-		
+		return this.http.get(url) ;
+	};
+
+	gettUserManage(){
+		let url = GLOBAL.API.workbench.userManager ;
 		return this.http.get(url) ;
 	}
 };

@@ -1,10 +1,10 @@
 export class PrecheckSearchModel{
-	min : number ;
-	max : number ;
-	departmentId : number ;
-	createUser : string ;
-	modifyUser : string ;
-	proposerName : string ;
-	currentPage : number = 0 ;
-	pageSize : number  = 10;
+	min : any  = '';
+	max : any  = '';
+	departmentId : any  = '';
+	createUser : any  = '';
+	modifyUser : any  = '';
+	proposerName : any  = '';
+	currentPage : any = 0 ;
+	pageSize : any  = 10;
 };

@@ -3,7 +3,13 @@ import { WorkbenchAll } from '../../service/workbench/all.service';
 import { AllSearchModel } from './all-search.model';
 import { dataFormat } from '../../format/dateFormat';
 import { MsgService } from '../../service/msg/msg.service' ;
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute } from '@angular/router';
+
+
+import { DepartService } from '../../service/depart/depart.service' ;
+import { ProductService } from '../../service/product/product.service' ;
+
+import { DateReflect } from '../../service/date-reflect' ;
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -14,7 +20,9 @@ export class AllComponent implements OnInit{
 	constructor(
 		private service : WorkbenchAll ,
 		private msg : MsgService ,
-		private routerInfo : ActivatedRoute
+		private routerInfo : ActivatedRoute ,
+		private departSer : DepartService ,
+		private productSer : ProductService
 	){} ;
 
 	ngOnInit(){
@@ -22,6 +30,7 @@ export class AllComponent implements OnInit{
 
 		this.activeState = this.routerInfo.snapshot.params['type'];
 		this.getData() ;
+		this.getDepart();
 
 	};
 	searchModel : AllSearchModel = new AllSearchModel() ;
@@ -102,5 +111,49 @@ export class AllComponent implements OnInit{
 	changeType(idx : number) : void{
 		this.activeState = idx ;
 		this.getData();
-	}
+	};
+
+	reset(){
+		this.searchModel = new AllSearchModel() ;
+		this.getData() ;
+	};
+
+	search(){
+		this.getData() ;
+	};
+
+	// select option 网点
+	departList : object[] = []; 
+	getDepart(){
+		this.departSer.getDepart()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						res['data'].forEach((index,item) => {
+							let _obj = {} ;
+							_obj['name'] = item.name ;
+							_obj['id'] = item.id;
+							this.departList.push(_obj); 
+						});
+						this.departList = res['data'] ;
+					}else{
+						this.msg.warn("获取部门数据失败");
+					};
+				}
+			)
+	};
+
+	//select option 产品
+	productList :object[] = [] ;
+	getProduct(){
+		this.productSer.getList({})
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+					}else{
+						this.msg.warn("获取产品数据失败") ;
+					}
+				}
+			)
+	};
 };
