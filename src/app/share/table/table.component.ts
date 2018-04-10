@@ -18,5 +18,7 @@ export class TableComponent{
 		};
 		this.icoIndex = idx ;
 		fn(this.icoActive);
+
+		console.log(this.tableData) ;
 	};
 }

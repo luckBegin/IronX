@@ -24,11 +24,12 @@
 					<input type="date">
 				</div>
 				<div class="c-search-item">
-					<input nz-input placeholder="Basic usage">
+					<input nz-input placeholder="申请人姓名">
 				</div>
 			</div>
-
 			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
+
+				<!-- 网点 -->
 				<div class="c-search-item">
 					<nz-select style="width: 120px;" [(ngModel)]="searchModel.departmentId" nzAllowClear nzPlaceHolder="网点">
 						<nz-option *ngFor = 'let item of departList' [nzValue]="item.id" [nzLabel]="item.name">
@@ -36,35 +37,31 @@
 					</nz-select>
 				</div>
 
+				<!-- 产品名称 -->
 				<div class="c-search-item">
-					<nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-						<nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-						<nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-						<nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.productId" nzAllowClear nzPlaceHolder="产品名称">
+						<nz-option *ngFor = 'let item of productList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 					</nz-select>
 				</div>
 
+				<!-- 客户经理 -->
 				<div class="c-search-item">
-					<nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-						<nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-						<nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-						<nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.createUser" nzAllowClear nzPlaceHolder="客户经理">
+						<nz-option *ngFor = 'let item of userManagerList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 					</nz-select>
 				</div>
 
+				<!-- 节点流程 -->
 				<div class="c-search-item">
-					<nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-						<nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-						<nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-						<nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+					<nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="流程节点">
+						<nz-option *ngFor = 'let item of processList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 					</nz-select>
 				</div>
 
+				<!-- 处理人 -->
 				<div class="c-search-item">
-					<nz-select style="width: 120px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choose">
-						<nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-						<nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-						<nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.modifyUser" nzAllowClear nzPlaceHolder="处理人">
+						<nz-option *ngFor = 'let item of dealUserList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 					</nz-select>
 				</div>
 			</div>
@@ -84,3 +81,54 @@
 		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
 	</div>
 </div>
+
+
+<nz-modal [(nzVisible)]="passModel" [nzTitle]="passTitle" [nzContent]="passContent" [nzFooter]="passFooter" (nzOnCancel)="passModel = false">
+  <ng-template #passTitle>
+  	确认预审通过
+  </ng-template>
+
+  <ng-template #passContent>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div>
+  			<h4>
+  				确认通过
+  			</h4>
+  			<p>
+  				通过之后,将立即进入资料补录阶段
+  			</p>
+  		</div>
+  	</div>
+  </ng-template>
+
+  <ng-template #passFooter>
+    <button nz-button nzType="default" (click)="passModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="pass()">通过</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="refuseModel" [nzTitle]="refuseTitle" [nzContent]="refuseContent" [nzFooter]="refuseFotter" (nzOnCancel)="refuseModel = false">
+  <ng-template #refuseTitle>
+  	确认预审拒绝
+  </ng-template>
+
+  <ng-template #refuseContent>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o warnInfo"></i>
+  		<div>
+  			<h4>
+  				确认拒绝
+  			</h4>
+  			<p>
+  				一旦拒绝,该笔借条将作废,进入【已流单】列表
+  			</p>
+  		</div>
+  	</div>
+  </ng-template>
+
+  <ng-template #refuseFotter>
+    <button nz-button nzType="default" (click)="refuseModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="refuse()">拒绝</button>
+  </ng-template>
+</nz-modal>

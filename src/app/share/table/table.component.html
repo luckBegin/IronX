@@ -59,15 +59,19 @@
 					</span>
 				</div>
 
-				<div *ngIf = 'item.type =="select" ' class="c-flex-row-center" style="width: 70px;">
-					<nz-select [ngModel] = 'item.data2' style="width: 120px;"  (ngModelChange) = 'item.fn($event , data)'>
-					  <nz-option
-					    *ngFor="let option of item.data"
-					    [nzLabel]="option.name"
-					    [nzValue]="option.name"
-					    [nzDisabled]="option.disabled">
-					  </nz-option> 
-					</nz-select>
+				<div *ngIf = 'item.type =="select" ' class="c-flex-row-center">
+					<div *ngFor = 'let selectData of item.data;let statusIdx = index'>
+						<div *ngIf = 'data.status == selectData.status'>
+							<nz-select [ngModel] = 'item.data2' style="width: 80px;"  (ngModelChange) = 'item.fn($event , data)'>
+							  <nz-option
+							    *ngFor="let option of selectData.oper;let selectIdx = index"
+							    [nzLabel]="option.name"
+							    [nzValue]="statusIdx + ','+ selectIdx"
+							    [nzDisabled]="option.disabled">
+							  </nz-option> 
+							</nz-select>
+						</div>
+					</div>
 				</div>
 
 				<div *ngIf = 'item.type == "checkbox" ' style="padding: 0 10px;">

@@ -4,17 +4,20 @@ import { HttpClient , HttpParams } from '@angular/common/http';
 
 import { ObjToQuery } from '../ObjToQuery' ;
 @Injectable()
-export class ProductService{
+export class Userservice{
 	constructor(
 		private http : HttpClient
 	){};
 
-	getList(obj : object = {} ){
-		let url = GLOBAL.API.product.productList ;
+	getList(){
+		let url = GLOBAL.API.workbench.userManager ;
 
-		let param = ObjToQuery(obj) ;
-		return this.http.get(url , {
-			params : param
-		}) ;
+		return this.http.get(url) ;
 	};
+
+	getDealUserlist(){
+		let url = GLOBAL.API.workbench.dealUserList;
+
+		return this.http.get(url) ;
+	}
 };

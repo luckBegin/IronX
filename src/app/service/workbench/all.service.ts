@@ -1,7 +1,6 @@
 import { GLOBAL } from '../../global/global_settion' ;
 import { Injectable } from '@angular/core' ;
-import { HttpClient , HttpParams } from '@angular/common/http';
-
+import { HttpClient , HttpParams , HttpHeaders} from '@angular/common/http' ;
 import { ObjToQuery } from '../ObjToQuery'
 @Injectable()
 export class WorkbenchAll{
@@ -25,6 +24,50 @@ export class WorkbenchAll{
 
 	gettUserManage(){
 		let url = GLOBAL.API.workbench.userManager ;
+		return this.http.get(url) ;
+	};
+
+	getOrderStatus(){
+		let url =GLOBAL.API.workbench.orderStatus ;
+		return this.http.get(url) ;
+	};
+
+	pass(id : string , obj : object ){
+		let url = GLOBAL.API.workbench.pass +id; 
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json");
+
+		return this.http.put(url ,obj , {
+			headers :header
+		})
+	};
+
+	refuse(id : string , obj : object ){
+		let url = GLOBAL.API.workbench.refuse +id; 
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json");
+
+		return this.http.put(url ,obj , {
+			headers :header
+		})
+	};
+
+	cancel( id : string | number ){
+		let url = GLOBAL.API.workbench.cancel + id ;
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.put(url , {
+			headers : header
+		});
+	};
+
+	getOderInfo(id : string | number){
+		let url = GLOBAL.API.workbench.orderInfo + id ;
+
 		return this.http.get(url) ;
 	}
 };

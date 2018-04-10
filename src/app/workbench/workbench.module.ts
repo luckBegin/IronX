@@ -4,12 +4,14 @@ import { ShareModule } from '../share/share.module' ;
 import { RouterModule , Router ,Routes } from '@angular/router' ;
 import { IntoComponent } from './into/into.component' ;
 import { AllComponent } from './all/all.component' ;
-import { PrecheckComponent } from './precheck/precheck.component'
+import { PrecheckComponent } from './precheck/precheck.component';
+import { DataRemakeComponent } from './dataRemake/dataRemake.component';
 
 const compoents = [
 	IntoComponent ,
 	AllComponent,
-	PrecheckComponent
+	PrecheckComponent,
+	DataRemakeComponent
 ];
 const routes  : Routes = [
 	{
@@ -21,6 +23,9 @@ const routes  : Routes = [
 	},{
 		path : 'precheck' ,
 		component : PrecheckComponent
+	},{
+		path : "dataRemake/:id" ,
+		component : DataRemakeComponent
 	}
 ];
 @NgModule({

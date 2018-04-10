@@ -1,0 +1,588 @@
+<div class="container">
+	<div class="stepWrap">
+		<nz-steps [nzCurrent]="current" nzSize="small">
+			<nz-step nzTitle="选择贷款产品"></nz-step>
+			<nz-step nzTitle="申请表信息录入"></nz-step>
+			<nz-step nzTitle="提交申请"></nz-step>
+		</nz-steps>
+	</div>
+	<div class="stepContent">
+		<div class="tabContent" [ngClass] = '{activeTab : current == 0}'>
+			<div class="c-flex-row-center listWrap">
+				<div 
+					class="proList" 
+					*ngFor = 'let item of proListData;let idx = index'
+					[nz-tooltip]="item.remark"
+					(click) = 'selectPro(item , idx)'
+					[ngClass] = '{"proList_active" : idx == proList_active}'
+
+				>
+					{{item.productName}}
+				</div>
+			</div>
+		</div>
+
+		<div class="tabContent" [ngClass]='{activeTab : current == 1}'>
+			<nz-tabset [nzTabPosition]="position" [nzType]="'line'">
+				<nz-tab [nzTitle]="'申请信息'">
+					<div class="c-fold-wrap">
+						<div class="c-fold-title c-flex-row-space">
+							<div>
+								借款人信息
+							</div>
+							<i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+						</div>
+						<div class="c-fold-content">
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										姓名:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text"  placeholder="客户姓名" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										性别:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="性别">
+											<nz-option *ngFor = 'let item of enum_SexModel' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										婚姻状态:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="婚姻状态">
+											<nz-option *ngFor = 'let item of enum_marryModel' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										出身日期:
+									</div>
+									<div>
+										<input type="date" >
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										教育程度:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="教育程度">
+											<nz-option *ngFor = 'let item of enum_edu' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										身份证号码:
+									</div>
+									<div>
+										<input style="width: 168px;" type="text"  placeholder="身份证号码" nz-input>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										月收入:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text" placeholder="月收入" nz-input>
+										<span>
+											元
+										</span>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										有无本地房产:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="有无本地房产">
+											<nz-option  [nzValue]="1" [nzLabel]="'有'"></nz-option>
+											<nz-option  [nzValue]="0" [nzLabel]="'无'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										居住状况:
+									</div>
+									<div>
+										<nz-radio-group [(ngModel)]="radioValue">
+											<div class="c-flex-row-start">
+												<div class="inputRadio">
+													<label nz-radio nzValue="0">自建</label>
+													<input type="text">
+													<span>
+														层
+													</span>
+												</div>
+
+												<div class="inputRadio">
+													<label nz-radio nzValue="1">自购无按揭</label>
+													<input type="text">
+													<span>
+														元
+													</span>
+												</div>
+
+												<div class="inputRadio">
+													<label nz-radio nzValue="2">自建</label>
+													<input type="text">
+													<span>
+														元
+													</span>
+												</div>
+												<div class="inputRadio">
+													<label nz-radio nzValue="3">租用</label>
+												</div>
+												<div class="inputRadio">
+													<label nz-radio nzValue="4">亲戚住房</label>
+												</div>
+												<div class="inputRadio">
+													<label nz-radio nzValue="5">单位住房</label>
+												</div>
+											</div>
+										</nz-radio-group>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										手机号:
+									</div>
+									<div>
+										<input style="width: 110px;" type="text" placeholder="手机号" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										户口所在地:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="户口所在地">
+											<nz-option  [nzValue]="1" [nzLabel]="'有'"></nz-option>
+											<nz-option  [nzValue]="0" [nzLabel]="'无'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										户口详情地址:
+									</div>
+									<div>
+										<input style="width: 250px;" type="text" placeholder="户口详情地址" nz-input>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										现居住地:
+									</div>
+									<div>
+										<input style="width: 250px;" type="text" placeholder="现居住地" nz-input>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="c-fold-wrap">
+						<div class="c-fold-title c-flex-row-space">
+							<div>
+								单位信息
+							</div>
+							<i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+						</div>
+						<div class="c-fold-content">
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										单位名称:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text"  placeholder="客户姓名" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										所在部门:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text"  placeholder="所在部门" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										单位性质:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="单位性质">
+											<nz-option *ngFor = 'let item of enum_unit' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem_title">
+										职称名称:
+								</div>
+								<div>
+									<nz-radio-group [(ngModel)]="radioValue">
+										<div class="c-flex-row-start lineWrap">
+											<label nz-radio nzValue="0">
+												<span>
+													经营类 
+												</span>
+												<input type="text" placeholder="" nz-input class="line_input">
+												<span>
+													如:法人,股东
+												</span>
+											</label>
+										</div>
+										<div class="c-flex-row-start">
+											<label nz-radio nzValue="1">
+												<span>
+													打工类 
+												</span>
+												<input type="text" placeholder="" nz-input class="line_input">
+												<span>
+													如:一般职员(具体职务,如会计,厨师),种养殖户
+												</span>
+											</label>
+										</div>
+									</nz-radio-group>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										现单位入职时间:
+									</div>
+									<div>
+										<input style="width: 100px;" type="date" placeholder="入职时间" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										现单位工作年限:
+									</div>
+									<div>
+										<input style="width: 100px;" type="date" placeholder="工作年限" nz-input>
+										<span>
+											年
+										</span>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										单位电话:
+									</div>
+									<div>
+										<input style="width: 100px;" type="date" placeholder="单位电话" nz-input>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										月收入:
+									</div>
+									<div>
+										<input style="width: 100px;" type="date" placeholder="月收入" nz-input>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										工资发放形式:
+									</div>
+
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="工资发放形式">
+											<nz-option [nzValue]="0" [nzLabel]="'现金发放'"></nz-option>
+											<nz-option [nzValue]="1" [nzLabel]="'银行转账'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'现金和银行转账结合'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										现单位所在地址:
+									</div>
+									<div>
+										<input style="width: 250px;" type="text" placeholder="现单位所在地址" nz-input>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="c-fold-wrap">
+						<div class="c-fold-title c-flex-row-space">
+							<div>
+								联系人信息(不承担贷款相关责任)
+							</div>
+							<i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+						</div>
+						<div class="c-fold-content">
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										亲属联系人姓名:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text" placeholder="姓名" nz-input>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										是您的:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="关系">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+											<nz-option [nzValue]="1" [nzLabel]="'子女'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'兄弟姐妹'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'亲戚'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'朋友'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'同学'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'同事'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'其他'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										手机号:
+									</div>
+									<div>
+										<input style="width: 110px;" type="text" placeholder="手机号" nz-input>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										其他联系人姓名:
+									</div>
+									<div>
+										<input style="width: 100px;" type="text" placeholder="姓名" nz-input>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										是您的:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="关系">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+											<nz-option [nzValue]="1" [nzLabel]="'子女'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'兄弟姐妹'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'亲戚'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'朋友'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'同学'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'同事'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'其他'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										手机号:
+									</div>
+									<div>
+										<input style="width: 110px;" type="text" placeholder="手机号" nz-input>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="c-fold-wrap">
+						<div class="c-fold-title c-flex-row-space">
+							<div>
+								贷款事项
+							</div>
+							<i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+						</div>
+						<div class="c-fold-content">
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										申请金额(元):
+									</div>
+									<div>
+										<input style="width: 100px;" type="text" placeholder="申请金额" nz-input>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										申请期限:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="申请期限">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+							</div>
+
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										还款方式:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="还款方式">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										贷款用途:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="贷款用途">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="c-fold-wrap">
+						<div class="c-fold-title c-flex-row-space">
+							<div>
+								其他
+							</div>
+							<i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+						</div>
+						<div class="c-fold-content">
+							<div class="formRow c-flex-row-start">
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										贷款品种/代码:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="贷款品种">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+								<div class="formItem c-flex-row-start">
+									<div class="formItem_title">
+										贷款用途性质:
+									</div>
+									<div>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="用途性质">
+											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										</nz-select>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</nz-tab>
+				<nz-tab [nzTitle]="'资料清单'">
+					
+				</nz-tab>
+			</nz-tabset>
+		</div>
+	</div>
+
+	<div class="usrManger_info">
+		<div class="title c-before-line">
+			<span>
+				客户经理信息
+			</span>
+		</div>
+		<div class="c-flex-row-start">
+			<div style="margin-right: 20px;" *ngIf='orderInfo && orderInfo.orderVO'>
+				<nz-input-group nzAddOnBefore="姓名">
+					<input type="text" readonly="true" placeholder="客户经理姓名" nz-input [ngModel]="orderInfo.orderVO.createUserName || '暂无' ">
+				</nz-input-group>
+			</div>
+			<div>
+				<nz-input-group nzAddOnBefore="手机号">
+					<input type="text" readonly="true" placeholder="客户经理手机号" nz-input [ngModel] = '"暂无"'>
+				</nz-input-group>
+			</div>
+		</div>
+	</div>
+	<div class="btnGroup c-flex-row-center">
+		<button class="usr_cancel c-btn-width" nz-button (click)='usrCancel()'>客户取消</button>
+		<button class="c-btn-width" nz-button nzType="primary" (click)='nextStep()' *ngIf = 'current < 1'>下一步</button>
+		<button class="c-btn-width" nz-button nzType="primary" (click)='nextStep()' *ngIf = 'current >= 1'>提交审批</button>
+	</div>
+</div>
+
+<nz-modal [(nzVisible)]="cancelModel" [nzTitle]="cancelTitle" [nzContent]="cancelContent" [nzFooter]="cancelFooter" (nzOnCancel)="cancelModel = false">
+  <ng-template #cancelTitle>
+  	客户取消
+  </ng-template>
+
+  <ng-template #cancelContent>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div>
+  			<h4>
+  				客户确认要取消订单
+  			</h4>
+  			<p>
+  				取消之后,将立即进入【已取消】列表
+  			</p>
+  		</div>
+  	</div>
+  </ng-template>
+
+  <ng-template #cancelFooter>
+    <button nz-button nzType="default" (click)="cancelModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="cancel()">确认</button>
+  </ng-template>
+</nz-modal>

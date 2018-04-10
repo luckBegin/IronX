@@ -7,4 +7,5 @@ export class AllSearchModel{
 	proposerName : string ;
 	currentPage : number = 0 ;
 	pageSize : number  = 10;
+	productId :number;
 };
