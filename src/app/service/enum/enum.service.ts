@@ -40,5 +40,37 @@ export class EnumService{
 	getRelation(){
 		let url = GLOBAL.API.enum.relation ;
 		return this.http.get(url);
-	}
+	};
+
+	getLoanType(){
+		let url = GLOBAL.API.enum.loan_type ;
+		return this.http.get(url) ;
+	};
+
+	getLoanWay(){
+		let url = GLOBAL.API.enum.loan_useWay;
+		return this.http.get(url) ;
+	};
+
+	getRepayWay(){
+		let url = GLOBAL.API.enum.repay_way ;
+
+		return this.http.get(url) ;
+	};
+
+	getRepayStatus(){
+		let url = GLOBAL.API.enum.repay_status ;
+
+		return this.http.get(url) ;
+	};
+
+	getLoanPurpose(){
+		let url = GLOBAL.API.enum.loan_purpose ;
+		return this.http.get(url) ;
+	};
+
+	getImgUoloadType(){
+		let url = GLOBAL.API.enum.imgUploadType ;
+		return this.http.get(url) ;
+	};
 };

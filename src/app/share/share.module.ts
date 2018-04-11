@@ -24,7 +24,8 @@ import { WorkbenchAll } from '../service/workbench/all.service';
 import { DepartService } from '../service/depart/depart.service' ;
 import { ProductService } from '../service/product/product.service' ;
 import { Userservice } from '../service/user/user.service' ;
-import { EnumService } from '../service/enum/enum.service'
+import { EnumService } from '../service/enum/enum.service';
+import { ImgService } from '../service/img/img.service';
 const layOut = [
     SideMenuComponent ,
     TagNavComponent ,
@@ -39,7 +40,8 @@ const services = [
     EmitService ,
     NzMessageService,
     MsgService ,
-    EnumService
+    EnumService,
+    ImgService
 ];
 
 const workbench_services = [

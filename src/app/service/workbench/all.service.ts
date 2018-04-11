@@ -69,5 +69,16 @@ export class WorkbenchAll{
 		let url = GLOBAL.API.workbench.orderInfo + id ;
 
 		return this.http.get(url) ;
+	};
+
+	postClientInfo(obj  : object){
+		let url = GLOBAL.API.workbench.postClient;
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.post(url, obj , {
+			headers : header
+		});
 	}
 };

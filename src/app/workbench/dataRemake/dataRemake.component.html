@@ -17,7 +17,7 @@
 					[ngClass] = '{"proList_active" : idx == proList_active}'
 
 				>
-					{{item.productName}}
+					{{ item.productName }}
 				</div>
 			</div>
 		</div>
@@ -67,10 +67,10 @@
 
 								<div class="formItem c-flex-row-start">
 									<div class="formItem_title">
-										出身日期:
+										出生日期:
 									</div>
 									<div>
-										<input type="date" >
+										<input type="date" [(ngModel)] = 'postModel.clientInfoInputVO.birthDate'>
 									</div>
 								</div>
 							</div>
@@ -81,7 +81,7 @@
 										教育程度:
 									</div>
 									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="教育程度">
+										<nz-select [(ngModel)]="postModel.clientInfoInputVO.educationDegree" style="width: 120px;" nzAllowClear nzPlaceHolder="教育程度">
 											<nz-option *ngFor = 'let item of enum_edu' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
@@ -129,11 +129,11 @@
 										居住状况:
 									</div>
 									<div>
-										<nz-radio-group [(ngModel)]="radioValue">
+										<nz-radio-group [(ngModel)]="postModel.clientInfoInputVO.dwellState">
 											<div class="c-flex-row-start">
 												<div class="inputRadio">
 													<label nz-radio nzValue="0">自建</label>
-													<input type="text">
+													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														层
 													</span>
@@ -141,7 +141,7 @@
 
 												<div class="inputRadio">
 													<label nz-radio nzValue="1">自购无按揭</label>
-													<input type="text">
+													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														元
 													</span>
@@ -149,7 +149,7 @@
 
 												<div class="inputRadio">
 													<label nz-radio nzValue="2">自建</label>
-													<input type="text">
+													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														元
 													</span>
@@ -209,7 +209,7 @@
 										现居住地:
 									</div>
 									<div>
-										<input style="width: 250px;" type="text" placeholder="现居住地" nz-input>
+										<input [(ngModel)] = 'postModel.clientInfoInputVO.currentAddress' style="width: 250px;" type="text" placeholder="现居住地" nz-input>
 									</div>
 								</div>
 							</div>
@@ -453,16 +453,16 @@
 										申请金额(元):
 									</div>
 									<div>
-										<input style="width: 100px;" type="text" placeholder="申请金额" nz-input>
+										<input [(ngModel)]='postModel.applyOrderVO.applyMoney' style="width: 100px;" type="text" placeholder="申请金额" nz-input>
 									</div>
 								</div>
 								<div class="formItem c-flex-row-start">
 									<div class="formItem_title">
 										申请期限:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="申请期限">
-											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+									<div *ngIf = 'proListData'>
+										<nz-select [(ngModel)] = 'postModel.applyOrderVO.deadline' style="width: 120px;" nzAllowClear nzPlaceHolder="申请期限">
+											<nz-option [nzValue]="proListData[proList_active]['loanDeadline']" [nzLabel]="proListData[proList_active]['loanDeadline']+'期'"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -473,9 +473,9 @@
 									<div class="formItem_title">
 										还款方式:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="还款方式">
-											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+									<div *ngIf = 'proListData'>
+										<nz-select [(ngModel)] = 'postModel.applyOrderVO.payBackType' style="width: 120px;" nzAllowClear nzPlaceHolder="还款方式">
+											<nz-option [nzValue]="proListData[proList_active]['repaymentMode']" [nzLabel]="proListData[proList_active]['repaymentMode']"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -484,8 +484,8 @@
 										贷款用途:
 									</div>
 									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="贷款用途">
-											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										<nz-select [(ngModel)] = 'postModel.applyOrderVO.use' style="width: 120px;" nzAllowClear nzPlaceHolder="贷款用途">
+											<nz-option *ngFor = 'let item of enum_loanUse' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -502,7 +502,7 @@
 						</div>
 						<div class="c-fold-content">
 							<div class="formRow c-flex-row-start">
-								<div class="formItem c-flex-row-start">
+<!-- 								<div class="formItem c-flex-row-start">
 									<div class="formItem_title">
 										贷款品种/代码:
 									</div>
@@ -511,15 +511,15 @@
 											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
 										</nz-select>
 									</div>
-								</div>
+								</div> -->
 
 								<div class="formItem c-flex-row-start">
 									<div class="formItem_title">
-										贷款用途性质:
+										贷款性质:
 									</div>
 									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="用途性质">
-											<nz-option [nzValue]="0" [nzLabel]="'父母'"></nz-option>
+										<nz-select [(ngModel)] = 'postModel.applyOrderVO.useNature' style="width: 120px;" nzAllowClear nzPlaceHolder="贷款性质">
+											<nz-option *ngFor = 'let item of enum_loanType' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -530,7 +530,62 @@
 
 				</nz-tab>
 				<nz-tab [nzTitle]="'资料清单'">
-					
+					<div class="formRow c-flex-row-start">
+						<div class="formItem_title">
+							资料上传:
+						</div>
+						<div>
+							<nz-select [(ngModel)]='imgSelect' style="width: 130px;" nzAllowClear nzPlaceHolder="资料类型">
+								<nz-option *ngFor = 'let item of imgUploadType' [nzValue]="item.id+','+item.name" [nzLabel]="item.name"></nz-option>
+							</nz-select>
+						</div>
+						<div  class="c-flex-row-start">
+							<div class="uploadWrap c-flex-row-start">
+								<button nzType="primary" class="imgUploadBtn c-btn-width" nz-button>浏览本地</button>
+								<input type="file" id="fileUpload" (change)='imgUpload($event)'>
+							</div>
+							<div>
+								<i class="anticon anticon-info-circle-o" style="color:#f00"></i>
+								<span>上传资料之前请先选择资料类型</span>
+							</div>
+						</div>
+					</div>
+					<div class="formRow c-flex-row-start">
+						<table class="img_table">
+							<thead>
+								<tr>
+									<th class="table-type">类型</th>
+									<th class="table-img">支持同类型图片上传多张,格式png,jpg,单张限制5M</th>
+									<th class="table-oper">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor = 'let item of imgUploads;let idx = index'>
+									<td>
+										{{ item.title }}
+									</td>
+									<td class="c-flex-row-center">
+										<div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
+											<div>
+												<i class="anticon anticon-picture imgIco"></i>
+											</div>
+											<div class="c-flex-row-start operWrap">
+												<span class="operBtn look" (click)='makeLook(idx,idx2)'>
+													查看
+												</span>
+												<span class="operBtn del" (click)='delImg(idx , idx2)'>
+													删除
+												</span>
+											</div>
+										</div>
+									</td>
+									<td>
+										<i class="anticon anticon-delete icoDel" (click)='delItem(idx)'></i>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</nz-tab>
 			</nz-tabset>
 		</div>
@@ -584,5 +639,23 @@
   <ng-template #cancelFooter>
     <button nz-button nzType="default" (click)="cancelModel = false">取消</button>
     <button nz-button nzType="primary" (click)="cancel()">确认</button>
+  </ng-template>
+</nz-modal>
+
+
+ <nz-modal [(nzVisible)]="imgModal" [nzTitle]="imgTitle" [nzContent]="imgContent" [nzFooter]="imgFooter" (nzOnCancel)="imgModal = false">
+  <ng-template #imgTitle>
+    图片查看
+  </ng-template>
+
+  <ng-template #imgContent>
+  	<div class="imgWrap c-flex-row-center">
+  		<img [src] = 'lookImg.url' class="c-img-res">
+  	</div>
+  </ng-template>
+
+  <ng-template #imgFooter>
+    <button nz-button nzType="default" (click)="imgModal = false">关闭</button>
+    <button nz-button nzType="primary" (click)="delImgBtn()">删除</button>
   </ng-template>
 </nz-modal>

@@ -7,6 +7,8 @@ import { Router , ActivatedRoute } from '@angular/router' ;
 import { AbstractControl,FormBuilder,FormControl,FormGroup,Validators , } from '@angular/forms';
 import { EnumService } from '../../service/enum/enum.service' ;
 import { DateReflect } from '../../service/date-reflect' ;
+import { ImgService } from '../../service/img/img.service';
+import { PostDataModel } from './postData.model'
 @Component({
 	selector : "app-dataRemake" ,
 	templateUrl : './dataRemake.component.html' ,
@@ -21,7 +23,8 @@ export class DataRemakeComponent implements OnInit{
 		private router : Router,
 		private routerInfo : ActivatedRoute,
 		private fb: FormBuilder ,
-		private enumSer : EnumService 
+		private enumSer : EnumService,
+		private imgSer : ImgService
 	){};
 
 	ngOnInit(){
@@ -38,9 +41,16 @@ export class DataRemakeComponent implements OnInit{
 		this.getMarry() ;
 		this.getEdu() ;
 		this.getUnit() ;
+		this.getLoanUse() ;
+		this.getLoanType() ;
+		this.getImgUploadType() ;
+
+		this.postModel.applyOrderVO['id'] = this.orderId;
+		// this.getRepayWay();
 		// this.getLive() ;
 	};
 
+	postModel : PostDataModel = new PostDataModel () ;
 	current : number =  0 ;
 
 	cancelModel : boolean = false ;
@@ -68,6 +78,7 @@ export class DataRemakeComponent implements OnInit{
 			this.msg.warn("请先选择产品");
 			return ;
 		};
+		this.postModel.applyOrderVO['productId'] = this.proListData[this.proList_active]['id']
 		this.current += 1 ;
 	};
 
@@ -176,7 +187,7 @@ export class DataRemakeComponent implements OnInit{
 
 	enum_unit : object[] = [] ;
 	getUnit(){
-		this.enumSer.getEdu()
+		this.enumSer.getUnit()
 			.subscribe(
 				res => {
 					if(res['success'] == true){
@@ -203,6 +214,162 @@ export class DataRemakeComponent implements OnInit{
 	// 			}
 	// 		)
 	// };
+
+	// enum_repayWay : object [] = [] ;
+	// getRepayWay(){
+	// 	this.enumSer.getRepayWay()
+	// 		.subscribe(
+	// 			res => {
+	// 				if(res['success'] == true){
+	// 					this.enum_repayWay = makeObjToArr(res['data']) ;
+	// 				}else{
+	// 					this.msg.error("获取还款方式出错,原因:" + res['message']) ;
+	// 				};
+	// 			}
+	// 		)
+	// };
+
+	enum_loanUse : object[] = [] ;
+	getLoanUse(){
+		this.enumSer.getLoanPurpose()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.enum_loanUse = makeObjToArr(res['data']) ;
+					}else{
+						this.msg.error("获取贷款用途出错,原因:" + res['message']) ;
+					};
+				}
+			)
+	};
+	
+	enum_loanType : object[] = [] ;
+	getLoanType(){
+		this.enumSer.getLoanType()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.enum_loanType = makeObjToArr(res['data']) ;
+					}else{
+						this.msg.error("获取种类信息出错,原因:" + res['message']) ;
+					};
+				}
+			);
+	};
+
+	imgUploadType : object[] = [] ;
+	getImgUploadType(){
+		this.enumSer.getImgUoloadType()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let map = {
+							desc : "name" ,
+							code : "id" 
+						};
+						this.imgUploadType = DateReflect(map , res['data']) ;
+						this.imgSelect = this.imgUploadType[0]['id'] +","+ this.imgUploadType[0]['name'];
+					}else{
+						this.msg.error("获取图片上传种类信息失败,原因:"+res['message']) ;
+					};
+				}
+			)
+	};
+
+	imgSelect ;
+	imgUploads : object[] = [] ;
+	imgUpload($event){
+		let profileInfo = this.imgSelect.split(",") ;
+		// console.log(this.imgSelect) ;
+		let tar = $event.target.files[0];
+
+		let fileName = tar.name.split(".");
+
+		let isImg = this.imgSer.isImg(fileName[fileName.length -1 ]) ;
+
+		if(!isImg){
+			this.msg.notifyErr("图片格式错误" , "支持上传的图片格式仅为png , jpg , jpeg");
+			return ;
+		};
+		let _info = null ;
+		this.imgUploads.forEach( item => {
+			if(item['title'] == profileInfo[1]){
+				_info = item ;
+			};
+		});
+
+		if(_info){
+			_info['imgs'].push({}) ;
+		}else{
+			_info = {
+				title : profileInfo[1],
+				id : profileInfo[0] ,
+				imgs : [
+					{}
+				]
+			};
+			this.imgUploads.push(_info) ;
+		};
+		let formData = new FormData();
+			formData.set("sourceType" , profileInfo[0]);
+			formData.set("orderId" , this.orderId +"");
+			formData.set("files" , tar);
+
+		this.imgSer.imgUpload(formData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						_info['imgs'][_info['imgs'].length -1]['url'] = res['data'][0]['url'];
+						_info['imgs'][_info['imgs'].length -1]['id'] = res['data'][0]['id'];
+					};
+				}
+			)
+	};
+
+	imgModal : boolean = false ;
+	lookImg : object = {} ;
+	makeLook( idx : string , index : string){
+		this.imgModal = true ;
+
+		let imgUrl = this.imgUploads[idx]['imgs'][index]['url'];
+		let id = this.imgUploads[idx]['imgs'][index]['id'];
+
+		this.lookImg = {
+			url : imgUrl , 
+			firstIndex : idx ,
+			secIndex : index ,
+			id : id
+		};
+	};
+
+	delImg(idx,idx2){
+		let len = this.imgUploads[idx]['imgs'].length ;
+		let id = this.imgUploads[idx]['imgs'][idx2]['id'];
+
+		if(len == 1){
+			this.imgUploads.splice( idx, 1)
+		}else{
+			this.imgUploads[idx]['imgs'].splice(idx2 , 1 ) ;
+		};
+
+		this.imgSer.delImg(id)
+			.subscribe(
+				res => {
+					console.log(res);
+				}
+			)
+	};
+
+	delImgBtn(){
+		let idx = this.lookImg['firstIndex'];
+		let idx2 = this.lookImg['secIndex'];
+		this.delImg(idx ,idx2);
+		this.imgModal = false ;
+	};
+	
+	delItem(idx){
+		this.imgUploads.splice( idx , 1 ) ;
+	};
 };
 
 let makeObjToArr = function(obj){
