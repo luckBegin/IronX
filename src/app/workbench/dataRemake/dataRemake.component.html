@@ -555,32 +555,41 @@
 							<thead>
 								<tr>
 									<th class="table-type">类型</th>
-									<th class="table-img">支持同类型图片上传多张,格式png,jpg,单张限制5M</th>
-									<th class="table-oper">操作</th>
+									<th class="table-img">支持同类型图片上传多张,格式png,jpg,单张限制1M</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr *ngFor = 'let item of imgUploads;let idx = index'>
+								<tr *ngFor = 'let item of imgUploads;let idx = index' >
 									<td>
 										{{ item.title }}
 									</td>
-									<td class="c-flex-row-center">
+									<td class="c-flex-row-start c-flex-auto-wrap">
+										<!--  -->
 										<div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
-											<div>
-												<i class="anticon anticon-picture imgIco"></i>
+											<!--  -->
+											<div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
 											</div>
-											<div class="c-flex-row-start operWrap">
-												<span class="operBtn look" (click)='makeLook(idx,idx2)'>
-													查看
-												</span>
-												<span class="operBtn del" (click)='delImg(idx , idx2)'>
-													删除
-												</span>
+											<div class="textWrap">
+												<div class="imgName c-text-overflow">
+													{{img.name}}
+												</div>
+												<div class="imgSize">
+													图片大小 : {{img.size}}KB
+												</div>
+											</div>
+											<div class="c-flex-row-end operWrap">
+												<div class="firstBtn" nz-tooltip="点我查看图片" (click)='makeLook(idx,idx2)'>
+													<i class="anticon anticon-eye-o watch" ></i>
+												</div>
+												<div>
+													<nz-popconfirm [nzTitle]="'确定删除该图片'" (nzOnConfirm)="delImg(idx , idx2)" [nzPlacement]="'topRight'">
+														<div nz-popconfirm nz-tooltip="点我删除图片">
+															<i class="anticon anticon-delete delbtn"></i>
+														</div>
+													</nz-popconfirm>
+												</div>
 											</div>
 										</div>
-									</td>
-									<td>
-										<i class="anticon anticon-delete icoDel" (click)='delItem(idx)'></i>
 									</td>
 								</tr>
 							</tbody>
@@ -655,7 +664,10 @@
   </ng-template>
 
   <ng-template #imgFooter>
-    <button nz-button nzType="default" (click)="imgModal = false">关闭</button>
-    <button nz-button nzType="primary" (click)="delImgBtn()">删除</button>
+    <button nz-button nzType="default" (click)="imgModal = false" style="margin-right: 20px">关闭</button>
+	<!-- <nz-popconfirm [nzTitle]="'确定删除该图片'" (nzOnConfirm)="delImgBtn()" [nzPlacement]="'topRight'"> -->
+	<button nz-button nzType="primary" (click)='delImgBtn()' >删除</button>
+	<!-- </nz-popconfirm> -->
+    
   </ng-template>
 </nz-modal>

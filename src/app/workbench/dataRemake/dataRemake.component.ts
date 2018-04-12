@@ -280,17 +280,25 @@ export class DataRemakeComponent implements OnInit{
 	imgUploads : object[] = [] ;
 	imgUpload($event){
 		let profileInfo = this.imgSelect.split(",") ;
-		// console.log(this.imgSelect) ;
 		let tar = $event.target.files[0];
 
+		if(!tar){
+			return ;
+		};
 		let fileName = tar.name.split(".");
 
 		let isImg = this.imgSer.isImg(fileName[fileName.length -1 ]) ;
+		let size = Math.ceil(tar.size / 1024);
 
-		if(!isImg){
-			this.msg.notifyErr("图片格式错误" , "支持上传的图片格式仅为png , jpg , jpeg");
+
+		// if(!isImg){
+		// 	this.msg.notifyErr("图片格式错误" , "支持上传的图片格式仅为png , jpg , jpeg");
+		// 	return ;
+		// };
+		if(size > 1024){
+			this.msg.notifyErr("图片大小错误",'支持上传的图片大小不能超过1M');
 			return ;
-		};
+		}
 		let _info = null ;
 		this.imgUploads.forEach( item => {
 			if(item['title'] == profileInfo[1]){
@@ -321,9 +329,11 @@ export class DataRemakeComponent implements OnInit{
 					if(res['success'] == true){
 						_info['imgs'][_info['imgs'].length -1]['url'] = res['data'][0]['url'];
 						_info['imgs'][_info['imgs'].length -1]['id'] = res['data'][0]['id'];
+						_info['imgs'][_info['imgs'].length -1]['size'] = size ;
+						_info['imgs'][_info['imgs'].length -1]['name'] = tar.name ;
 					};
 				}
-			)
+			);
 	};
 
 	imgModal : boolean = false ;
@@ -346,16 +356,19 @@ export class DataRemakeComponent implements OnInit{
 		let len = this.imgUploads[idx]['imgs'].length ;
 		let id = this.imgUploads[idx]['imgs'][idx2]['id'];
 
-		if(len == 1){
-			this.imgUploads.splice( idx, 1)
-		}else{
-			this.imgUploads[idx]['imgs'].splice(idx2 , 1 ) ;
-		};
-
 		this.imgSer.delImg(id)
 			.subscribe(
 				res => {
-					console.log(res);
+					if(res['success'] == true){
+						this.msg.success("图片删除成功");
+						if(len == 1){
+							this.imgUploads.splice( idx, 1)
+						}else{
+							this.imgUploads[idx]['imgs'].splice(idx2 , 1 ) ;
+						};
+					}else{
+						this.msg.error("图片删除失败") ;
+					}
 				}
 			)
 	};
