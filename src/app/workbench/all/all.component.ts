@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DepartService } from '../../service/depart/depart.service' ;
 import { ProductService } from '../../service/product/product.service' ;
 import { Userservice } from '../../service/user/user.service'
-import { SessionStorageService } from '../../service/storage/session_storage'
+import { LocalStorageService } from '../../service/storage/local_storage'
 import { DateReflect } from '../../service/date-reflect' ;
 let __this ;
 
@@ -40,7 +40,7 @@ const cancel = {
 const profile_remake = {
 	name : "资料补录" ,
 	fn : function(item){
-		// __this.sgo.set("proInfo" , item);
+		__this.lgo.set("proInfo" , item);
 		__this.router.navigate(["/workbench/dataRemake",item.id]);
 	}
 };
@@ -127,7 +127,7 @@ export class AllComponent implements OnInit{
 		private productSer : ProductService,
 		private usrSer : Userservice ,
 		private router : Router,
-		private sgo : SessionStorageService
+		private lgo : LocalStorageService
 	){
 		__this = this ;
 	} ;

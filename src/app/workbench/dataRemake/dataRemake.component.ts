@@ -8,7 +8,9 @@ import { AbstractControl,FormBuilder,FormControl,FormGroup,Validators , } from '
 import { EnumService } from '../../service/enum/enum.service' ;
 import { DateReflect } from '../../service/date-reflect' ;
 import { ImgService } from '../../service/img/img.service';
-import { PostDataModel } from './postData.model'
+import { PostDataModel } from './postData.model';
+import { CityService } from '../../service/city/city.service' ;
+import { LocalStorageService } from '../../service/storage/local_storage';
 @Component({
 	selector : "app-dataRemake" ,
 	templateUrl : './dataRemake.component.html' ,
@@ -24,7 +26,9 @@ export class DataRemakeComponent implements OnInit{
 		private routerInfo : ActivatedRoute,
 		private fb: FormBuilder ,
 		private enumSer : EnumService,
-		private imgSer : ImgService
+		private imgSer : ImgService,
+		private citySer : CityService,
+		private lgo : LocalStorageService
 	){};
 
 	ngOnInit(){
@@ -46,9 +50,17 @@ export class DataRemakeComponent implements OnInit{
 		this.getImgUploadType() ;
 
 		this.postModel.applyOrderVO['id'] = this.orderId;
+
+		this.enum_province = this.citySer.getCityList() ;
 		// this.getRepayWay();
 		// this.getLive() ;
 	};
+
+	enum_province : object[] = [] ;
+
+	enum_city : object[] = [] ;
+
+	enum_area : object[] = [];
 
 	postModel : PostDataModel = new PostDataModel () ;
 	current : number =  0 ;
@@ -70,7 +82,7 @@ export class DataRemakeComponent implements OnInit{
 						this.msg.error("操作失败,原因"+res['message']) ;
 					};
 				}
-			)
+			);
 	};
 
 	nextStep() : void{
@@ -84,7 +96,7 @@ export class DataRemakeComponent implements OnInit{
 
 	proListData : object[] ;
 
-	proList_active : number = 0 ;
+	proList_active : number ;
 
 	getProList(){
 		this.proSer.getList()
@@ -96,7 +108,7 @@ export class DataRemakeComponent implements OnInit{
 						this.msg.error("获取产品列表数据失败");
 					};
 				}
-			)
+			);
 	};
 
 	selectData = {} ;
@@ -106,18 +118,18 @@ export class DataRemakeComponent implements OnInit{
 		this.selectData['proInfo'] = item ;
 	};
 
-	orderInfo : object ;
 	getOrderInfo(){
 		this.workSer.getOderInfo(this.orderId)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.orderInfo = res['data'];
+						this.postModel = res['data'] ;
+						// this.orderInfo = res['data'];
 					}else{
 						this.msg.error("获取订单信息失败"+res['message']) ;
 					};
 				}
-			)
+			);
 	};
 
 	switchTab($el){
@@ -134,25 +146,17 @@ export class DataRemakeComponent implements OnInit{
 	};
 
 	enum_SexModel : object[] = [] ;
+
 	getSex(){
 		this.enumSer.getSex()
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						if(res['data']){
+						if(res['data'])
 							this.enum_SexModel = makeObjToArr(res['data']) ;
-							// for(let keys in res['data']){
-							// 	let obj = {
-							// 		name : res['data'][keys] ,
-							// 		id : keys 
-							// 	}
-							// 	this.enum_SexModel.push(obj);
-							// };
-						}
-						// this.enum_SexModel = DateReflect(map , res['data']) ;
 					}else{
 						this.msg.error("获取性别数据出错,原因:"+res['message']) ;
-					};
+					}
 				}
 			)
 	};
@@ -383,6 +387,31 @@ export class DataRemakeComponent implements OnInit{
 	delItem(idx){
 		this.imgUploads.splice( idx , 1 ) ;
 	};
+
+	priveChange(parent,item,model){
+		let val = this.postModel.clientInfoInputVO[model] ;
+		if(val){
+			let id = val.split(",")[1] ;
+			this[item] = this[parent][id]['child'] ;
+
+			let province = this.postModel.clientInfoInputVO['registerProvince'];
+			let proName = province?province.split(",")[0]:"" ;
+
+			let city = this.postModel.clientInfoInputVO['registerCity'];
+			let cityName = city?city.split(",")[0]:"" ;
+
+			let county = this.postModel.clientInfoInputVO['registerCounty'] ;
+			let countName = county?county.split(",")[0]:"" ;
+
+			this.postModel.clientInfoInputVO['registerDetailAddress'] = proName + cityName + countName ;
+		};
+	};
+
+	submitCheck(){
+		this.postModel.clientInfoInputVO['userId'] = 1 ;
+		let orderInfo = this.lgo.get("proInfo") ;
+		console.log(orderInfo);
+	};
 };
 
 let makeObjToArr = function(obj){
@@ -397,4 +426,9 @@ let makeObjToArr = function(obj){
 	};
 
 	return _arr ;
+};
+let UpdateObj = function( target : object , expect : object){
+	for(let keys in expect){
+		if(target.hasOwnProperty());
+	};
 };

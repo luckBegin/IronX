@@ -26,6 +26,7 @@ import { ProductService } from '../service/product/product.service' ;
 import { Userservice } from '../service/user/user.service' ;
 import { EnumService } from '../service/enum/enum.service';
 import { ImgService } from '../service/img/img.service';
+import { CityService } from '../service/city/city.service'
 const layOut = [
     SideMenuComponent ,
     TagNavComponent ,
@@ -41,7 +42,8 @@ const services = [
     NzMessageService,
     MsgService ,
     EnumService,
-    ImgService
+    ImgService,
+    CityService
 ];
 
 const workbench_services = [

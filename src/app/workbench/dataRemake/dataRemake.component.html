@@ -8,16 +8,31 @@
 	</div>
 	<div class="stepContent">
 		<div class="tabContent" [ngClass] = '{activeTab : current == 0}'>
-			<div class="c-flex-row-center listWrap">
-				<div 
-					class="proList" 
+			<div class="c-flex-row-start listWrap">
+				<div class="proList c-text-noSelect" 
+					[nz-tooltip]="'点击选择此产品'" 
 					*ngFor = 'let item of proListData;let idx = index'
-					[nz-tooltip]="item.remark"
+					[ngClass] = '{"proList_active" : proList_active == idx}'
 					(click) = 'selectPro(item , idx)'
-					[ngClass] = '{"proList_active" : idx == proList_active}'
-
 				>
-					{{ item.productName }}
+					<img src="./assets/img/card.png" alt="" class="c-img-res">
+					<div class="cardInfo">
+						<div class="info_title">
+							{{item.productName}}
+						</div>
+						<div class="sec_info" *ngIf = 'item.loanDeadline'>
+							借款期限 : {{item.loanDeadline}}月
+						</div>
+						<div class="sec_info">
+							贷款额度 : {{item.loanLimit}}元
+						</div>
+						<div class="sec_info">
+							滞纳金 : {{item.overdueFine}}
+						</div>
+						<div class="sec_info c-text-overflow">
+							备注 : {{item.remark}}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -38,8 +53,8 @@
 									<div class="formItem_title">
 										姓名:
 									</div>
-									<div>
-										<input style="width: 100px;" type="text"  placeholder="客户姓名" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name = 'usrName' style="width: 100px;" type="text"  placeholder="客户姓名" nz-input [(ngModel)]="postModel.clientInfoInputVO.userName">
 									</div>
 								</div>
 
@@ -47,8 +62,8 @@
 									<div class="formItem_title">
 										性别:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="性别">
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="性别" [(ngModel)]="postModel.clientInfoInputVO.gender">
 											<nz-option *ngFor = 'let item of enum_SexModel' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
@@ -58,8 +73,8 @@
 									<div class="formItem_title">
 										婚姻状态:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="婚姻状态">
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<nz-select [(ngModel)]="postModel.clientInfoInputVO.marriageState" style="width: 120px;" nzAllowClear nzPlaceHolder="婚姻状态">
 											<nz-option *ngFor = 'let item of enum_marryModel' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
@@ -69,8 +84,8 @@
 									<div class="formItem_title">
 										出生日期:
 									</div>
-									<div>
-										<input type="date" [(ngModel)] = 'postModel.clientInfoInputVO.birthDate'>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name='birthDate' type="date" [(ngModel)] = 'postModel.clientInfoInputVO.birthDate'>
 									</div>
 								</div>
 							</div>
@@ -80,7 +95,7 @@
 									<div class="formItem_title">
 										教育程度:
 									</div>
-									<div>
+									<div *ngIf='postModel.clientInfoInputVO'>
 										<nz-select [(ngModel)]="postModel.clientInfoInputVO.educationDegree" style="width: 120px;" nzAllowClear nzPlaceHolder="教育程度">
 											<nz-option *ngFor = 'let item of enum_edu' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
@@ -91,8 +106,8 @@
 									<div class="formItem_title">
 										身份证号码:
 									</div>
-									<div>
-										<input style="width: 168px;" type="text"  placeholder="身份证号码" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name='idCard' [(ngModel)]='postModel.clientInfoInputVO.idCard' style="width: 168px;" type="text"  placeholder="身份证号码" nz-input>
 									</div>
 								</div>
 							</div>
@@ -102,8 +117,8 @@
 									<div class="formItem_title">
 										月收入:
 									</div>
-									<div>
-										<input style="width: 100px;" type="text" placeholder="月收入" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name="income" [(ngModel)]="postModel.clientInfoInputVO.monthlyIncome" style="width: 100px;" type="text" placeholder="月收入" nz-input>
 										<span>
 											元
 										</span>
@@ -114,8 +129,8 @@
 									<div class="formItem_title">
 										有无本地房产:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="有无本地房产">
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<nz-select [(ngModel)]='postModel.clientInfoInputVO.localHouse' style="width: 120px;" nzAllowClear nzPlaceHolder="有无本地房产">
 											<nz-option  [nzValue]="1" [nzLabel]="'有'"></nz-option>
 											<nz-option  [nzValue]="0" [nzLabel]="'无'"></nz-option>
 										</nz-select>
@@ -128,12 +143,12 @@
 									<div class="formItem_title">
 										居住状况:
 									</div>
-									<div>
+									<div *ngIf='postModel.clientInfoInputVO'>
 										<nz-radio-group [(ngModel)]="postModel.clientInfoInputVO.dwellState">
 											<div class="c-flex-row-start">
 												<div class="inputRadio">
 													<label nz-radio nzValue="0">自建</label>
-													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
+													<input name='dwellDetail_1' type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														层
 													</span>
@@ -141,7 +156,7 @@
 
 												<div class="inputRadio">
 													<label nz-radio nzValue="1">自购无按揭</label>
-													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
+													<input name = 'dwellDetail_2' type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														元
 													</span>
@@ -149,7 +164,7 @@
 
 												<div class="inputRadio">
 													<label nz-radio nzValue="2">自建</label>
-													<input type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
+													<input name='dwellDetail_3' type="text" [(ngModel)]="postModel.clientInfoInputVO.dwellDetail">
 													<span>
 														元
 													</span>
@@ -174,8 +189,8 @@
 									<div class="formItem_title">
 										手机号:
 									</div>
-									<div>
-										<input style="width: 110px;" type="text" placeholder="手机号" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name='tel' [(ngModel)]="postModel.clientInfoInputVO.phoneNumber" style="width: 110px;" type="text" placeholder="手机号" nz-input>
 									</div>
 								</div>
 
@@ -183,10 +198,49 @@
 									<div class="formItem_title">
 										户口所在地:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="户口所在地">
-											<nz-option  [nzValue]="1" [nzLabel]="'有'"></nz-option>
-											<nz-option  [nzValue]="0" [nzLabel]="'无'"></nz-option>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<nz-select 
+											[(ngModel)]='postModel.clientInfoInputVO.registerProvince' 
+											style="width: 120px;margin-right: 20px;" 
+											nzAllowClear nzPlaceHolder="所在省份"
+											(ngModelChange) = 'priveChange("enum_province","enum_city","registerProvince")'
+										>
+											<nz-option 
+												*ngFor = 'let item of enum_province;let idx = index'
+												[nzValue]="item.name + ',' + idx " [nzLabel]="item.name"			
+											>
+											</nz-option>
+
+										</nz-select>
+
+										<nz-select 
+											[(ngModel)]='postModel.clientInfoInputVO.registerCity' 
+											style="width: 120px;margin-right: 20px;" 
+											nzAllowClear nzPlaceHolder="所在城市" 
+											*ngIf ='enum_city && enum_city.length > 0'
+											(ngModelChange) = 'priveChange("enum_city","enum_area","registerCity")'
+										>
+											<nz-option 
+												*ngFor = 'let item of enum_city;let idx = index'
+												[nzValue]="item.name +','+ idx" 
+												[nzLabel]="item.name"
+											>
+											</nz-option>
+										</nz-select>
+
+										<nz-select 
+											style="width: 120px;" 
+											nzAllowClear 
+											nzPlaceHolder="户籍县/区" 
+											*ngIf ='enum_area && enum_area.length > 0'
+											[(ngModel)]='postModel.clientInfoInputVO.registerCounty' 
+										>
+											<nz-option 
+												*ngFor = 'let item of enum_area;let idx = index'
+												[nzValue]="item.name +','+ idx" 
+												[nzLabel]="item.name"
+											>
+											</nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -197,8 +251,8 @@
 									<div class="formItem_title">
 										户口详情地址:
 									</div>
-									<div>
-										<input style="width: 250px;" type="text" placeholder="户口详情地址" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name='liveInfo' style="width: 250px;" type="text" placeholder="户口详情地址" nz-input [(ngModel)] = 'postModel.clientInfoInputVO.registerDetailAddress'>
 									</div>
 								</div>
 							</div>
@@ -208,8 +262,8 @@
 									<div class="formItem_title">
 										现居住地:
 									</div>
-									<div>
-										<input [(ngModel)] = 'postModel.clientInfoInputVO.currentAddress' style="width: 250px;" type="text" placeholder="现居住地" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name='curAddr' [(ngModel)] = 'postModel.clientInfoInputVO.currentAddress' style="width: 250px;" type="text" placeholder="现居住地" nz-input>
 									</div>
 								</div>
 							</div>
@@ -229,8 +283,8 @@
 									<div class="formItem_title">
 										单位名称:
 									</div>
-									<div>
-										<input style="width: 100px;" type="text"  placeholder="客户姓名" nz-input>
+									<div *ngIf='postModel.clientInfoInputVO'>
+										<input name="unitName" style="width: 100px;" type="text"  placeholder="单位名称" nz-input [(ngModel)] = 'postModel.clientInfoInputVO.unitName'>
 									</div>
 								</div>
 
@@ -238,8 +292,8 @@
 									<div class="formItem_title">
 										所在部门:
 									</div>
-									<div>
-										<input style="width: 100px;" type="text"  placeholder="所在部门" nz-input>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<input name='unitDepart' style="width: 100px;" type="text"  placeholder="所在部门" nz-input [(ngModel)]='postModel.clientUnitInputVO.department'>
 									</div>
 								</div>
 
@@ -247,9 +301,9 @@
 									<div class="formItem_title">
 										单位性质:
 									</div>
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="单位性质">
-											<nz-option *ngFor = 'let item of enum_unit' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="单位性质" [(ngModel)]='postModel.clientUnitInputVO.unitNature'>
+											<nz-option *ngFor = 'let item of enum_unit' [nzValue]="item.name" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -260,14 +314,14 @@
 								<div class="formItem_title">
 										职称名称:
 								</div>
-								<div>
-									<nz-radio-group [(ngModel)]="radioValue">
+								<div *ngIf='postModel.clientUnitInputVO'>
+									<nz-radio-group [(ngModel)]="postModel.clientUnitInputVO.jobType">
 										<div class="c-flex-row-start lineWrap">
 											<label nz-radio nzValue="0">
 												<span>
 													经营类 
 												</span>
-												<input type="text" placeholder="" nz-input class="line_input">
+												<input name='type_1' type="text" placeholder="" nz-input class="line_input" [(ngModel)]="postModel.clientUnitInputVO.jobPosition">
 												<span>
 													如:法人,股东
 												</span>
@@ -278,7 +332,7 @@
 												<span>
 													打工类 
 												</span>
-												<input type="text" placeholder="" nz-input class="line_input">
+												<input name='type_2' type="text" placeholder="" nz-input class="line_input" [(ngModel)]="postModel.clientUnitInputVO.jobPosition">
 												<span>
 													如:一般职员(具体职务,如会计,厨师),种养殖户
 												</span>
@@ -293,8 +347,8 @@
 									<div class="formItem_title">
 										现单位入职时间:
 									</div>
-									<div>
-										<input style="width: 100px;" type="date" placeholder="入职时间" nz-input>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<input style="width: 100px;" type="date" placeholder="入职时间" nz-input [(ngModel)]='postModel.clientUnitInputVO.currentUnitEntryDate'>
 									</div>
 								</div>
 
@@ -302,8 +356,8 @@
 									<div class="formItem_title">
 										现单位工作年限:
 									</div>
-									<div>
-										<input style="width: 100px;" type="date" placeholder="工作年限" nz-input>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<input style="width: 100px;" type="date" placeholder="工作年限" nz-input [(ngModel)]='postModel.clientUnitInputVO.currentUnitWorkYears'>
 										<span>
 											年
 										</span>
@@ -314,8 +368,8 @@
 									<div class="formItem_title">
 										单位电话:
 									</div>
-									<div>
-										<input style="width: 100px;" type="date" placeholder="单位电话" nz-input>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<input style="width: 100px;" type="date" placeholder="单位电话" nz-input [(ngModel)]='postModel.clientUnitInputVO.unitPhone'>
 									</div>
 								</div>
 							</div>
@@ -335,11 +389,11 @@
 										工资发放形式:
 									</div>
 
-									<div>
-										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="工资发放形式">
-											<nz-option [nzValue]="0" [nzLabel]="'现金发放'"></nz-option>
-											<nz-option [nzValue]="1" [nzLabel]="'银行转账'"></nz-option>
-											<nz-option [nzValue]="2" [nzLabel]="'现金和银行转账结合'"></nz-option>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="工资发放形式" [(ngModel)]='postModel.clientUnitInputVO.salaryGrantForm'>
+											<nz-option [nzValue]="'现金发放'" [nzLabel]="'现金发放'"></nz-option>
+											<nz-option [nzValue]="'银行转账'" [nzLabel]="'银行转账'"></nz-option>
+											<nz-option [nzValue]="'现金和银行转账结合'" [nzLabel]="'现金和银行转账结合'"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -350,8 +404,8 @@
 									<div class="formItem_title">
 										现单位所在地址:
 									</div>
-									<div>
-										<input style="width: 250px;" type="text" placeholder="现单位所在地址" nz-input>
+									<div *ngIf='postModel.clientUnitInputVO'>
+										<input style="width: 250px;" type="text" placeholder="现单位所在地址" nz-input [(ngModel)]='postModel.clientUnitInputVO.currentUnitAddress'>
 									</div>
 								</div>
 							</div>
@@ -452,15 +506,15 @@
 									<div class="formItem_title">
 										申请金额(元):
 									</div>
-									<div>
-										<input [(ngModel)]='postModel.applyOrderVO.applyMoney' style="width: 100px;" type="text" placeholder="申请金额" nz-input>
+									<div *ngIf='postModel.applyOrderVO'>
+										<input [(ngModel)]='postModel.applyOrderVO.applyMoney' style="width: 100px;" type="text" placeholder="申请金额" nz-input name="applyMoney">
 									</div>
 								</div>
 								<div class="formItem c-flex-row-start">
 									<div class="formItem_title">
 										申请期限:
 									</div>
-									<div *ngIf = 'proListData'>
+									<div *ngIf = 'proListData && proList_active && postModel.applyOrderVO'>
 										<nz-select [(ngModel)] = 'postModel.applyOrderVO.deadline' style="width: 120px;" nzAllowClear nzPlaceHolder="申请期限">
 											<nz-option [nzValue]="proListData[proList_active]['loanDeadline']" [nzLabel]="proListData[proList_active]['loanDeadline']+'期'"></nz-option>
 										</nz-select>
@@ -473,7 +527,7 @@
 									<div class="formItem_title">
 										还款方式:
 									</div>
-									<div *ngIf = 'proListData'>
+									<div *ngIf = 'proListData && proList_active && postModel.applyOrderVO'>
 										<nz-select [(ngModel)] = 'postModel.applyOrderVO.payBackType' style="width: 120px;" nzAllowClear nzPlaceHolder="还款方式">
 											<nz-option [nzValue]="proListData[proList_active]['repaymentMode']" [nzLabel]="proListData[proList_active]['repaymentMode']"></nz-option>
 										</nz-select>
@@ -483,7 +537,7 @@
 									<div class="formItem_title">
 										贷款用途:
 									</div>
-									<div>
+									<div *ngIf='postModel.applyOrderVO'>
 										<nz-select [(ngModel)] = 'postModel.applyOrderVO.use' style="width: 120px;" nzAllowClear nzPlaceHolder="贷款用途">
 											<nz-option *ngFor = 'let item of enum_loanUse' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
@@ -517,7 +571,7 @@
 									<div class="formItem_title">
 										贷款性质:
 									</div>
-									<div>
+									<div *ngIf='postModel.applyOrderVO'>
 										<nz-select [(ngModel)] = 'postModel.applyOrderVO.useNature' style="width: 120px;" nzAllowClear nzPlaceHolder="贷款性质">
 											<nz-option *ngFor = 'let item of enum_loanType' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
@@ -607,14 +661,14 @@
 			</span>
 		</div>
 		<div class="c-flex-row-start">
-			<div style="margin-right: 20px;" *ngIf='orderInfo && orderInfo.orderVO'>
+			<div style="margin-right: 20px;" *ngIf='postModel && postModel.orderVO'>
 				<nz-input-group nzAddOnBefore="姓名">
-					<input type="text" readonly="true" placeholder="客户经理姓名" nz-input [ngModel]="orderInfo.orderVO.createUserName || '暂无' ">
+					<input type="text" readonly="true" placeholder="客户经理姓名" nz-input [ngModel]="postModel.orderVO.createUserName || '暂无' " name="managerName">
 				</nz-input-group>
 			</div>
 			<div>
 				<nz-input-group nzAddOnBefore="手机号">
-					<input type="text" readonly="true" placeholder="客户经理手机号" nz-input [ngModel] = '"暂无"'>
+					<input type="text" readonly="true" placeholder="客户经理手机号" nz-input [ngModel] = '"暂无"' name="manager">
 				</nz-input-group>
 			</div>
 		</div>
@@ -622,7 +676,7 @@
 	<div class="btnGroup c-flex-row-center">
 		<button class="usr_cancel c-btn-width" nz-button (click)='usrCancel()'>客户取消</button>
 		<button class="c-btn-width" nz-button nzType="primary" (click)='nextStep()' *ngIf = 'current < 1'>下一步</button>
-		<button class="c-btn-width" nz-button nzType="primary" (click)='nextStep()' *ngIf = 'current >= 1'>提交审批</button>
+		<button class="c-btn-width" nz-button nzType="primary" (click)='submitCheck()' *ngIf = 'current >= 1'>提交审批</button>
 	</div>
 </div>
 
