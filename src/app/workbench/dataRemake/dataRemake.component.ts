@@ -90,6 +90,7 @@ export class DataRemakeComponent implements OnInit{
 			this.msg.warn("请先选择产品");
 			return ;
 		};
+		!this.postModel.applyOrderVO && (this.postModel.applyOrderVO = {}) ;
 		this.postModel.applyOrderVO['productId'] = this.proListData[this.proList_active]['id']
 		this.current += 1 ;
 	};
@@ -123,7 +124,7 @@ export class DataRemakeComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.postModel = res['data'] ;
+						// this.postModel = res['data'] ;
 						// this.orderInfo = res['data'];
 					}else{
 						this.msg.error("获取订单信息失败"+res['message']) ;
@@ -429,6 +430,6 @@ let makeObjToArr = function(obj){
 };
 let UpdateObj = function( target : object , expect : object){
 	for(let keys in expect){
-		if(target.hasOwnProperty());
+		target[keys] = expect[keys] ;
 	};
 };

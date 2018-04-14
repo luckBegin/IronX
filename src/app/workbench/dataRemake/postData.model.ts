@@ -22,7 +22,6 @@ export class PostDataModel {
 		gender : "" ,
 		idCard : "" ,
 		localHouse : "",
-		// id (integer, optional): 主键id ,
 		marriageState : "" ,
 		monthlyIncome : "" ,
 		phoneNumber : "" ,
@@ -37,13 +36,13 @@ export class PostDataModel {
 		currentUnitEntryDate : "" ,
 		currentUnitWorkYears : "" ,
 		department : "" ,
-		// id (integer, optional): 主键id ,
 		jobPosition : "" ,
 		jobType : "" ,
-		// salaryGrantForm (string): 工资发放形式 ,
-		// unitName (string): 单位名称 ,
-		// unitNature (string): 单位性质 ,
-		// unitPhone (string): 单位电话 ,
-		// userId (integer): 客户id
+		salaryGrantForm : "" ,
+		unitName : "" ,
+		unitNature : "" ,
+		unitPhone : "" ,
+		userId : "",
+		id : "" ,
 	};
 }

@@ -6,13 +6,16 @@ import { IntoComponent } from './into/into.component' ;
 import { AllComponent } from './all/all.component' ;
 import { PrecheckComponent } from './precheck/precheck.component';
 import { DataRemakeComponent } from './dataRemake/dataRemake.component';
+import { FirstComponent } from './review/first/first.component' ;
 
 const compoents = [
 	IntoComponent ,
 	AllComponent,
 	PrecheckComponent,
-	DataRemakeComponent
+	DataRemakeComponent,
+	FirstComponent
 ];
+
 const routes  : Routes = [
 	{
 		path  : "into" ,
@@ -26,6 +29,14 @@ const routes  : Routes = [
 	},{
 		path : "dataRemake/:id" ,
 		component : DataRemakeComponent
+	},{
+		path : "approve",
+		children : [
+			{
+				path : "first" ,
+				component : FirstComponent
+			}
+		]
 	}
 ];
 @NgModule({

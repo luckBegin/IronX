@@ -152,7 +152,7 @@ export class AllComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
+			{ name : "操作" , type:"dropDown", reflect : "qudao" , data : operData , fn:function($event,data , select){
 				let _idx = $event.split(",") ;
 				operData[_idx[0]].oper[_idx[1]].fn(data) ;
 			}} ,
@@ -361,5 +361,5 @@ export class AllComponent implements OnInit{
 					};
 				}
 			)
-	}
+	};
 };
