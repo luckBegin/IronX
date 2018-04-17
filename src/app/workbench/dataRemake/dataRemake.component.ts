@@ -10,7 +10,7 @@ import { DateReflect } from '../../service/date-reflect' ;
 import { ImgService } from '../../service/img/img.service';
 import { PostDataModel } from './postData.model';
 import { CityService } from '../../service/city/city.service' ;
-import { LocalStorageService } from '../../service/storage/local_storage';
+import { SessionStorageService } from '../../service/storage/session_storage';
 @Component({
 	selector : "app-dataRemake" ,
 	templateUrl : './dataRemake.component.html' ,
@@ -28,7 +28,7 @@ export class DataRemakeComponent implements OnInit{
 		private enumSer : EnumService,
 		private imgSer : ImgService,
 		private citySer : CityService,
-		private lgo : LocalStorageService
+		private lgo : SessionStorageService
 	){};
 
 	ngOnInit(){

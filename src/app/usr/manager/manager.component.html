@@ -1,0 +1,23 @@
+<div class="c-content-wrap">
+	<div class="c-search-wrap">
+		<div class="c-flex-row-start c-flex-auto-wrap">
+			<div>
+				<nz-select style="width: 120px;margin-right: 10px" [(ngModel)]="searchModel.code" nzAllowClear nzPlaceHolder="选择字段">
+					<nz-option [nzValue]="0" [nzLabel]="'姓名'"></nz-option>
+					<nz-option [nzValue]="1" [nzLabel]="'身份证号'"></nz-option>
+					<nz-option [nzValue]="2" [nzLabel]="'手机号'"></nz-option>
+				</nz-select>
+			</div>
+			<div>
+				<input [(ngModel)] = 'searchModel.keyword' type="text" nz-input placeholder="请输入搜索内容" style="width:300px;">
+				<button (click)='search()' style="margin-left: 10px;" nz-button nzType="primary">搜索</button>
+				<button (click)='reset()' style="margin-left: 10px;" nz-button nzType="default">重置</button>
+			</div>
+		</div>
+	</div>
+	<c-table [tableData]='tableData'>
+	</c-table>
+	<div class="c-pag">
+		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+	</div>
+</div>

@@ -1,63 +1,104 @@
-<div class="processBar" *ngIf = 'isFetch'></div>
-<div class="header">
-	<div class="logo">
-		<a href="/#">
-			<img [src]="logoImg" alt="">
-		</a>
-	</div>
-	<div class="top-nav-wrap">
-		<ul class="top-nav">
-			<li>
-				<div class="item" (click) = 'switchTogle()'>
-					<i class="anticon" [ngClass] = '{"anticon-menu-fold" : !togleSwitch , "anticon-menu-unfold" : togleSwitch }'></i>
-				</div>
-			</li>
-		</ul>
-	</div>
-	<div class="menu-list">
-		<ul class="top-nav">
-			<li
-				class="menu-item" 
-				[ngClass] = '{"active_menu" : idx == tabIndex }' 
-				*ngFor = 'let item of menuList;let idx = index'
-			>
-				<div 
-					*ngIf = 'item.type == "menu" ' 
-					(click) = 'selectMenu( item.type ,item ,idx )'
+<div class="wraperContainer">
+	<div class="processBar" *ngIf = 'isFetch'></div>
+	<div class="header">
+		<div class="logo">
+			<a href="/#">
+				<img [src]="logoImg" alt="">
+			</a>
+		</div>
+		<div class="top-nav-wrap">
+			<ul class="top-nav">
+				<li>
+					<div class="item" (click) = 'switchTogle()'>
+						<i class="anticon" [ngClass] = '{"anticon-menu-fold" : !togleSwitch , "anticon-menu-unfold" : togleSwitch }'></i>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="menu-list">
+			<ul class="top-nav">
+				<li
+					class="menu-item" 
+					[ngClass] = '{"active_menu" : idx == tabIndex }' 
+					*ngFor = 'let item of menuList;let idx = index'
 				>
-					{{item.title}}
-				</div>
+					<div 
+						*ngIf = 'item.type == "menu" ' 
+						(click) = 'selectMenu( item.type ,item ,idx )'
+					>
+						{{item.title}}
+					</div>
 
-				<div
-					*ngIf = 'item.type == "dropdown" '
-				>
-					<nz-dropdown>
-						<a class="dropDownLink" nz-dropdown>
-							{{item.title}}<i class="anticon anticon-down"></i>
-						</a>
-						<ul nz-menu>
-							<li 
-								nz-menu-item 
-								*ngFor = 'let items of item.data' 
-								(click) = 'selectMenu( item.type , items , idx)'
-							>
-								{{ items.title}}
-							</li>
-						</ul>
-					</nz-dropdown>
-				</div>
-			</li>
-		</ul>
+					<div
+						*ngIf = 'item.type == "dropdown" '
+					>
+						<nz-dropdown>
+							<a class="dropDownLink" nz-dropdown>
+								{{item.title}}<i class="anticon anticon-down"></i>
+							</a>
+							<ul nz-menu>
+								<li 
+									nz-menu-item 
+									*ngFor = 'let items of item.data' 
+									(click) = 'selectMenu( item.type , items , idx)'
+								>
+									{{ items.title}}
+								</li>
+							</ul>
+						</nz-dropdown>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="infoInfo c-flex-row-start">
+			<div class="imgHeadWrap">
+				<img src="./assets/img/head.jpg" alt="" class="c-img-res">
+			</div>
+			<div>
+				<nz-dropdown>
+				  <a nz-dropdown class="loginUsr">
+				  	{{loginInfo.name}}
+				    <i class="anticon anticon-down"></i>
+				  </a>
+				  <ul nz-menu nzSelectable>
+				    <li nz-menu-item (click)='logOut()'>
+				      <a>退出</a>
+				    </li>
+				  </ul>
+				</nz-dropdown>
+			</div>
+			<div class="setting" (click)='makeSet("show")'>
+				<span class="c-flex-row-start textWrap">
+					<i class="anticon anticon-setting gear"></i>
+					<span class='setting_text'>设置</span>
+				</span>
+			</div>
+		</div>
 	</div>
-</div>
-<div class="contentWrap">
-	<div [ngClass]="{'aside' : !togleSwitch , 'aside_cool' : togleSwitch}">
-		<side-menu [togleSwitch] = 'togleSwitch' [menuData] = 'sideMenu'></side-menu>
+	<div class="contentWrap">
+		<div [ngClass]="{'aside' : !togleSwitch , 'aside_cool' : togleSwitch}">
+			<side-menu [togleSwitch] = 'togleSwitch' [menuData] = 'sideMenu'></side-menu>
+		</div>
+		<div class="content">
+			<router-outlet>
+				<tag-nav>
+				</tag-nav>
+			</router-outlet>
+		</div>
 	</div>
-	<div class="content">
-		<router-outlet>
-			<tag-nav>
-			</tag-nav>
-		</router-outlet>
+	<div class="theme">
+		<div class="hideIco" (click)='makeSet("hide")'>
+			<i class="anticon anticon-close"></i>
+		</div>
+		<div class="section">
+			<div class="title">
+				主题
+			</div>
+			<div class="imgSecWrap c-flex-row-start c-flex-auto-wrap">
+				<div [ngClass]='{"activeImg":activeIndex == 1}' (click)='changeImg("bg.jpg" , 1)' class="imgSec" style="background: url(../assets/img/bg.jpg) round;"></div>
+				<div [ngClass]='{"activeImg":activeIndex == 3}' (click)='changeImg("bg1.jpg" , 3)' class="imgSec" style="background: url(../assets/img/bg1.jpg) round;"></div>
+				<div [ngClass]='{"activeImg":activeIndex == 2}' (click)='changeImg("bg2.jpg" , 2)' class="imgSec" style="background: url(../assets/img/bg2.jpg) round;"></div>
+			</div>
+		</div>
 	</div>
 </div>

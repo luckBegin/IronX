@@ -8,6 +8,7 @@ import { SideMenuComponent } from '../layout/side-menu/side-menu.component' ;
 import { TagNavComponent } from '../layout/tag-nav/tag-nav.component' ;
 import { LayoutComponent } from '../layout/layout.component' ;
 import { TableComponent } from './table/table.component' ;
+import { HeaderTitleComponent } from './title/title.component'
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NzMessageService } from 'ng-zorro-antd';
@@ -26,12 +27,22 @@ import { ProductService } from '../service/product/product.service' ;
 import { Userservice } from '../service/user/user.service' ;
 import { EnumService } from '../service/enum/enum.service';
 import { ImgService } from '../service/img/img.service';
-import { CityService } from '../service/city/city.service'
+import { CityService } from '../service/city/city.service';
+
+import  { LoginComponent } from '../login/login.component';
+import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http' ;
+import { LoginInterceptor } from '../interceptor.service' ;
+
+// pipe
+import { AgeByIdPipe } from '../pipe/AgeById.pipe';
+import { SexByIdPipe } from '../pipe/SexById.pipe';
 const layOut = [
     SideMenuComponent ,
     TagNavComponent ,
     TableComponent,
-    LayoutComponent
+    LayoutComponent,
+    LoginComponent,
+    HeaderTitleComponent
 ];
 
 const services = [
@@ -57,6 +68,11 @@ const depart_services = [
 
 const product_services = [
     ProductService
+];
+
+const pipe = [
+    AgeByIdPipe ,
+    SexByIdPipe
 ]
 @NgModule({
     imports: [
@@ -64,23 +80,27 @@ const product_services = [
         FormsModule,
         RouterModule,
         ReactiveFormsModule,
-        NgZorroAntdModule
+        NgZorroAntdModule ,
+
     ],
     declarations: [
-        ...layOut
+        ...layOut,
+        ...pipe
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        ...layOut
+        ...layOut,
+        ...pipe
     ],
     providers: [
         ...services,
         ...workbench_services ,
         ...depart_services,
-        ...product_services
+        ...product_services,
+        {provide:HTTP_INTERCEPTORS,useClass:LoginInterceptor,multi:true}
     ]
 })
 export class ShareModule { }

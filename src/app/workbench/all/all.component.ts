@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DepartService } from '../../service/depart/depart.service' ;
 import { ProductService } from '../../service/product/product.service' ;
 import { Userservice } from '../../service/user/user.service'
-import { LocalStorageService } from '../../service/storage/local_storage'
+import { SessionStorageService } from '../../service/storage/session_storage'
 import { DateReflect } from '../../service/date-reflect' ;
 let __this ;
 
@@ -40,7 +40,7 @@ const cancel = {
 const profile_remake = {
 	name : "资料补录" ,
 	fn : function(item){
-		__this.lgo.set("proInfo" , item);
+		__this.sgo.set("proInfo" , item);
 		__this.router.navigate(["/workbench/dataRemake",item.id]);
 	}
 };
@@ -80,7 +80,7 @@ const profile_trans = {
 };
 
 const rightNow = {
-	name : "马上尽调" ,
+	name : "马上审批" ,
 	fn : function(item){
 
 	}
@@ -127,7 +127,7 @@ export class AllComponent implements OnInit{
 		private productSer : ProductService,
 		private usrSer : Userservice ,
 		private router : Router,
-		private lgo : LocalStorageService
+		private sgo : SessionStorageService
 	){
 		__this = this ;
 	} ;
@@ -152,13 +152,11 @@ export class AllComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"dropDown", reflect : "qudao" , data : operData , fn:function($event,data , select){
+			{ name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
 				let _idx = $event.split(",") ;
 				operData[_idx[0]].oper[_idx[1]].fn(data) ;
 			}} ,
-			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" , sort:true , sortFn : function(){
-				
-			}},
+			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" },
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},

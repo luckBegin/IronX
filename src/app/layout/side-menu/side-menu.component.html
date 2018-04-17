@@ -1,10 +1,10 @@
-<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="togleSwitch">
+<ul nz-menu [nzMode]="'inline'" [nzInlineCollapsed]="togleSwitch" class="sideMenu">
 	<div *ngFor = 'let items of menuData'>
 		<li 
 			nz-menu-item
 			*ngIf = '!items.childs'
 			(click) = 'urlLink(items)'
-			style="margin-top: 0px;" 
+			style="margin-top: 0px;margin-bottom: 0px" 
 		>
 			<span title>
 				<i [className]="items.ico"></i>
@@ -15,10 +15,11 @@
 		<li 
 			nz-submenu
 			*ngIf = 'items.childs'
-			style="margin-top: 0px;" 
+			style="margin-top: 0px;margin-bottom: 0px"
+			class="itemMenu" 
 		>
 			<span title>
-				<i [className]="items.ico"></i>
+				<i [className]="items.ico" style="color:#fff"></i>
 				<span>{{items.title}}</span>
 			</span>
 			<ul>

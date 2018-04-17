@@ -5,7 +5,7 @@ export const kehuguanli : MenuItemModel[] = [
 	{
 		id : 1 , 
 		title : "客户管理" ,
-		url : `/${prefix_url}/mange`,
+		url : `/${prefix_url}/manage`,
 		ico : "anticon anticon-plus-square-o" ,
 	}
 ]

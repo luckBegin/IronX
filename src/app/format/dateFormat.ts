@@ -16,23 +16,28 @@ export const dataFormat = ( timeStamp : string  , format : string = 'y-m-d h:i:s
 		};
 
 		if(format.indexOf("m") > -1){
-			dateStr += _month +"-";
+			let month = _month < 10 ? "0"+_month : _month ;
+			dateStr += month +"-";
 		};
 
 		if(format.indexOf("d") > -1){
-			dateStr += _date
+			let date = _date < 10 ? "0"+_date : _date ;
+			dateStr += date
 		};
 
 		if(format.indexOf("h") > -1){
-			dateStr += " " + _hour +":" ;
+			let hour = _hour < 10 ? "0"+_hour : _hour ;
+			dateStr += " " + hour +":" ;
 		};
 
 		if(format.indexOf("i") > -1){
-			dateStr += _min +":";
+			let min = _min < 10 ? "0"+_min : _min ;
+			dateStr += min +":";
 		};
 
 		if(format.indexOf("s") > -1){
-			dateStr += _sec ;
+			let sec = _sec < 10 ? "0"+_sec : _sec ;
+			dateStr += sec ;
 		};
 		
 		return dateStr ;

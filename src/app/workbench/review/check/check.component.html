@@ -1,0 +1,52 @@
+<div class="c-content-wrap">
+	<div class="person_info c-border">
+		<div class="nameWrap">
+			<i class="anticon anticon-user userIco"></i>
+			<span class="usr_name">
+				{{checkInfo.userName}}
+			</span>
+		</div>
+
+		<div class="sec_info c-flex-row-start">
+			<div>
+				<span>
+					身份证号 : 
+				</span>
+				<span>
+					{{checkInfo.idCard}}
+				</span>
+			</div>
+			<div>
+				<span>
+					年龄 : 
+				</span>
+				<span>
+					{{checkInfo.idCard | AgeById}}
+				</span>
+			</div>
+			<div>
+				<span>
+					性别 : 
+				</span>
+				<span>
+					{{checkInfo.idCard | SexById }}
+				</span>
+			</div>
+		</div>
+	</div>
+<!-- 
+	<nz-tabset>
+		<nz-tab nzTitle="录入信用报告">
+			
+		</nz-tab>
+		<nz-tab nzTitle="网查筛查">
+
+		</nz-tab>
+		<nz-tab nzTitle="电核">
+
+		</nz-tab>
+		<nz-tab nzTitle="受理意见">
+
+		</nz-tab>
+	</nz-tabset> -->
+</div>

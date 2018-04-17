@@ -26,10 +26,9 @@
 			<td *ngIf = 'tableData.showIndex'>
 				{{ idx_2 + 1 }}
 			</td>
-			<td *ngIf = 'tableData.btnGroup && tableData.btnGroup.title' class="c_flex_row operWrap"  style="width:150px" >
+			<td *ngIf = 'tableData.btnGroup && tableData.btnGroup.title' class="c-flex-row-center operWrap"  style="width:150px" >
 				<div *ngFor = 'let btn of tableData.btnGroup.data' 
 					(click) = 'btn.bindFn(data)' class="btnOper"
-					[style.background] = 'btn.bgColor'
 					[style.color] = 'btn.textColor'
 				>
 					<i [class] = 'btn.ico'></i>

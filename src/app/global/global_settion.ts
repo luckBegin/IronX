@@ -1,5 +1,5 @@
 const host = 'http://151.28ms.com:8088' ;
-
+// const host = 'http://192.168.11.60:8082'
 const workbench = {
 	orderList : host + '/order/getStatus' ,
 	orderType : host + "/order/undisposedOrders" ,
@@ -19,6 +19,9 @@ const depart = {
 
 const product = {
 	productList : host + "/config/products" ,
+	create : host + "/config/product" ,
+	delete : host + "/config/product/" ,
+	edit : host + "/config/product" 
 };
 
 const enums = {
@@ -39,6 +42,11 @@ const enums = {
 const upload = {
 	baseUpload : host + "/order/ordersource/baseUpload",
 	delImg : host + "/order/ordersource/delete/"
+};
+
+const usr = {
+	getUsrList : host + "/client/clients" ,
+	getQueryPara : host + "/client/clients/params"
 }
 export const GLOBAL = {
 	API : {
@@ -46,6 +54,8 @@ export const GLOBAL = {
 		depart : depart ,
 		product : product ,
 		enum : enums,
-		upload : upload
+		upload : upload , 
+		login : host + "/login" ,
+		usr : usr 
 	}
 }

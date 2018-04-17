@@ -12,7 +12,7 @@ const typeMethod = {
 		return type.match(reg)[0].trim()
 	}
 };
-let ls = window.localStorage ;
+let ls = window.sessionStorage ;
 let isType = function(type,obj){
 	return Object.prototype.toString.call(obj) === '[object '+type+']';
 };

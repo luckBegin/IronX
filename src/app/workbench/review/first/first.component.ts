@@ -6,11 +6,10 @@ import { dataFormat } from '../../../format/dateFormat';
 import { MsgService } from '../../../service/msg/msg.service' ;
 import { ActivatedRoute } from '@angular/router';
 
-
 import { DepartService } from '../../../service/depart/depart.service' ;
 import { ProductService } from '../../../service/product/product.service' ;
 import { Userservice } from '../../../service/user/user.service'
-import { LocalStorageService } from '../../../service/storage/local_storage'
+import { SessionStorageService } from '../../../service/storage/session_storage'
 import { DateReflect } from '../../../service/date-reflect' ;
 let __this ;
 
@@ -68,7 +67,6 @@ const reback = {
 const has_pay = {
 	name : "线下已放款" ,
 	fn : function(item){
-
 	}
 };
 
@@ -80,9 +78,10 @@ const profile_trans = {
 };
 
 const rightNow = {
-	name : "马上尽调" ,
+	name : "马上审批" ,
 	fn : function(item){
-
+		__this.sgo.set("checkInfo" , item) ;
+		__this.router.navigate(['/workbench/check' , item.id]);
 	}
 };
 
@@ -121,11 +120,14 @@ const operData = [
 export class  FirstComponent implements OnInit{
 	constructor(
 		private service : WorkbenchAll,
-		private msg : MsgService
+		private msg : MsgService ,
+		private sgo : SessionStorageService ,
+		private router : Router
 	){};
 
 	ngOnInit(){
 		this.getData() ;
+		__this = this ;
 	};
 
 	searchModel : FirstSearchModel = new FirstSearchModel();

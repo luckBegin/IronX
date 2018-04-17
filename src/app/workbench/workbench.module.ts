@@ -7,13 +7,14 @@ import { AllComponent } from './all/all.component' ;
 import { PrecheckComponent } from './precheck/precheck.component';
 import { DataRemakeComponent } from './dataRemake/dataRemake.component';
 import { FirstComponent } from './review/first/first.component' ;
-
+import { CheckComponent } from './review/check/check.component'
 const compoents = [
 	IntoComponent ,
 	AllComponent,
 	PrecheckComponent,
 	DataRemakeComponent,
-	FirstComponent
+	FirstComponent ,
+	CheckComponent
 ];
 
 const routes  : Routes = [
@@ -37,6 +38,9 @@ const routes  : Routes = [
 				component : FirstComponent
 			}
 		]
+	},{
+		path : "check/:id" ,
+		component : CheckComponent
 	}
 ];
 @NgModule({
