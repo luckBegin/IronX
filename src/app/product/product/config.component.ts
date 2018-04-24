@@ -5,7 +5,6 @@ import { MsgService } from '../../service/msg/msg.service' ;
 import { dataFormat } from '../../format/dateFormat' ;
 import { ProductModel } from './product.model';
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
-
 let __this ;
 @Component({
 	selector : "app-usrManager" ,

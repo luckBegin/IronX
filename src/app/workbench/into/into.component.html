@@ -1,3 +1,26 @@
-<div>
-
+<div class="formWrap">
+	<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+		<nz-form-item class='formSec'>
+			<nz-form-label [nzSm]="5" nzRequired nzFor="userName">姓名</nz-form-label>
+			<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+				<input nz-input formControlName="userName" id="userName">
+				<nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">姓名必须输入</nz-form-explain>
+			</nz-form-control>
+		</nz-form-item>
+		<nz-form-item class='formSec'>
+			<nz-form-label [nzSm]="5" nzRequired nzFor="phoneNumber">手机号</nz-form-label>
+			<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+				<input nz-input formControlName="phoneNumber" id="phoneNumber">
+				<nz-form-explain *ngIf="validateForm.get('phoneNumber').dirty && validateForm.get('phoneNumber').errors">手机号必须输入</nz-form-explain>
+			</nz-form-control>
+		</nz-form-item>
+		<nz-form-item class='formSec'>
+			<nz-form-label [nzSm]="5" nzRequired nzFor="idCard">身份证号</nz-form-label>
+			<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+				<input nz-input formControlName="idCard" id="idCard">
+				<nz-form-explain *ngIf="validateForm.get('idCard').dirty && validateForm.get('idCard').errors">身份证号必须输入</nz-form-explain>
+			</nz-form-control>
+		</nz-form-item>		
+	</form>
+	<button class="submitBtn" nz-button nzType="primary" *ngIf='!editMark' [disabled]="!validateForm.valid" (click)='submitForm()'>提交</button>
 </div>

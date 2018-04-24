@@ -6,8 +6,7 @@ import { shujutongji } from './model/shujutongji.model' ;
 import { quanxianzhongxin } from './model/quanxianzhongxin.model' ;
 import { peizhizhongxin } from './model/peizhizhongxin.model' ;
 import { yingyonggongju } from './model/yingyonggongju.model' ;
-
-
+import { caiwuguanli } from './model/caiwuguanli.model' ;
 const menuList = {
 	1 : { 
 		title : "工作台" ,
@@ -25,21 +24,26 @@ const menuList = {
 		type : "menu" ,
 	} ,
 	4 : {
+		title : "财务管理" ,
+		data: caiwuguanli ,
+		type : "menu" ,
+	} ,
+	5 : {
 		title:"数据统计",
 		data:shujutongji ,
 		type:"menu"
 	} ,
-	5 : {
+	6 : {
 		title:"权限中心" ,
 		data:quanxianzhongxin,
 		type:"menu" ,
 	},
-	6 : { 
+	7 : { 
 		title :"配置中心" ,
 		data : peizhizhongxin ,
 		type : 'menu' ,
 	},
-	7 : {
+	8 : {
 		title : "应用工具" ,
 		data : yingyonggongju ,
 		type : 'dropdown'

@@ -11,7 +11,7 @@ export class DepartService{
 
 	getDepart(){
 		let url = GLOBAL.API.depart.departList ;
-
 		return this.http.get(url);
-	}
+	};
+	
 };

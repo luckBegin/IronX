@@ -43,8 +43,8 @@ export class WorkbenchAll{
 		})
 	};
 
-	refuse(id : string , obj : object ){
-		let url = GLOBAL.API.workbench.refuse +id; 
+	refuse(obj : object ){
+		let url = GLOBAL.API.workbench.refuse;
 
 		let header = new HttpHeaders()
 			.set("Content-type" , "application/json");
@@ -54,9 +54,8 @@ export class WorkbenchAll{
 		})
 	};
 
-	cancel( id : string | number ){
+	cancel( id : number | string ){
 		let url = GLOBAL.API.workbench.cancel + id ;
-
 		let header = new HttpHeaders()
 			.set("Content-type" , "application/json") ;
 
@@ -80,5 +79,16 @@ export class WorkbenchAll{
 		return this.http.post(url, obj , {
 			headers : header
 		});
-	}
+	};
+
+	submitInto(obj : object){
+		let url = GLOBAL.API.workbench.into;
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.post(url, obj , {
+			headers : header
+		});
+	};
 };

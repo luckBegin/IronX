@@ -156,7 +156,7 @@ export class AllComponent implements OnInit{
 				let _idx = $event.split(",") ;
 				operData[_idx[0]].oper[_idx[1]].fn(data) ;
 			}} ,
-			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" },
+			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
@@ -331,8 +331,9 @@ export class AllComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.passModel = true ;
+						this.passModel = false ;
 						this.msg.notifySuccess("操作成功" , '该订单已通过审核');
+						this.getData();
 					}else{
 						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
 					};
@@ -343,21 +344,21 @@ export class AllComponent implements OnInit{
 	refuseModel : boolean = false ;
 
 	refuse(){
-		let id = this.selectItem['id'] ;
-		let obj = {
-			opinion : "" 
-		};
+		// let id = this.selectItem['id'] ;
+		// let obj = {
+		// 	opinion : "" 
+		// };
 
-		this.service.pass(id ,obj )
-			.subscribe(
-				res => {
-					if(res['success'] == true){
-						this.refuseModel = true ;
-						this.msg.notifySuccess("操作成功" , '该订单已拒绝');
-					}else{
-						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
-					};
-				}
-			)
+		// this.service.pass(id ,obj )
+		// 	.subscribe(
+		// 		res => {
+		// 			if(res['success'] == true){
+		// 				this.refuseModel = false ;
+		// 				this.msg.notifySuccess("操作成功" , '该订单已拒绝');
+		// 			}else{
+		// 				this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+		// 			};
+		// 		}
+		// 	)
 	};
 };

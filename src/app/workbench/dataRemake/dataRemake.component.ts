@@ -119,13 +119,15 @@ export class DataRemakeComponent implements OnInit{
 		this.selectData['proInfo'] = item ;
 	};
 
+	orderInfo : object  ;
 	getOrderInfo(){
 		this.workSer.getOderInfo(this.orderId)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
+						this.orderInfo = res['data'];						
+						console.log(res['data']) ;
 						// this.postModel = res['data'] ;
-						// this.orderInfo = res['data'];
 					}else{
 						this.msg.error("获取订单信息失败"+res['message']) ;
 					};
@@ -281,7 +283,7 @@ export class DataRemakeComponent implements OnInit{
 			)
 	};
 
-	imgSelect ;
+	imgSelect : string ;
 	imgUploads : object[] = [] ;
 	imgUpload($event){
 		let profileInfo = this.imgSelect.split(",") ;
@@ -409,8 +411,44 @@ export class DataRemakeComponent implements OnInit{
 	};
 
 	submitCheck(){
-		this.postModel.clientInfoInputVO['userId'] = 1 ;
+		let usrId = this.orderInfo['orderVO']['customerId'] ;
+		let input = [
+			{
+				"contactName": "测试",
+				"contactPhone": "15687792721",
+				"contactRelation": 0,
+				"contactType": 0,
+				"id": usrId,
+				"userId": 1,
+				"workAddress": "杭州",
+				"workUnit": "测试"
+			  },    {
+				"contactName": "测试2",
+				"contactPhone": "15687792720",
+				"contactRelation": 0,
+				"contactType": 0,
+				"id": usrId,
+				"userId": 1,
+				"workAddress": "杭州",
+				"workUnit": "测试"
+			  }
+		]
+		this.postModel.clientInfoInputVO['id'] = usrId ;
+		this.postModel.clientUnitInputVO['userId'] = usrId ;
+		this.postModel.clientContactInputVOS = input ;
 		let orderInfo = this.lgo.get("proInfo") ;
+
+		this.workSer.postClientInfo(this.postModel)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("提交成功")
+					}else{
+						this.msg.error("提交失败，原因:" + res['msg']) ;
+					};
+				}
+			)
+		console.log(this.postModel) ;
 		console.log(orderInfo);
 	};
 };

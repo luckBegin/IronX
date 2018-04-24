@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
 // component
 import { SideMenuComponent } from '../layout/side-menu/side-menu.component' ;
 import { TagNavComponent } from '../layout/tag-nav/tag-nav.component' ;
@@ -28,6 +27,9 @@ import { Userservice } from '../service/user/user.service' ;
 import { EnumService } from '../service/enum/enum.service';
 import { ImgService } from '../service/img/img.service';
 import { CityService } from '../service/city/city.service';
+import { OrderSevice } from '../service/order/order.service';
+import { FinancialService } from '../service/financial/financial.service';
+import { AfterLoanService } from '../service/afterLoan/afterLoan.service' ;
 
 import  { LoginComponent } from '../login/login.component';
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http' ;
@@ -36,6 +38,15 @@ import { LoginInterceptor } from '../interceptor.service' ;
 // pipe
 import { AgeByIdPipe } from '../pipe/AgeById.pipe';
 import { SexByIdPipe } from '../pipe/SexById.pipe';
+import { SexByNumnerPipe } from '../pipe/SexByNumber.pipe';
+import { MarriageStatePipe } from '../pipe/marryState.pipe';
+import { dateFormatPipe } from '../pipe/dateformat.pipe';
+import { EduPipe } from '../pipe/edu.pipe';
+import { DwellStatePipe } from '../pipe/dwellState.pipe';
+import { dwellDetailPipe } from '../pipe/dwellDetail.pipe';
+import { unitNaturePipe } from '../pipe/unitNature.pipe';
+import { nullPipe } from '../pipe/null.pipe';
+import { RelationPipe } from '../pipe/relation.pipe';
 const layOut = [
     SideMenuComponent ,
     TagNavComponent ,
@@ -54,7 +65,10 @@ const services = [
     MsgService ,
     EnumService,
     ImgService,
-    CityService
+    CityService ,
+    OrderSevice ,
+    FinancialService ,
+    AfterLoanService
 ];
 
 const workbench_services = [
@@ -72,7 +86,16 @@ const product_services = [
 
 const pipe = [
     AgeByIdPipe ,
-    SexByIdPipe
+    SexByIdPipe ,
+    SexByNumnerPipe ,
+    MarriageStatePipe ,
+    dateFormatPipe ,
+    EduPipe,
+    DwellStatePipe ,
+    dwellDetailPipe ,
+    unitNaturePipe,
+    nullPipe,
+    RelationPipe
 ]
 @NgModule({
     imports: [
@@ -80,8 +103,7 @@ const pipe = [
         FormsModule,
         RouterModule,
         ReactiveFormsModule,
-        NgZorroAntdModule ,
-
+        NgZorroAntdModule
     ],
     declarations: [
         ...layOut,
@@ -93,7 +115,7 @@ const pipe = [
         ReactiveFormsModule,
         RouterModule,
         ...layOut,
-        ...pipe
+        ...pipe,
     ],
     providers: [
         ...services,

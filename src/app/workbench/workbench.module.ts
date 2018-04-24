@@ -7,14 +7,16 @@ import { AllComponent } from './all/all.component' ;
 import { PrecheckComponent } from './precheck/precheck.component';
 import { DataRemakeComponent } from './dataRemake/dataRemake.component';
 import { FirstComponent } from './review/first/first.component' ;
-import { CheckComponent } from './review/check/check.component'
+import { CheckComponent } from './review/check/check.component';
+import { ApproveComponent } from './review/approve/approve.component'
 const compoents = [
 	IntoComponent ,
 	AllComponent,
 	PrecheckComponent,
 	DataRemakeComponent,
 	FirstComponent ,
-	CheckComponent
+	CheckComponent ,
+	ApproveComponent
 ];
 
 const routes  : Routes = [
@@ -41,6 +43,9 @@ const routes  : Routes = [
 	},{
 		path : "check/:id" ,
 		component : CheckComponent
+	},{
+		path : "approveOrder/:id" , 
+		component : ApproveComponent
 	}
 ];
 @NgModule({

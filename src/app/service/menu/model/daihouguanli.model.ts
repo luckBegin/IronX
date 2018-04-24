@@ -1,21 +1,31 @@
 import { MenuItemModel } from '../menu-item.model' ;
 
-let prefix_url = 'loan'
+let prefix_url = 'afterLoan'
 export const daihouguanli : MenuItemModel[] = [
 	{
 		id : 1 , 
-		title : "贷后管理" ,
-		url : `/${prefix_url}/loan`,
+		title : "还款管理" ,
+		url : `/${prefix_url}/repay`,
 		ico : "anticon anticon-plus-square-o" ,
 	},{
 		id : 1 , 
-		title : "财务管理" ,
-		url : `/${prefix_url}/financial`,
+		title : "催收管理" ,
+		url : `/${prefix_url}/collect`,
 		ico : "anticon anticon-plus-square-o" ,
 	},{
 		id : 1 , 
-		title : "收款明细" ,
-		url : `/${prefix_url}/detail`,
+		title : "起诉管理" ,
+		url : `/${prefix_url}/sue`,
+		ico : "anticon anticon-plus-square-o" ,
+	},{
+		id : 1 , 
+		title : "已提交起诉" ,
+		url : `/${prefix_url}/hasSue`,
+		ico : "anticon anticon-plus-square-o" ,
+	},{
+		id : 1 , 
+		title : "已确认起诉" ,
+		url : `/${prefix_url}/madeSue`,
 		ico : "anticon anticon-plus-square-o" ,
 	}
 ]

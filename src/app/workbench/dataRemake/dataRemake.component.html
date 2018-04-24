@@ -284,7 +284,7 @@
 										单位名称:
 									</div>
 									<div *ngIf='postModel.clientInfoInputVO'>
-										<input name="unitName" style="width: 100px;" type="text"  placeholder="单位名称" nz-input [(ngModel)] = 'postModel.clientInfoInputVO.unitName'>
+										<input name="unitName" style="width: 100px;" type="text"  placeholder="单位名称" nz-input [(ngModel)] = 'postModel.clientUnitInputVO.unitName'>
 									</div>
 								</div>
 
@@ -303,7 +303,7 @@
 									</div>
 									<div *ngIf='postModel.clientUnitInputVO'>
 										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="单位性质" [(ngModel)]='postModel.clientUnitInputVO.unitNature'>
-											<nz-option *ngFor = 'let item of enum_unit' [nzValue]="item.name" [nzLabel]="item.name"></nz-option>
+											<nz-option *ngFor = 'let item of enum_unit' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -357,7 +357,7 @@
 										现单位工作年限:
 									</div>
 									<div *ngIf='postModel.clientUnitInputVO'>
-										<input style="width: 100px;" type="date" placeholder="工作年限" nz-input [(ngModel)]='postModel.clientUnitInputVO.currentUnitWorkYears'>
+										<input style="width: 100px;" type="text" placeholder="工作年限" nz-input [(ngModel)]='postModel.clientUnitInputVO.currentUnitWorkYears'>
 										<span>
 											年
 										</span>
@@ -369,7 +369,7 @@
 										单位电话:
 									</div>
 									<div *ngIf='postModel.clientUnitInputVO'>
-										<input style="width: 100px;" type="date" placeholder="单位电话" nz-input [(ngModel)]='postModel.clientUnitInputVO.unitPhone'>
+										<input style="width: 100px;" type="text" placeholder="单位电话" nz-input [(ngModel)]='postModel.clientUnitInputVO.unitPhone'>
 									</div>
 								</div>
 							</div>
@@ -380,7 +380,7 @@
 										月收入:
 									</div>
 									<div>
-										<input style="width: 100px;" type="date" placeholder="月收入" nz-input>
+										<input style="width: 100px;" type="text" placeholder="月收入" nz-input>
 									</div>
 								</div>
 
@@ -391,9 +391,9 @@
 
 									<div *ngIf='postModel.clientUnitInputVO'>
 										<nz-select style="width: 120px;" nzAllowClear nzPlaceHolder="工资发放形式" [(ngModel)]='postModel.clientUnitInputVO.salaryGrantForm'>
-											<nz-option [nzValue]="'现金发放'" [nzLabel]="'现金发放'"></nz-option>
-											<nz-option [nzValue]="'银行转账'" [nzLabel]="'银行转账'"></nz-option>
-											<nz-option [nzValue]="'现金和银行转账结合'" [nzLabel]="'现金和银行转账结合'"></nz-option>
+											<nz-option [nzValue]="0" [nzLabel]="'现金发放'"></nz-option>
+											<nz-option [nzValue]="1" [nzLabel]="'银行转账'"></nz-option>
+											<nz-option [nzValue]="2" [nzLabel]="'现金和银行转账结合'"></nz-option>
 										</nz-select>
 									</div>
 								</div>
@@ -529,7 +529,15 @@
 									</div>
 									<div *ngIf = 'proListData && proList_active && postModel.applyOrderVO'>
 										<nz-select [(ngModel)] = 'postModel.applyOrderVO.payBackType' style="width: 120px;" nzAllowClear nzPlaceHolder="还款方式">
-											<nz-option [nzValue]="proListData[proList_active]['repaymentMode']" [nzLabel]="proListData[proList_active]['repaymentMode']"></nz-option>
+												<!-- "0": "等额本息",
+												"1": "等额本金",
+												"2": "先息后本",
+												"3": "等本等息" -->
+											<nz-option  [nzValue]="0" [nzLabel]="'等额本息'"></nz-option>
+											<nz-option  [nzValue]="1" [nzLabel]="'等额本金'"></nz-option>
+											<nz-option  [nzValue]="2" [nzLabel]="'先息后本'"></nz-option>
+											<nz-option  [nzValue]="3" [nzLabel]="'等本等息'"></nz-option>
+											<!-- <nz-option [nzValue]="proListData[proList_active]['repaymentMode']" [nzLabel]="proListData[proList_active]['repaymentMode']"></nz-option> -->
 										</nz-select>
 									</div>
 								</div>
@@ -581,7 +589,6 @@
 							</div>
 						</div>
 					</div>
-
 				</nz-tab>
 				<nz-tab [nzTitle]="'资料清单'">
 					<div class="formRow c-flex-row-start">
@@ -618,9 +625,8 @@
 										{{ item.title }}
 									</td>
 									<td class="c-flex-row-start c-flex-auto-wrap">
-										<!--  -->
-										<div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
-											<!--  -->
+
+										<!-- <div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
 											<div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
 											</div>
 											<div class="textWrap">
@@ -643,7 +649,7 @@
 													</nz-popconfirm>
 												</div>
 											</div>
-										</div>
+										</div> -->
 									</td>
 								</tr>
 							</tbody>

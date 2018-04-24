@@ -4,6 +4,8 @@ import { dataFormat } from '../../format/dateFormat';
 import { MsgService } from '../../service/msg/msg.service' ;
 import { ActivatedRoute } from '@angular/router';
 import { PrecheckSearchModel } from './precheck-search.model' ;
+import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
+import { EmitService } from '../../service/event-emit.service' ;
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -14,26 +16,36 @@ export class PrecheckComponent implements OnInit{
 	constructor(
 		private service : WorkbenchAll ,
 		private msg : MsgService ,
-		private routerInfo : ActivatedRoute
+		private routerInfo : ActivatedRoute ,
+		private fb : FormBuilder
 	){} ;
 	ngOnInit(){
 		__this = this ;
 
 		this.getList() ;
+		this.validateForm = this.fb.group({
+			"rejectionReason" : [null , [Validators.required]] ,
+			"opinion" : [ null ]
+		})
 	};
-
+	validateForm : FormGroup ;
 	searchModel : PrecheckSearchModel = new PrecheckSearchModel();
 
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "" , type:"checkbox" , check : true , fn : function(data){
-				console.log(data);
-			}} ,
-			{ name : "操作" , type:"select", reflect : "qudao" , data : [{name : "通过"},{name : "拒绝"}] , 
+			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["通过" , "拒绝" , "客户取消"] , 
 			fn:function($event,data){
-				console.log($event);
-				console.log(data);
+				__this.selectItem = data ;
+				if($event == '通过'){
+					__this.passModel = true ;
+				};
+				if($event == '拒绝'){
+					__this.refuseModel = true ;
+				};
+				if($event == '客户取消'){
+					__this.cancelModel = true ;
+				}
 			}} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
@@ -78,5 +90,64 @@ export class PrecheckComponent implements OnInit{
 	reset(){
 		this.searchModel = new PrecheckSearchModel();
 		this.getList() ;
+	};
+
+	passModel : boolean = false ;
+	selectItem : object ;
+
+	pass():void {
+		let id = this.selectItem['id'] ;
+		let obj = {
+			orderStatus:this.selectItem['status'] ,
+			opinion : "" 
+		}
+		this.service.pass(id , obj)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.passModel = false ;
+						this.msg.notifySuccess("操作成功" , '该订单已通过审核');
+						this.getList() ;
+					}else{
+						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+					};
+				}
+			)
+	};
+
+	refuseModel : boolean = false ;
+	refuse(){
+		let id = this.selectItem['id'];
+		let obj = this.validateForm.value ; 
+		obj['orderId'] = id ;
+		this.service.refuse(obj)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.refuseModel = false ;
+						this.msg.notifySuccess("操作成功" , '该订单已拒绝');
+						this.getList();
+					}else{
+						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+					};
+				}
+			)
+	};
+
+	cancelModel :boolean = false ;
+	cancel(){
+		let id = this.selectItem['id'];
+		this.service.cancel(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.cancelModel = false ;
+						this.msg.notifySuccess("操作成功",'该订单已标记为客户取消');
+						this.getList();
+					}else{
+						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+					};
+				}
+			)
 	}
 };

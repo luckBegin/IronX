@@ -1,0 +1,99 @@
+<div class="infoWrap" *ngIf ='loginInfo'>
+	<div class="title">
+		用户信息
+	</div>
+	<div class="content">
+		<div class="infoSec">
+			<span>用户编号</span>
+			<span>
+				{{loginInfo.id}}
+			</span>
+		</div>
+		
+		<div class="infoSec">
+			<span>用户名</span>
+			<span>
+				{{loginInfo.username}}
+			</span>
+		</div>
+
+		<div class="infoSec">
+			<span>真实姓名</span>
+			<span>
+				{{loginInfo.name}}
+			</span>
+		</div>
+
+		<div class="infoSec">
+			<span>手机号码</span>
+			<span>
+				{{loginInfo.phone}}
+			</span>
+		</div>
+		
+		<div class="infoSec">
+			<span>部门</span>
+			<span>
+				{{loginInfo.department.name}}
+			</span>
+		</div>
+		<div class="infoSec">
+			<span>状态</span>
+			<span>
+				{{loginInfo.statusDesc}}
+			</span>
+		</div>
+		<div class="infoSec">
+			<span>添加时间</span>
+			<span>
+				{{loginInfo.createTime | dateFormat}}
+			</span>
+		</div>
+		
+		<div class="infoSec">
+			<span>添加人</span>
+			<span>
+				{{loginInfo.createUserName}}
+			</span>
+		</div>
+	</div>
+	<button nz-button nzType="primary" (click) = 'showPass()' style="width: 150px;margin: 10px 65px;">重置密码</button>
+</div>
+
+<nz-modal [(nzVisible)]="passMark" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="passMark = false">
+	<ng-template #modalTitle>
+		重置密码
+	</ng-template>
+
+	<ng-template #modalContent>
+		<div  class="checkWrap">
+			<div class="changeTitle">
+				选择以下方式修改密码
+			</div>
+			<div  class="info">
+				<div  class="info_left">
+					<label nz-checkbox [(ngModel)]='checked' (ngModelChange)='makeType("1")'>设为默认</label>
+				</div>
+				<div  class="info_right">
+					<span >
+						默认密码为【sd123456】
+					</span>
+				</div>
+			</div>
+			<div  class="info">
+				<div  class="info_left">
+					<label nz-checkbox [(ngModel)]='checked2' (ngModelChange) = 'makeType("2")'>手动设置</label>
+				</div>
+				<div  class="info_right">
+					<input nz-input type="text" style="width: 120px" [(ngModel)] = 'newPass'>
+					<!-- <span style="margin-left: 10">6位以上字母和数字组合</span> -->
+				</div>
+			</div>
+		</div>
+	</ng-template>
+
+	<ng-template #modalFooter>
+		<button nz-button nzType="primary"  (click)='makeNew()'>确定</button>
+		<button nz-button nzType="default" (click)='passMark = false'>关闭</button>
+	</ng-template>
+</nz-modal>

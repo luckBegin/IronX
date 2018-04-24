@@ -6,5 +6,5 @@ export class ContactModel{
 	id  : number ;
 	userId : number;
 	workAddress : string;
-	workUnit : number;
+	workUnit : string;
 }

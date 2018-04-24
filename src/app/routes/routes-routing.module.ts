@@ -17,9 +17,18 @@ const routes: Routes = [
             },{
                 path : "product" , 
                 loadChildren : "app/product/product.module#ProductModule"
+            },{
+                path : "permission" ,
+                loadChildren : "app/permission/permission.module#PermissionModule"
+            },{
+                path : 'financial' , 
+                loadChildren : "app/financial/financial.module#FinancialModule"
+            },{
+                path : "afterLoan" ,
+                loadChildren : "app/afterLoan/afterLoan.module#AfterLoanModule"
             }
         ],
-        canActivate : [RouteguardService]
+        // canActivate : [RouteguardService]
     },{
         path : "login" ,
         component : LoginComponent

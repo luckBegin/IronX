@@ -54,7 +54,8 @@ const record = {
 const detail = {
 	name : "查看详情" ,
 	fn: function(item){
-
+		__this.sgo.set("checkInfo" , item) ;
+		__this.router.navigate(['/workbench/check' , item.id]);
 	}
 };
 const reback = {
@@ -81,7 +82,7 @@ const rightNow = {
 	name : "马上审批" ,
 	fn : function(item){
 		__this.sgo.set("checkInfo" , item) ;
-		__this.router.navigate(['/workbench/check' , item.id]);
+		__this.router.navigate(['/workbench/approveOrder' , item.id]);
 	}
 };
 
@@ -172,4 +173,8 @@ export class  FirstComponent implements OnInit{
 				}
 			);
 	};
+	reset(){
+		this.searchModel = new FirstSearchModel();
+		this.getData() ;
+	}
 };
