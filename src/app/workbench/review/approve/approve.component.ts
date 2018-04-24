@@ -251,7 +251,7 @@ export class ApproveComponent implements OnInit{
 				}
 			)
 	};
-	current : number = 0;
+	current : number = 3;
 	showRefuse(){
 		this.refuseModel = true ;
 	};
@@ -281,7 +281,7 @@ export class ApproveComponent implements OnInit{
 		};
 
 		if(idx == 3){
-			let passMark = this.telCheckForm.valid ;
+			let passMark = this.makeCheckForm.valid ;
 			if(!passMark){
 				this.msg.notifyErr("进入下一步失败" , "请检查每项信息填写完毕") ;
 				return ;
@@ -320,6 +320,7 @@ export class ApproveComponent implements OnInit{
 	saveFirstCheck(){
 		let postData = this.makeCheckForm.value ;
 		postData['orderId'] = this.checkInfo['id'] ;
+		postData['status']= 1 ;
 		this.orderSer.saveFirstCheck(postData)
 			.subscribe(
 				res => {
