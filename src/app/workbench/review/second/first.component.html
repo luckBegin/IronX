@@ -1,0 +1,83 @@
+<div class="c-content-wrap">
+	<div class="tabSwitch">
+<!-- 		<div class="c-flex-row-start c-dash-border">
+			<div class="orderType-sec">
+				类别 :
+			</div>
+			<ul class="c-list-unstyled c-flex-row-start">
+				<li 
+					*ngFor = 'let item of menuType;' 
+					class="orderType-item c-flex-row-start"
+					[ngClass] = '{"activeItem" : item.status == activeState}'
+					(click) = 'changeType(item.status)'
+				>
+					{{item.desc}}
+				</li>
+			</ul>
+		</div> -->
+		<div class="searchGroup">
+			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
+				<div class="c-search-item">
+					<input type="date">
+				</div>
+				<div class="c-search-item">
+					<input type="date">
+				</div>
+				<div class="c-search-item">
+					<input nz-input placeholder="申请人姓名">
+				</div>
+			</div>
+			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
+
+				<!-- 网点 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.departmentId" nzAllowClear nzPlaceHolder="网点">
+						<nz-option *ngFor = 'let item of departList' [nzValue]="item.id" [nzLabel]="item.name">
+						</nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 产品名称 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.productId" nzAllowClear nzPlaceHolder="产品名称">
+						<nz-option *ngFor = 'let item of productList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 客户经理 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.createUser" nzAllowClear nzPlaceHolder="客户经理">
+						<nz-option *ngFor = 'let item of userManagerList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 节点流程 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="流程节点">
+						<nz-option *ngFor = 'let item of processList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 处理人 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.modifyUser" nzAllowClear nzPlaceHolder="处理人">
+						<nz-option *ngFor = 'let item of dealUserList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+			</div>
+			<div class="c-flex-row-start c-flex-auto-wrap">
+				<div class="c-search-btn">
+					 <button nz-button nzType="primary" (click)='reset()'>重置</button>
+				</div>
+				<div>
+					 <button (click) = 'search()' nz-button nzType="primary"><i class="anticon anticon-search"></i>搜索</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<c-table [tableData]='tableData'>
+	</c-table>
+	<div class="c-pag">
+		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+	</div>
+</div>

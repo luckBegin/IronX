@@ -72,5 +72,10 @@ export class Userservice{
 	unFreeze(id : number ){
 		let url = GLOBAL.API.usr.unFreeze + id ;
 		return this.http.put(url , {})
-	}
+	};
+
+	getAllDue(){
+		let url = GLOBAL.API.usr.getAllDue;
+		return this.http.get(url) ;
+	};
 };

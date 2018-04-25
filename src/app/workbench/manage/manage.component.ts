@@ -2,10 +2,11 @@ import { Component ,OnInit } from '@angular/core';
 import { WorkbenchAll } from '../../service/workbench/all.service';
 import { dataFormat } from '../../format/dateFormat';
 import { MsgService } from '../../service/msg/msg.service' ;
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router } from '@angular/router';
 import { PrecheckSearchModel } from './precheck-search.model' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
+import { SessionStorageService } from '../../service/storage/session_storage'
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -17,7 +18,9 @@ export class ManageComponent implements OnInit{
 		private service : WorkbenchAll ,
 		private msg : MsgService ,
 		private routerInfo : ActivatedRoute ,
-		private fb : FormBuilder
+		private fb : FormBuilder ,
+		private sgo : SessionStorageService ,
+		private router : Router 
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -37,15 +40,13 @@ export class ManageComponent implements OnInit{
 			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["查看详细" , "马上尽调","退回订单", "客户取消" , '处理记录'] , 
 			fn:function($event,data){
 				__this.selectItem = data ;
-				if($event == '查看详细'){
-					__this.passModel = true ;
-				};
-				if($event == '拒绝'){
-					__this.refuseModel = true ;
-				};
 				if($event == '客户取消'){
 					__this.cancelModel = true ;
-				}
+				};
+				if($event == '马上尽调'){
+					__this.sgo.set("orderInfo" , data) ;
+					__this.router.navigate("/workbench/income")
+				};
 			}} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
@@ -65,7 +66,6 @@ export class ManageComponent implements OnInit{
 	};
 
 	totalSize : number = 0 ;
-
 	getList(){
 		this.service.getOrderList(this.searchModel , 7)
 			.subscribe(

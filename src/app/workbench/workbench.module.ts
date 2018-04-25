@@ -10,6 +10,8 @@ import { FirstComponent } from './review/first/first.component' ;
 import { CheckComponent } from './review/check/check.component';
 import { ApproveComponent } from './review/approve/approve.component' ;
 import { ManageComponent } from './manage/manage.component';
+import { InComeComponent } from './income/income.component' ;
+import {} from ''
 const compoents = [
 	IntoComponent ,
 	AllComponent,
@@ -18,7 +20,8 @@ const compoents = [
 	FirstComponent ,
 	CheckComponent ,
 	ApproveComponent ,
-	ManageComponent
+	ManageComponent ,
+	InComeComponent
 ];
 
 const routes  : Routes = [
@@ -40,6 +43,9 @@ const routes  : Routes = [
 			{
 				path : "first" ,
 				component : FirstComponent
+			},{
+				path : "second" ,
+				component : SecondComponent
 			}
 		]
 	},{
@@ -51,6 +57,9 @@ const routes  : Routes = [
 	},{
 		path : "manage" ,
 		component : ManageComponent
+	},{
+		path : "income" ,
+		component : InComeComponent
 	}
 ];
 @NgModule({

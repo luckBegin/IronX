@@ -56,7 +56,8 @@ const usr = {
 	stuffList : host + "/system/user/find" ,
 	addStuff : host + "/system/user/add" ,
 	freeze : host + "/system/user/freeze/" ,
-	unFreeze : host + "/system/user/unfreeze/"
+	unFreeze : host + "/system/user/unfreeze/" ,
+	getAllDue : host + "/system/user/getAllDueDiligenceManager" ,
 };
 const order = {
 	getImg : host + "/order/ordersource/base/" ,
