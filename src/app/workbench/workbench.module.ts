@@ -11,7 +11,8 @@ import { CheckComponent } from './review/check/check.component';
 import { ApproveComponent } from './review/approve/approve.component' ;
 import { ManageComponent } from './manage/manage.component';
 import { InComeComponent } from './income/income.component' ;
-import {} from ''
+import { SecondComponent } from './review/second/second.component' ;
+import { ReApproveComponent } from './review/reApprove/reApprove.component' ;
 const compoents = [
 	IntoComponent ,
 	AllComponent,
@@ -21,7 +22,9 @@ const compoents = [
 	CheckComponent ,
 	ApproveComponent ,
 	ManageComponent ,
-	InComeComponent
+	InComeComponent ,
+	SecondComponent ,
+	ReApproveComponent
 ];
 
 const routes  : Routes = [
@@ -60,6 +63,9 @@ const routes  : Routes = [
 	},{
 		path : "income" ,
 		component : InComeComponent
+	},{
+		path : "reApproveOrder/:id" ,
+		component : ReApproveComponent
 	}
 ];
 @NgModule({

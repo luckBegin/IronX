@@ -37,12 +37,12 @@ export class ApproveComponent implements OnInit{
 			"opinion" : [ null ]
 		})
 		this.makeCheckForm = this.fb.group({
-			description :  [null , [Validators.required]] ,
-			diligencePurpose :  [null] ,
-			dueDiligence : [null] ,
-			mockMoney : [null] ,
-			orderId: [null] ,
-			status: [null] ,
+			"description" :  [null , [Validators.required]] ,
+			"diligencePurpose" :  [null] ,
+			"dueDiligence" : [null] ,
+			"mockMoney" : [null] ,
+			"orderId": [null] ,
+			"status": [null] ,
 		});
 		this.getTelRecord() ;
 		__this = this ;
@@ -251,14 +251,13 @@ export class ApproveComponent implements OnInit{
 				}
 			)
 	};
-	current : number = 3;
+	current : number = 0;
 	showRefuse(){
 		this.refuseModel = true ;
 	};
 
 	nextStep(){
 		let idx = this.current ; 
-
 		if(idx == 0){
 			let passMark = this.reportForm.valid ;
 			if(!passMark){

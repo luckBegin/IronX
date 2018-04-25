@@ -67,6 +67,8 @@ const order = {
 	telCheckRecord : host + "/audit/phoneAudit" ,
 	saveReport : host + "/audit/creditReport/" ,
 	saveFirstCheck : host + "/flow/saveFirstCheck",
+	getFirestCheclRst : host + "/flow/getFirstCheck/" ,
+	saveSecondCheck:host + "/flow/saveSecoundCheck" ,
 }
 const role = {
 	getRoleList : host + "/system/role/getAllRole"

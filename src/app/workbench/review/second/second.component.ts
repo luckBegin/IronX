@@ -1,7 +1,7 @@
 import { Component ,OnInit } from '@angular/core';
 import { Router } from '@angular/router' ;
 import { WorkbenchAll } from '../../../service/workbench/all.service';
-import { FirstSearchModel } from './first.search.model';
+import { FirstSearchModel } from './second.search.model';
 import { dataFormat } from '../../../format/dateFormat';
 import { MsgService } from '../../../service/msg/msg.service' ;
 import { ActivatedRoute } from '@angular/router';
@@ -11,8 +11,8 @@ import { ProductService } from '../../../service/product/product.service' ;
 import { Userservice } from '../../../service/user/user.service'
 import { SessionStorageService } from '../../../service/storage/session_storage'
 import { DateReflect } from '../../../service/date-reflect' ;
-let __this ;
 
+let __this ;
 const pass = {
 	name : "通过" ,
 	fn : function(item){
@@ -82,7 +82,7 @@ const rightNow = {
 	name : "马上审批" ,
 	fn : function(item){
 		__this.sgo.set("checkInfo" , item) ;
-		__this.router.navigate(['/workbench/approveOrder' , item.id]);
+		__this.router.navigate(['/workbench/reApproveOrder' , item.id]);
 	}
 };
 
@@ -115,10 +115,10 @@ const operData = [
 ];
 @Component({
 	selector : "app-first"  ,
-	templateUrl: "./first.component.html" ,
-	styleUrls : ["./first.component.less"]
+	templateUrl: "./second.component.html" ,
+	styleUrls : ["./second.component.less"]
 })
-export class  FirstComponent implements OnInit{
+export class  SecondComponent implements OnInit{
 	constructor(
 		private service : WorkbenchAll,
 		private msg : MsgService ,
@@ -161,7 +161,7 @@ export class  FirstComponent implements OnInit{
 	totalSize : number ;
 
 	getData() : void {
-		this.service.getOrderList(this.searchModel , 4)
+		this.service.getOrderList(this.searchModel , 5)
 			.subscribe(
 				res => {
 					if(res['success'] == true){

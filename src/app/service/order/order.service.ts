@@ -71,5 +71,22 @@ export class OrderSevice{
 		return this.http.post(url, obj , {
 			headers : header
 		});
+	};
+
+	getFirstCheckResult(orderId : number | string){
+		let url = GLOBAL.API.order.getFirestCheclRst + orderId ;
+
+		return this.http.get( url ) ;
+	};
+
+	saveSecondCheck(obj : object) {
+		let url = GLOBAL.API.order.saveSecondCheck ;
+		
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.post(url, obj , {
+			headers : header
+		});
 	}
 };
