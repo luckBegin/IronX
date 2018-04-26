@@ -69,6 +69,7 @@ const order = {
 	saveFirstCheck : host + "/flow/saveFirstCheck",
 	getFirestCheclRst : host + "/flow/getFirstCheck/" ,
 	saveSecondCheck:host + "/flow/saveSecoundCheck" ,
+	getSecondCheckRst : host + "/flow/getSecoundCheck/"
 }
 const role = {
 	getRoleList : host + "/system/role/getAllRole"

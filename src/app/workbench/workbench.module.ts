@@ -13,6 +13,8 @@ import { ManageComponent } from './manage/manage.component';
 import { InComeComponent } from './income/income.component' ;
 import { SecondComponent } from './review/second/second.component' ;
 import { ReApproveComponent } from './review/reApprove/reApprove.component' ;
+import { ThirdComponent } from './review/third/third.component' ;
+import { FinalCheckComponent } from './review/finalCheck/finalCheck.component'
 const compoents = [
 	IntoComponent ,
 	AllComponent,
@@ -24,7 +26,9 @@ const compoents = [
 	ManageComponent ,
 	InComeComponent ,
 	SecondComponent ,
-	ReApproveComponent
+	ReApproveComponent ,
+	ThirdComponent ,
+	FinalCheckComponent
 ];
 
 const routes  : Routes = [
@@ -49,6 +53,9 @@ const routes  : Routes = [
 			},{
 				path : "second" ,
 				component : SecondComponent
+			},{
+				path : "third" , 
+				component : ThirdComponent
 			}
 		]
 	},{
@@ -66,6 +73,9 @@ const routes  : Routes = [
 	},{
 		path : "reApproveOrder/:id" ,
 		component : ReApproveComponent
+	},{
+		path : "finalCheck/:id" , 
+		component : FinalCheckComponent
 	}
 ];
 @NgModule({

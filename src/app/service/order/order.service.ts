@@ -88,5 +88,11 @@ export class OrderSevice{
 		return this.http.post(url, obj , {
 			headers : header
 		});
-	}
+	};
+
+	getSecondCheckResult(orderId : number | string ){
+		let url = GLOBAL.API.order.getSecondCheckRst + orderId ;
+		return this.http.get(url) ;
+	};
+
 };

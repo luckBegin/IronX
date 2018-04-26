@@ -2,10 +2,11 @@ import { Component ,OnInit } from '@angular/core';
 import { WorkbenchAll } from '../../service/workbench/all.service';
 import { dataFormat } from '../../format/dateFormat';
 import { MsgService } from '../../service/msg/msg.service' ;
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router } from '@angular/router';
 import { PrecheckSearchModel } from './precheck-search.model' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
+import { SessionStorageService } from '../../service/storage/session_storage'
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -17,7 +18,9 @@ export class PrecheckComponent implements OnInit{
 		private service : WorkbenchAll ,
 		private msg : MsgService ,
 		private routerInfo : ActivatedRoute ,
-		private fb : FormBuilder
+		private fb : FormBuilder,
+		private sgo : SessionStorageService ,
+		private router : Router
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -34,11 +37,12 @@ export class PrecheckComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["通过" , "拒绝" , "客户取消"] , 
+			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["资料补录" , "拒绝" , "客户取消"] , 
 			fn:function($event,data){
 				__this.selectItem = data ;
-				if($event == '通过'){
-					__this.passModel = true ;
+				if($event == '资料补录'){
+					__this.sgo.set("proInfo" , data);
+					__this.router.navigate(["/workbench/dataRemake",data.id]);
 				};
 				if($event == '拒绝'){
 					__this.refuseModel = true ;
@@ -92,28 +96,7 @@ export class PrecheckComponent implements OnInit{
 		this.getList() ;
 	};
 
-	passModel : boolean = false ;
 	selectItem : object ;
-
-	pass():void {
-		let id = this.selectItem['id'] ;
-		let obj = {
-			orderStatus:this.selectItem['status'] ,
-			opinion : "" 
-		}
-		this.service.pass(id , obj)
-			.subscribe(
-				res => {
-					if(res['success'] == true){
-						this.passModel = false ;
-						this.msg.notifySuccess("操作成功" , '该订单已通过审核');
-						this.getList() ;
-					}else{
-						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
-					};
-				}
-			)
-	};
 
 	refuseModel : boolean = false ;
 	refuse(){

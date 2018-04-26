@@ -1,0 +1,145 @@
+<div class="container">
+	<div class="infoWrap">
+        <div class="info_title">
+            初审意见
+        </div>
+        <div class="info_content" *ngIf='result'>
+            <div class="secItem">
+                <span>拟批</span>
+                <span>
+                    {{result.mockMoney}} 元
+                </span>
+            </div>
+            <div class="secItem">
+                <span class="title">拟批备注</span>
+                <p class="pgh">
+                     {{result.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="infoWrap">
+        <div class="info_title">
+            复审意见
+        </div>
+        <div class="info_content" *ngIf='secondResult'>
+            <div class="secItem">
+                <span>拟批</span>
+                <span>
+                    {{secondResult.mockMoney}} 元
+                </span>
+            </div>
+            <div class="secItem">
+                <span class="title">拟批备注</span>
+                <p class="pgh">
+                     {{secondResult.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="c-flex-row-start">
+        <form nz-form [nzLayout]="'inline'" [formGroup]="thirdForm">
+            <nz-form-item class='c-formSec'>
+                <nz-form-label [nzSm]="7" nzRequired nzFor="status">审核结果</nz-form-label>
+                <nz-form-control [nzSm]="16"  [nzOffset]='1'>
+                    <nz-select name="select-error" formControlName="status" id="status">
+                        <nz-option nzValue="0" nzLabel="不通过"></nz-option>
+                        <nz-option nzValue="1" nzLabel="通过"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="3" nzRequired nzFor="agreeMoney">核批金额</nz-form-label>
+                <nz-form-control [nzSm]="20"  [nzOffset]='1'>
+                    <nz-input-group nzAddOnAfter="元">
+                        <input nz-input formControlName="agreeMoney" id="agreeMoney">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="secondForm.get('agreeMoney').dirty && secondForm.get('agreeMoney').errors">借款期限必须为6的倍数</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="3" nzRequired nzFor="deadLine">借款期限</nz-form-label>
+                <nz-form-control [nzSm]="20"  [nzOffset]='1'>
+                    <nz-input-group nzAddOnAfter="年">
+                        <input nz-input formControlName="deadLine" id="deadLine">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="secondForm.get('deadLine').dirty && secondForm.get('deadLine').errors">借款期限必须为6的倍数</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="3" nzRequired nzFor="annualInterestRate">年化利率</nz-form-label>
+                <nz-form-control [nzSm]="20"  [nzOffset]='1'>
+                    <nz-input-group nzAddOnAfter="%">
+                        <input nz-input formControlName="annualInterestRate" id="annualInterestRate">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="secondForm.get('annualInterestRate').dirty && secondForm.get('annualInterestRate').errors">借款期限必须为6的倍数</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="3" nzRequired nzFor="repayMonth">每月还款金额</nz-form-label>
+                <nz-form-control [nzSm]="20"  [nzOffset]='1'>
+                    <nz-input-group nzAddOnAfter="元">
+                        <input nz-input formControlName="repayMonth" id="repayMonth" readonly='true'>
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="secondForm.get('repayMonth').dirty && secondForm.get('repayMonth').errors">借款期限必须为6的倍数</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="7" nzRequired nzFor="description">备注</nz-form-label>
+                    <nz-form-control [nzSm]="16"  [nzOffset]='1'>
+                        <textarea nz-input formControlName="description" rows="4" placeholder="备注" id="description"></textarea>
+                    </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+    <div class="btnGroup c-flex-row-start">
+        <button nz-button nzType="primary" class="c-btn-width usr_cancel" (click)='showRefuse()'>
+            拒绝
+        </button>
+        <!-- <button nz-button nzType="primary" class="c-btn-width" (click)="pass()"> -->
+        <button nz-button nzType="primary" class="c-btn-width" (click)="submit()">
+            提交
+        </button>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="refuseModel" [nzTitle]="refuseTitle" [nzContent]="refuseContent" [nzFooter]="refuseFotter" (nzOnCancel)="refuseModel = false">
+    <ng-template #refuseTitle>
+        确认复审拒绝
+    </ng-template>
+    
+    <ng-template #refuseContent>
+            <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                <nz-form-item class='c-formSec'>
+                    <nz-form-label [nzSm]="5" nzRequired nzFor="rejectionReason">拒绝原因</nz-form-label>
+                    <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+                        <nz-select name="select-error" formControlName="rejectionReason" id="rejectionReason">
+                            <nz-option nzValue="0" nzLabel="进件信息造假"></nz-option>
+                            <nz-option nzValue="1" nzLabel="进件资料造假"></nz-option>
+                            <nz-option nzValue="2" nzLabel="经营异常"></nz-option>
+                            <nz-option nzValue="3" nzLabel="法院纠纷"></nz-option>
+                            <nz-option nzValue="4" nzLabel="负面信息"></nz-option>
+                            <nz-option nzValue="5" nzLabel="同行进件"></nz-option>
+                            <nz-option nzValue="6" nzLabel="偿贷能力不足/负债搞/隐形负债超纲"></nz-option>
+                            <nz-option nzValue="7" nzLabel="不符合进件大纲"></nz-option>
+                            <nz-option nzValue="8" nzLabel="综合评分不足"></nz-option>
+                            <nz-option nzValue="9" nzLabel="风险行业"></nz-option>
+                            <nz-option nzValue="10" nzLabel="客户取消"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class='c-formSec'>
+                    <nz-form-label [nzSm]="5" nzRequired nzFor="opinion">审批意见</nz-form-label>
+                    <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+                        <textarea nz-input formControlName="opinion" rows="4" placeholder="备注" id="opinion"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+    </ng-template>
+    
+    <ng-template #refuseFotter>
+        <button nz-button nzType="default" (click)="refuseModel = false">取消</button>
+        <button nz-button nzType="primary" (click)="refuse()">拒绝</button>
+    </ng-template>
+</nz-modal>

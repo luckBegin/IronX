@@ -4,6 +4,7 @@ import { MsgService } from '../../service/msg/msg.service' ;
 import { dataFormat } from '../../format/dateFormat' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
+import { CommonValidator } from '../../validator/common.validator'
 @Component({
 	selector : "app-into" ,
 	templateUrl : './into.component.html' ,
@@ -18,9 +19,9 @@ export class IntoComponent implements OnInit{
 	){} ;
 	ngOnInit(){
 		this.validateForm = this.fb.group({
-			"userName" : [null , [Validators.required]] ,
-			"phoneNumber" : [null , [Validators.required]] ,
-			"idCard" : [null , [Validators.required]]
+			"userName" : [null , [Validators.required ,CommonValidator.isChinese]] ,
+			"phoneNumber" : [null , [Validators.required , Validators.minLength(11) , Validators.maxLength(11)]] ,
+			"idCard" : [null , [Validators.required , CommonValidator.isIdCard]] ,
 		});
 
 		this.emit.eventEmit.emit({

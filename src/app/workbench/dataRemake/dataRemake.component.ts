@@ -127,6 +127,7 @@ export class DataRemakeComponent implements OnInit{
 					if(res['success'] == true){
 						this.orderInfo = res['data'];						
 						console.log(res['data']) ;
+						console.log(this.postModel) ;
 						// this.postModel = res['data'] ;
 					}else{
 						this.msg.error("获取订单信息失败"+res['message']) ;
