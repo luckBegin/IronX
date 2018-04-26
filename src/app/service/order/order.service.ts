@@ -81,13 +81,14 @@ export class OrderSevice{
 
 	saveSecondCheck(obj : object) {
 		let url = GLOBAL.API.order.saveSecondCheck ;
-		
+
 		let header = new HttpHeaders()
 			.set("Content-type" , "application/json") ;
 
 		return this.http.post(url, obj , {
 			headers : header
 		});
+<<<<<<< HEAD
 	};
 
 	getSecondCheckResult(orderId : number | string ){
@@ -96,3 +97,13 @@ export class OrderSevice{
 	};
 
 };
+=======
+	}
+
+  getAntiFraud(clientId: number) {
+    // let url = GLOBAL.API.order.getAntiFraud + clientId;
+    let url = 'http://localhost:8083/audit/td/anti/fraud/18';
+    return this.http.get(url);
+  }
+};
+>>>>>>> ab7cbd7245126754a6a22067b6f5bf78d28255f6
