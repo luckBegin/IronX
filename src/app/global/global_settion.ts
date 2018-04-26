@@ -25,7 +25,7 @@ const product = {
 	productList : host + "/config/products" ,
 	create : host + "/config/product" ,
 	delete : host + "/config/product/" ,
-	edit : host + "/config/product" 
+	edit : host + "/config/product"
 };
 
 const enums = {
@@ -68,6 +68,7 @@ const order = {
 	saveReport : host + "/audit/creditReport/" ,
 	saveFirstCheck : host + "/flow/saveFirstCheck",
 	getFirestCheclRst : host + "/flow/getFirstCheck/" ,
+    getAntiFraud: host + "/audit/td/anti/fraud/",
 	saveSecondCheck:host + "/flow/saveSecoundCheck" ,
 }
 const role = {
@@ -92,7 +93,7 @@ export const GLOBAL = {
 		depart : depart ,
 		product : product ,
 		enum : enums,
-		upload : upload , 
+		upload : upload ,
 		login : host + "/login_user" ,
 		usr : usr ,
 		order : order ,

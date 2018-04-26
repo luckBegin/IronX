@@ -1,295 +1,375 @@
 <div class="c-content-wrap">
-	<div class="person_info c-border">
-		<div class="nameWrap">
-			<i class="anticon anticon-user userIco"></i>
-			<span class="usr_name">
+  <div class="person_info c-border">
+    <div class="nameWrap">
+      <i class="anticon anticon-user userIco"></i>
+      <span class="usr_name">
 				{{checkInfo.userName}}
 			</span>
-		</div>
+    </div>
 
-		<div class="sec_info c-flex-row-start">
-			<div>
+    <div class="sec_info c-flex-row-start">
+      <div>
 				<span>
-					身份证号 : 
+					身份证号 :
 				</span>
-				<span>
+        <span>
 					{{checkInfo.idCard}}
 				</span>
-			</div>
-			<div>
+      </div>
+      <div>
 				<span>
-					年龄 : 
+					年龄 :
 				</span>
-				<span>
+        <span>
 					{{checkInfo.idCard | AgeById}}
 				</span>
-			</div>
-			<div>
+      </div>
+      <div>
 				<span>
-					性别 : 
+					性别 :
 				</span>
-				<span>
+        <span>
 					{{checkInfo.idCard | SexById }}
 				</span>
-			</div>
-		</div>
-		<div class="sec_info c-flex-row-start">
-			<div>
+      </div>
+    </div>
+    <div class="sec_info c-flex-row-start">
+      <div>
 				<span>
 					申请金额:
 				</span>
-				<span>
+        <span>
 					{{checkInfo.applyMoney}}
 				</span>
-			</div>
-		</div>
-	</div>
-	<nz-tabset *ngIf = 'orderInfo'>
-		<nz-tab nzTitle="申请信息">
-			<div class="infoSec">
-				<div class="infoWrap">
-					<div class="info_title">
-						借款人信息
-					</div>
-					<div class="info_content">
-						<div class="secItem">
-							<span>姓名</span>
-							<span>
+      </div>
+    </div>
+  </div>
+  <nz-tabset *ngIf='orderInfo'>
+    <nz-tab nzTitle="申请信息">
+      <div class="infoSec">
+        <div class="infoWrap">
+          <div class="info_title">
+            借款人信息
+          </div>
+          <div class="info_content">
+            <div class="secItem">
+              <span>姓名</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.userName}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>性别</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>性别</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.gender | SexByNumner }}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>婚姻</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>婚姻</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.marriageState | marriageState }}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>出生日期</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>出生日期</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.birthDate | dateFormat : "y-m-d" }}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>教育程度</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>教育程度</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.educationDegree | edu}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>身份证</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>身份证</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.idCard}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>月收入</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>月收入</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.monthlyIncome}}元
 							</span>
-						</div>
-						<div class="secItem">
-							<span>有无本地房产</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>有无本地房产</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.localHouse | dwellState}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>居住情况</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>居住情况</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.dwellState | dwellDetail :orderInfo.clientInfoOutputVO.dwellDetail }}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>手机</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>手机</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.phoneNumber}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>户口详细地址</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>户口详细地址</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.registerDetailAddress}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>现居住地址</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>现居住地址</span>
+              <span>
 								{{orderInfo.clientInfoOutputVO.currentAddress}}
 							</span>
-						</div>
-					</div>
-				</div>
-				<div class="infoWrap" *ngIf = 'orderInfo.clientUnitOutputVO'>
-					<div class="info_title">
-						单位信息
-					</div>
-					<div class="info_content">
-						<div class="secItem">
-							<span>单位名称</span>
-							<span>
+            </div>
+          </div>
+        </div>
+        <div class="infoWrap" *ngIf='orderInfo.clientUnitOutputVO'>
+          <div class="info_title">
+            单位信息
+          </div>
+          <div class="info_content">
+            <div class="secItem">
+              <span>单位名称</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.unitName}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>所在部门</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>所在部门</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.department}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>单位性质</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>单位性质</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.unitNature | unitNature}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>职位名称</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>职位名称</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.jobPosition}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>现单位入职时间</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>现单位入职时间</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.currentUnitEntryDate |  dateFormat : "y-m-d h:i:s" }}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>现单位工作年限</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>现单位工作年限</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.currentUnitWorkYears}}年
 							</span>
-						</div>
-						<div class="secItem">
-							<span>现单位电话</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>现单位电话</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.unitPhone}}
 							</span>
-						</div>
-						<div class="secItem">
-							<span>现单位所在地</span>
-							<span>
+            </div>
+            <div class="secItem">
+              <span>现单位所在地</span>
+              <span>
 								{{orderInfo.clientUnitOutputVO.currentUnitAddress}}
 							</span>
-						</div>
-					</div>
-				</div>
-				<div class="infoWrap">
-					<div class="info_title">
-						联系人信息 (不承担贷款相关责任)
-					</div>
-					<div class="info_content">
-						<div class="secItem">
-							<table _ngcontent-c18="" class="table_wrap">
-								<thead>
-									<tr>
-										<th>联系人姓名</th>
-										<th>关系</th>
-										<th>手机号</th>
-										<th>工作单位</th>
-										<th>工作地址</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr *ngFor = 'let items of orderInfo.clientContactOutputVOS'>
-										<td>
-											{{items.contactName}}
-										</td>
-										<td>
-											{{items.contactRelation | relation}}
-										</td>
-										<td>
-											{{items.contactPhone}}
-										</td>
-										<td>
-											{{items.workUnit}}
-										</td>
-										<td>
-											{{items.workAddress}}
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</nz-tab>
-		<nz-tab nzTitle="资料信息">
-			<table class="img_table">
-				<thead>
-					<tr>
-						<th class="table-type">类型</th>
-						<th class="table-img">图片</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor = 'let item of imgList;let idx = index' >
-						<td>
-							{{ item.title }}
-						</td>
-						<td class="c-flex-row-start c-flex-auto-wrap">
-							<div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
-								<div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
-									<img [src]='img.url' alt="" style="display: none" class="showImg">
-								</div>
-								<div class="textWrap">
-									<div class="imgName c-text-overflow">
-										{{img.name}}
-									</div>
-									<div class="imgSize">
-										图片大小 : {{img.size}}KB
-									</div>
-								</div>
-								<div class="c-flex-row-end operWrap">
-									<div class="firstBtn"></div>
-									<div class="" nz-tooltip="点我查看图片" (click)='makeLook(idx2)'>
-										<i class="anticon anticon-eye-o watch" ></i>
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</nz-tab>
-		<nz-tab nzTitle="尽调报告">
+            </div>
+          </div>
+        </div>
+        <div class="infoWrap">
+          <div class="info_title">
+            联系人信息 (不承担贷款相关责任)
+          </div>
+          <div class="info_content">
+            <div class="secItem">
+              <table _ngcontent-c18="" class="table_wrap">
+                <thead>
+                <tr>
+                  <th>联系人姓名</th>
+                  <th>关系</th>
+                  <th>手机号</th>
+                  <th>工作单位</th>
+                  <th>工作地址</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor='let items of orderInfo.clientContactOutputVOS'>
+                  <td>
+                    {{items.contactName}}
+                  </td>
+                  <td>
+                    {{items.contactRelation | relation}}
+                  </td>
+                  <td>
+                    {{items.contactPhone}}
+                  </td>
+                  <td>
+                    {{items.workUnit}}
+                  </td>
+                  <td>
+                    {{items.workAddress}}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="资料信息">
+      <table class="img_table">
+        <thead>
+        <tr>
+          <th class="table-type">类型</th>
+          <th class="table-img">图片</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor='let item of imgList;let idx = index'>
+          <td>
+            {{ item.title }}
+          </td>
+          <td class="c-flex-row-start c-flex-auto-wrap">
+            <div class="tableImgWrap flexColumnCenter" *ngFor='let img of item.imgs;let idx2 = index'>
+              <div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
+                <img [src]='img.url' alt="" style="display: none" class="showImg">
+              </div>
+              <div class="textWrap">
+                <div class="imgName c-text-overflow">
+                  {{img.name}}
+                </div>
+                <div class="imgSize">
+                  图片大小 : {{img.size}}KB
+                </div>
+              </div>
+              <div class="c-flex-row-end operWrap">
+                <div class="firstBtn"></div>
+                <div class="" nz-tooltip="点我查看图片" (click)='makeLook(idx2)'>
+                  <i class="anticon anticon-eye-o watch"></i>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </nz-tab>
+    <nz-tab nzTitle="尽调报告">
+    </nz-tab>
+    <nz-tab nzTitle="反欺诈信息">
+      <div *ngIf="antiFraudObj">
+        <div class="infoWrap">
+          <div class="c-header">
+            <h1 class="c-header-title">信息解析详情</h1>
+          </div>
+          <div class="info_content">
+            <div class="infoWrap">
+              <div class="info_title">
+                归属地解析
+              </div>
+              <div class="info_content">
+                <div class="secItem">
+                  <span>身份证所属地:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.id_card_address}}</span>
+                </div>
+                <div class="secItem">
+                  <span>身份证归属城市:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.id_card_city}}</span>
+                </div>
+                <div class="secItem">
+                  <span>身份证归属省份:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.id_card_province}}</span>
+                </div>
+                <div class="secItem">
+                  <span>手机归属地:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.mobile_address}}</span>
+                </div>
+                <div class="secItem">
+                  <span>手机归属城市:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.mobile_address_city}}</span>
+                </div>
+                <div class="secItem">
+                  <span>手机归属省份:</span>
+                  <span>{{antiFraudObj.resultDescString.INFOANALYSIS.address_detect.mobile_address_province}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="infoWrap">
+              <div class="info_title">
+                身份证解析年龄: <span>{{antiFraudObj.resultDescString.INFOANALYSIS.id_age}}</span>
+              </div>
+            </div>
 
-		</nz-tab>
-		<nz-tab nzTitle="处理信息">
-				<table class="img_table">
-						<thead>
-							<tr>
-								<th class="table-type">处理时间</th>
-								<th class="table-type">处理人</th>
-								<th class="table-type">处理事件</th>
-								<th class="table-type">事件结果</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor = 'let item of dealRecord;let idx = index' >
-								<td>
-									{{item.createTime | dateFormat}}
-								</td>
-								<td>
-									{{item.createUserName}}
-								</td>
-								<td>
-									{{item.description}}
-								</td>
-								<td>
+            <div class="infoWrap">
+              <div class="info_title">
+                身份证解析性别: <span>{{antiFraudObj.resultDescString.INFOANALYSIS.id_gender | GenderPipe}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-								</td>
-							</tr>
-						</tbody>
-					</table>
-		</nz-tab>
-	</nz-tabset>
+        <div class="infoWrap">
+          <div class="c-header">
+            <h1 class="c-header-title">反欺诈结果</h1>
+          </div>
+          <div class="c-header-report-application"><span>保镖ID:{{antiFraudObj.bodyGuardId}}</span></div>
+          <div><span>决策结果:{{antiFraudObj.resultDescString.ANTIFRAUD.final_decision | FinalDecisionResult}}</span></div>
+          <div><span>风险分数:{{antiFraudObj.resultDescString.ANTIFRAUD.final_score}}</span></div>
+
+          <div>
+            <div class="c-header">
+              <h1 class="c-header-title">风险项目</h1>
+            </div>
+            <c-table [tableData]='tableData'>
+            </c-table>
+          </div>
+        </div>
+        <div *ngIf="antiFraudObj.reasonCode">
+          <div class="c-header-title">
+            <div class="c-header-report-application"><span>错误码:{{antiFraudObj.reasonCode}}</span></div>
+          </div>
+        </div>
+        <div *ngIf="antiFraudObj.reasonDesc">
+          <div class="c-header-title">
+            <div class="c-header-report-application"><span>错误详情:{{antiFraudObj.reasonDesc}}</span></div>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="处理信息">
+      <table class="img_table">
+        <thead>
+        <tr>
+          <th class="table-type">处理时间</th>
+          <th class="table-type">处理人</th>
+          <th class="table-type">处理事件</th>
+          <th class="table-type">事件结果</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor='let item of dealRecord;let idx = index'>
+          <td>
+            {{item.createTime | dateFormat}}
+          </td>
+          <td>
+            {{item.createUserName}}
+          </td>
+          <td>
+            {{item.description}}
+          </td>
+          <td>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </nz-tab>
+
+  </nz-tabset>
 </div>
