@@ -6,7 +6,9 @@ import { ActivatedRoute , Router } from '@angular/router';
 import { PrecheckSearchModel } from './precheck-search.model' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
-import { SessionStorageService } from '../../service/storage/session_storage'
+import { SessionStorageService } from '../../service/storage/session_storage';
+import { DepartService } from '../../service/depart/depart.service';
+import { ProductService } from '../../service/product/product.service';
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -20,12 +22,18 @@ export class PrecheckComponent implements OnInit{
 		private routerInfo : ActivatedRoute ,
 		private fb : FormBuilder,
 		private sgo : SessionStorageService ,
-		private router : Router
+		private router : Router,
+		private departSer : DepartService ,
+		private proSer : ProductService ,
 	){} ;
 	ngOnInit(){
 		__this = this ;
 
 		this.getList() ;
+		this.getDepart() ;
+		this.getProlist() ;
+		this.getManager() ;
+		this.getDealUser() ;
 		this.validateForm = this.fb.group({
 			"rejectionReason" : [null , [Validators.required]] ,
 			"opinion" : [ null ]
@@ -57,14 +65,7 @@ export class PrecheckComponent implements OnInit{
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
 			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
-			{ name : "产品名称"  , type:"text" ,reflect : "productName"},
-			{ name : "申请金额"  , type:"text" ,reflect : "applyMoney"},
-			{ name : "审批金额"  , type:"text" ,reflect : "agreeMoney"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
-			{ name : "流程节点"  , type:"text" ,reflect : "statusDesc"},
-			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime"},
-			{ name : "处理人"  , type:"text" ,reflect : "modifyUser"},
-
 		] ,
 		data : [],
 	};
@@ -132,5 +133,86 @@ export class PrecheckComponent implements OnInit{
 					};
 				}
 			)
+	};
+
+	optionDeapart : object[] ;
+	getDepart(){
+		this.departSer.getDepart()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let obj = res['data'] ;
+						recursion(res['data']);
+						let arr = [] ; 
+						makeDepart(res['data'] , arr) ;
+						this.optionDeapart = arr ;
+					}else{
+						this.msg.error("获取部门结构信息出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+	proList : object[] ; 
+	getProlist(){
+		this.proSer.getList()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.proList = res['data'] ;
+					}else{
+						this.msg.error("获取产品信息出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+	managerList : object[] ;
+	getManager(){
+		this.service.gettUserManage()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.managerList = res['data'] ;
+					}else{
+						this.msg.error("获取客户经理出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+	dealUser : object[] ;
+	getDealUser(){
+		this.service.getDealUser()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.dealUser = res['data'] ;
+					}else{
+						this.msg.error("获取处理人列表出错,原因:" + res['msg']) ;
+					}
+				}
+			)
 	}
+};
+const recursion = function(obj){
+	obj.forEach( (item,index) => {
+		item['title'] = item.name ;
+		item['key'] = item.id ;
+
+		if(item.children){
+			recursion(item.children);
+		};
+	});
+};
+
+const makeDepart = function(obj ,tar){
+	obj.forEach( (item,index) => {
+		let _obj = {
+			value : item.name ,
+			id : item.id
+		};
+		tar.push(_obj) ;
+		if(item.children){
+			makeDepart(item.children , tar);
+		};
+	});
 };

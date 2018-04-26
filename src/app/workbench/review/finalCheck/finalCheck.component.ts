@@ -31,7 +31,7 @@ export class FinalCheckComponent implements OnInit{
 		this.orderId = this.routerInfo.snapshot.params['id'] ; 
 		this.getFirstCheckResult() ;
 		this.getSecondRst() ;
-
+		this.getProLst() ;
 		this.thirdForm = this.fb.group({
 			"agreeMoney": [null , [Validators.required]],
 			"annualInterestRate": [null,[Validators.required]],
