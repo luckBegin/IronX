@@ -2,7 +2,8 @@ import { FormControl } from '@angular/forms' ;
 export const CommonValidator = {
     isNumber(control : FormControl){
         let val = control.value;
-        return (val % 6 == 0)?null: { "invalid" : true } ;
+        let reg = /^[0-9]*$/g ;
+        return (reg.test(val)) ? null :  { "invalid" : true } ;
     },
     isChinese(control : FormControl){
         let val = control.value ;
@@ -14,5 +15,9 @@ export const CommonValidator = {
         let val = control.value ;
         return (reg.test(val)) ? null : {"invalid" : true } ;
     },
-    
+    passiveNumber(control : FormControl){
+        let reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/g;
+        let val = control.value ;
+        return (reg.test(val)) ? null : {"invalid" : true } ;
+    }
 }

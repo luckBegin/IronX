@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { routeAnimation } from './routes/aniamtion'
+// import { routeAnimation } from './routes/aniamtion'
 @Component({
   selector: 'app-root',
   template: `<div style='width:100%;height:100%;position:relative;' >

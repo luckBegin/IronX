@@ -45,12 +45,11 @@ export class PrecheckComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["资料补录" , "拒绝" , "客户取消"] , 
+			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["通过" , "拒绝" , "客户取消"] , 
 			fn:function($event,data){
 				__this.selectItem = data ;
-				if($event == '资料补录'){
-					__this.sgo.set("proInfo" , data);
-					__this.router.navigate(["/workbench/dataRemake",data.id]);
+				if($event == '通过'){
+					__this.passModel = true ;
 				};
 				if($event == '拒绝'){
 					__this.refuseModel = true ;
@@ -98,7 +97,27 @@ export class PrecheckComponent implements OnInit{
 	};
 
 	selectItem : object ;
+	passModel : boolean = false ;
 
+	pass():void {
+		let id = this.selectItem['id'] ;
+		let obj = {
+			orderStatus:this.selectItem['status'] ,
+			opinion : "" 
+		}
+		this.service.pass(id , obj)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.passModel = false ;
+						this.msg.notifySuccess("操作成功" , '该订单已通过预审');
+						this.getList() ;
+					}else{
+						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+					};
+				}
+			)
+	};
 	refuseModel : boolean = false ;
 	refuse(){
 		let id = this.selectItem['id'];

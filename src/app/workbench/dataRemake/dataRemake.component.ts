@@ -4,13 +4,14 @@ import { ProductService } from '../../service/product/product.service' ;
 import { MsgService } from '../../service/msg/msg.service' ;
 import { WorkbenchAll } from '../../service/workbench/all.service' ;
 import { Router , ActivatedRoute } from '@angular/router' ;
-import { AbstractControl,FormBuilder,FormControl,FormGroup,Validators , } from '@angular/forms';
+import { FormBuilder,FormGroup,Validators , FormControl , FormArray} from '@angular/forms';
 import { EnumService } from '../../service/enum/enum.service' ;
 import { DateReflect } from '../../service/date-reflect' ;
 import { ImgService } from '../../service/img/img.service';
 import { PostDataModel } from './postData.model';
 import { CityService } from '../../service/city/city.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
+import { CommonValidator } from '../../validator/common.validator'
 @Component({
 	selector : "app-dataRemake" ,
 	templateUrl : './dataRemake.component.html' ,
@@ -38,6 +39,7 @@ export class DataRemakeComponent implements OnInit{
 			url : "/workbench/dataRemakeList"
 		});
 
+		this.initForm() ;
 		this.orderId = this.routerInfo.snapshot.params['id'] ;
 		this.getOrderInfo() ;
 		this.getProList() ;
@@ -71,6 +73,83 @@ export class DataRemakeComponent implements OnInit{
 		this.cancelModel = true ;
 	};
 
+	validForm : FormGroup ;
+	initForm(){
+		this.validForm = this.fb.group({
+			"clientInfoInputVO" : this.fb.group({
+				"userName" : [null , [Validators.required,CommonValidator.isChinese]] ,
+				"gender" : [null , [Validators.required,CommonValidator.isNumber]] ,
+				"marriageState" : [null , [Validators.required,CommonValidator.isNumber]] ,
+				"birthDate" : [null ,[Validators.required]] ,	
+				"educationDegree" : [null , [Validators.required,CommonValidator.isNumber]] ,
+				"idCard" : [null , [Validators.required,CommonValidator.isIdCard]] ,
+				"monthlyIncome" : [null , [Validators.required , CommonValidator.passiveNumber]],
+				"localHouse" : [null , [Validators.required , CommonValidator.isNumber]],
+				"phoneNumber" : [null , [Validators.required , CommonValidator.isNumber , Validators.min(11) , Validators.max(11)]],
+				"dwellDetail" : [null , [Validators.required]],
+				"dwellState" : [null , [Validators.required]],
+				"registerProvince" : [null , [Validators.required]],
+				"registerCity" : [null , [Validators.required]],
+				"registerCounty" : [null , [Validators.required]],
+				"registerDetailAddress" : [null , [Validators.required]],
+				"currentAddress" : [null , [Validators.required]],
+			}),
+			"clientUnitInputVO" : this.fb.group({
+				"unitName" : [null , [Validators.required]] ,
+				"department" : [null ,[Validators.required]] ,
+				"unitNature" : [null ,[Validators.required]] ,
+				"jobType" : [null ,[Validators.required]] ,
+				"jobPosition" : [null ,[Validators.required]] ,
+				"currentUnitEntryDate" : [null ,[Validators.required]] ,
+				"currentUnitWorkYears" : [null ,[Validators.required]] ,
+				"unitPhone" : [null ,[Validators.required]] ,
+				"salaryGrantForm" : [null ,[Validators.required]] ,
+				"currentUnitAddress" : [null ,[Validators.required]] ,
+			}),
+			"clientContactInputVOS" : this.fb.array([ this.createContact() ]) ,
+			"applyOrderVO" : this.fb.group({
+				"applyMoney" : [null , [Validators.required]],
+				"deadline" : [null , [Validators.required]],
+				"payBackType" : [null , [Validators.required]],
+				"use" : [null , [Validators.required]],
+				"useNature" : [null , [Validators.required]],
+			})
+		});
+		this.add() ;
+	}
+	createContact(){
+		let id = this.lgo.get("proInfo")['customerId'] ;
+		return this.fb.group({
+			contactName: [null , [Validators.required]] ,
+			contactPhone: [null , [Validators.required]] ,
+			contactRelation: [null , [Validators.required]] ,
+			contactType: [null , [Validators.required]] ,
+			id: [null , [Validators.required]] ,
+			userId: [null , [Validators.required]] ,
+			workAddress: [null , [Validators.required]] ,
+			workUnit: [null , [Validators.required]] ,
+		}) ;
+	};
+	relationChange(idx : number){
+		const control = this.validForm.controls['clientContactInputVOS']['controls'][idx] ;
+		let val = control['value']['contactRelation'] < 2 ? 0 : 1 ;
+ 		control.pathValue({
+			contactType : val
+		})
+	}
+	add( times : number = 1 ){
+		for(let i = 0 ; i < times ; i++ ){
+			const control = <FormArray>this.validForm.controls['clientContactInputVOS'];
+			control.push(this.createContact());
+		};
+	};
+	removeRelation(idx :number ){
+		const control = <FormArray>this.validForm.controls['clientContactInputVOS'];
+		control.removeAt(idx) ;
+	};
+	get clientContactInputVOS() : FormArray{
+		return this.validForm.get("clientContactInputVOS") as FormArray ;
+	};
 	cancel(){
 		this.workSer.cancel(this.orderId)
 			.subscribe(
@@ -116,7 +195,7 @@ export class DataRemakeComponent implements OnInit{
 
 	selectPro(item : object , idx){
 		this.proList_active = idx ;
-		this.selectData['proInfo'] = item ;
+		this.selectData['proInfo'] = item;
 	};
 
 	orderInfo : object  ;
@@ -126,9 +205,8 @@ export class DataRemakeComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.orderInfo = res['data'];						
-						console.log(res['data']) ;
-						console.log(this.postModel) ;
-						// this.postModel = res['data'] ;
+						this.makeFormVal(res['data']) ;
+
 					}else{
 						this.msg.error("获取订单信息失败"+res['message']) ;
 					};
@@ -136,6 +214,24 @@ export class DataRemakeComponent implements OnInit{
 			);
 	};
 
+	makeFormVal(data : object){
+		let orderVO = data['orderVO'] ;
+		if(orderVO){
+			this.validForm.controls['applyOrderVO'].patchValue(orderVO) ;
+		};
+
+		let clientInfoOutputVO = data['clientInfoOutputVO'] ;
+		if(clientInfoOutputVO){
+			this.validForm.controls['clientInfoInputVO'].patchValue(clientInfoOutputVO) ;
+		} ;
+
+		let clientUnitOutputVO = data['clientUnitOutputVO'] ;
+		if(clientUnitOutputVO){
+			this.validForm.controls['clientUnitInputVO'].patchValue(clientUnitOutputVO) ;
+		};
+
+
+	};
 	switchTab($el){
 		let className = $el.target.className ;
 		let parentWrap = $el.target.parentElement.parentElement ;
@@ -205,37 +301,7 @@ export class DataRemakeComponent implements OnInit{
 					}
 				}
 			)
-	}
-	// enum_live : object[] = [] ;
-	// getLive(){
-	// 	this.enumSer.getLive()
-	// 		.subscribe(
-	// 			res => {
-
-	// 				debugger ;
-	// 				if(res['success'] == true){
-	// 					console.log(res['data']) ;
-	// 					this.enum_live = makeObjToArr(res['data']) ;
-	// 				}else{
-	// 					this.msg.error("获取居住信息出错,原因:" + res['message']) ;
-	// 				}
-	// 			}
-	// 		)
-	// };
-
-	// enum_repayWay : object [] = [] ;
-	// getRepayWay(){
-	// 	this.enumSer.getRepayWay()
-	// 		.subscribe(
-	// 			res => {
-	// 				if(res['success'] == true){
-	// 					this.enum_repayWay = makeObjToArr(res['data']) ;
-	// 				}else{
-	// 					this.msg.error("获取还款方式出错,原因:" + res['message']) ;
-	// 				};
-	// 			}
-	// 		)
-	// };
+	};
 
 	enum_loanUse : object[] = [] ;
 	getLoanUse(){
@@ -299,10 +365,10 @@ export class DataRemakeComponent implements OnInit{
 		let size = Math.ceil(tar.size / 1024);
 
 
-		// if(!isImg){
-		// 	this.msg.notifyErr("图片格式错误" , "支持上传的图片格式仅为png , jpg , jpeg");
-		// 	return ;
-		// };
+		if(!isImg){
+			this.msg.notifyErr("图片格式错误" , "支持上传的图片格式仅为png , jpg , jpeg");
+			return ;
+		};
 		if(size > 1024){
 			this.msg.notifyErr("图片大小错误",'支持上传的图片大小不能超过1M');
 			return ;
@@ -393,64 +459,49 @@ export class DataRemakeComponent implements OnInit{
 	};
 
 	priveChange(parent,item,model){
-		let val = this.postModel.clientInfoInputVO[model] ;
-		if(val){
-			let id = val.split(",")[1] ;
-			this[item] = this[parent][id]['child'] ;
+		let val = this.validForm.controls['clientInfoInputVO']['value'][model] ;
+		let id = val.split(",")[1] ;
+		console.log(this[parent]) ;
+		this[item] = this[parent][id]['child'] ;
 
-			let province = this.postModel.clientInfoInputVO['registerProvince'];
-			let proName = province?province.split(",")[0]:"" ;
+		// let val = this.postModel.clientInfoInputVO[model] ;
+		// if(val){
+		// 	let id = val.split(",")[1] ;
+		// 	this[item] = this[parent][id]['child'] ;
 
-			let city = this.postModel.clientInfoInputVO['registerCity'];
-			let cityName = city?city.split(",")[0]:"" ;
+		// 	let province = this.postModel.clientInfoInputVO['registerProvince'];
+		// 	let proName = province?province.split(",")[0]:"" ;
 
-			let county = this.postModel.clientInfoInputVO['registerCounty'] ;
-			let countName = county?county.split(",")[0]:"" ;
+		// 	let city = this.postModel.clientInfoInputVO['registerCity'];
+		// 	let cityName = city?city.split(",")[0]:"" ;
 
-			this.postModel.clientInfoInputVO['registerDetailAddress'] = proName + cityName + countName ;
-		};
+		// 	let county = this.postModel.clientInfoInputVO['registerCounty'] ;
+		// 	let countName = county?county.split(",")[0]:"" ;
+
+		// 	this.postModel.clientInfoInputVO['registerDetailAddress'] = proName + cityName + countName ;
+		// };
 	};
 
 	submitCheck(){
+		if(!this.validForm.valid){
+			this.msg.warn("请检测填写的每一项信息") ;
+			return ;
+		}
 		let usrId = this.orderInfo['orderVO']['customerId'] ;
-		let input = [
-			{
-				"contactName": "测试",
-				"contactPhone": "15687792721",
-				"contactRelation": 0,
-				"contactType": 0,
-				"id": usrId,
-				"userId": 1,
-				"workAddress": "杭州",
-				"workUnit": "测试"
-			  },    {
-				"contactName": "测试2",
-				"contactPhone": "15687792720",
-				"contactRelation": 0,
-				"contactType": 0,
-				"id": usrId,
-				"userId": 1,
-				"workAddress": "杭州",
-				"workUnit": "测试"
-			  }
-		]
-		this.postModel.clientInfoInputVO['id'] = usrId ;
-		this.postModel.clientUnitInputVO['userId'] = usrId ;
-		this.postModel.clientContactInputVOS = input ;
-		let orderInfo = this.lgo.get("proInfo") ;
+		let value = this.validForm.value ;
+		value.clientInfoInputVO['id'] = usrId ;
+		value.clientUnitInputVO['userId'] = usrId ;
 
 		this.workSer.postClientInfo(this.postModel)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.msg.success("提交成功")
+						this.msg.success("提交成功");
 					}else{
 						this.msg.error("提交失败，原因:" + res['msg']) ;
 					};
 				}
-			)
-		console.log(this.postModel) ;
-		console.log(orderInfo);
+			);
 	};
 };
 
