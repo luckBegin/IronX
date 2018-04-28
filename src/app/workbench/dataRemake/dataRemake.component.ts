@@ -11,7 +11,8 @@ import { ImgService } from '../../service/img/img.service';
 import { PostDataModel } from './postData.model';
 import { CityService } from '../../service/city/city.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
-import { CommonValidator } from '../../validator/common.validator'
+import { CommonValidator } from '../../validator/common.validator';
+import { OrderSevice } from '../../service/order/order.service'
 @Component({
 	selector : "app-dataRemake" ,
 	templateUrl : './dataRemake.component.html' ,
@@ -29,7 +30,8 @@ export class DataRemakeComponent implements OnInit{
 		private enumSer : EnumService,
 		private imgSer : ImgService,
 		private citySer : CityService,
-		private lgo : SessionStorageService
+		private lgo : SessionStorageService ,
+		private orderSer : OrderSevice
 	){};
 
 	ngOnInit(){
@@ -43,14 +45,14 @@ export class DataRemakeComponent implements OnInit{
 		this.orderId = this.routerInfo.snapshot.params['id'] ;
 		this.getOrderInfo() ;
 		this.getProList() ;
-		this.getSex() ;
-		this.getMarry() ;
-		this.getEdu() ;
+		// this.getSex() ;
+		// this.getMarry() ;
+		// this.getEdu() ;
 		this.getUnit() ;
-		this.getLoanUse() ;
-		this.getLoanType() ;
+		// this.getLoanUse() ;
+		// this.getLoanType() ;
 		this.getImgUploadType() ;
-
+		this.getImg() ;
 		this.postModel.applyOrderVO['id'] = this.orderId;
 
 		this.enum_province = this.citySer.getCityList() ;
@@ -89,8 +91,8 @@ export class DataRemakeComponent implements OnInit{
 				"dwellDetail" : [null , [Validators.required]],
 				"dwellState" : [null , [Validators.required]],
 				"registerProvince" : [null , [Validators.required]],
-				"registerCity" : [null , [Validators.required]],
-				"registerCounty" : [null , [Validators.required]],
+				"registerCity" : [null],
+				"registerCounty" : [null],
 				"registerDetailAddress" : [null , [Validators.required]],
 				"currentAddress" : [null , [Validators.required]],
 			}),
@@ -123,9 +125,9 @@ export class DataRemakeComponent implements OnInit{
 			contactName: [null , [Validators.required]] ,
 			contactPhone: [null , [Validators.required]] ,
 			contactRelation: [null , [Validators.required]] ,
-			contactType: [null , [Validators.required]] ,
-			id: [null , [Validators.required]] ,
-			userId: [null , [Validators.required]] ,
+			contactType: [null ] ,
+			id: [null] ,
+			userId: [null] ,
 			workAddress: [null , [Validators.required]] ,
 			workUnit: [null , [Validators.required]] ,
 		}) ;
@@ -460,10 +462,10 @@ export class DataRemakeComponent implements OnInit{
 
 	priveChange(parent,item,model){
 		let val = this.validForm.controls['clientInfoInputVO']['value'][model] ;
-		let id = val.split(",")[1] ;
-		console.log(this[parent]) ;
-		this[item] = this[parent][id]['child'] ;
-
+		if(val){
+			let id = val.split(",")[1] ;
+			this[item] = this[parent][id]['child'] ;
+		};
 		// let val = this.postModel.clientInfoInputVO[model] ;
 		// if(val){
 		// 	let id = val.split(",")[1] ;
@@ -483,16 +485,24 @@ export class DataRemakeComponent implements OnInit{
 	};
 
 	submitCheck(){
-		if(!this.validForm.valid){
-			this.msg.warn("请检测填写的每一项信息") ;
-			return ;
-		}
+		// debugger ;
+		// if(!this.validForm.valid){
+		// 	this.msg.warn("请检测填写的每一项信息") ;
+		// 	return ;
+		// }
 		let usrId = this.orderInfo['orderVO']['customerId'] ;
 		let value = this.validForm.value ;
+		value.applyOrderVO['id'] =  this.orderInfo['orderVO']['id'] ;
+		value.applyOrderVO['productId']  = this.proListData[this.proList_active]['id']
 		value.clientInfoInputVO['id'] = usrId ;
 		value.clientUnitInputVO['userId'] = usrId ;
-
-		this.workSer.postClientInfo(this.postModel)
+		value.clientInfoInputVO['registerProvince'] = value.clientInfoInputVO['registerProvince'].split(",")[0];
+		value.clientInfoInputVO['registerCity'] = value.clientInfoInputVO['registerCity']?value.clientInfoInputVO['registerCity'].split(",")[0] : "" ;
+		value.clientInfoInputVO['registerCounty'] = value.clientInfoInputVO['registerCounty']?value.clientInfoInputVO['registerCounty'].split(",")[0] : "" ;
+		value['clientContactInputVOS'].forEach( item => {
+			item.contactRelation > 2? item.contactType= 0 : item.contactType = 1 ;
+		});
+		this.workSer.postClientInfo(value)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
@@ -503,6 +513,39 @@ export class DataRemakeComponent implements OnInit{
 				}
 			);
 	};
+
+	getImg(){
+		this.orderSer.getImg(this.orderId)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						if(res['data'])
+							for(let keys in res['data']){
+								let item  = res['data'][keys] ;
+								let _info = {
+									title :keys ,
+									id : 0,
+									imgs : []
+								};
+								item.forEach( item2 => {
+									let _arr = {
+										url : item2.url ,
+										name : item2.fileName,
+										imgSize : "未知" ,
+										id : item2.id
+									};
+
+									_info.imgs.push(_arr) ;
+								});
+
+								this.imgUploads.push(_info) ;
+							};
+					}else{
+						this.msg.error("获取图片资源失败，原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
 };
 
 let makeObjToArr = function(obj){

@@ -45,6 +45,9 @@ export class ApproveComponent implements OnInit{
 			"status": [null] ,
 		});
 		this.getTelRecord() ;
+		this.getReport() ;
+		this.getFirstImg();
+		this.getTelResult() ;
 		__this = this ;
 	};
 
@@ -471,6 +474,10 @@ export class ApproveComponent implements OnInit{
 					name : "编辑",
 					ico : "anticon anticon-edit" ,
 					bindFn : function(item){
+						for(let keys in item){
+							item[keys] = item[keys] + '' ;
+							item['phoneAuditTime'] = dataFormat(item['phoneAuditTime'] , 'y-m-d') ;
+						};
 						__this.telRecordAddModel = true ;
 						__this.telRecordForm.patchValue(item) ;
 						__this.editMark = true ;
@@ -550,5 +557,78 @@ export class ApproveComponent implements OnInit{
 				"chineseZodiac" : ""
 			})
 		}
+	};
+	getReport(){
+		this.orderSer.getRepost(this.checkInfo['id'])
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						if(res['data']){
+							for(let keys in res['data']){
+								res['data'][keys] = res['data'][keys] + "" ;
+							}
+							this.reportForm.patchValue(res['data']) ;
+						}
+					}else{
+						this.msg.error("获取资料信息出错,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+	getFirstImg(){
+		this.orderSer.getFirstImg(this.checkInfo['id'])
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						if(res['data'])
+							for(let keys in res['data']){
+								let item  = res['data'][keys] ;
+								let _info = {
+									title :keys ,
+									id : 0,
+									imgs : []
+								};
+								item.forEach( item2 => {
+									let _arr = {
+										url : item2.url ,
+										name : item2.fileName,
+										imgSize : "未知" ,
+										id : item2.id
+									};
+
+									_info.imgs.push(_arr) ;
+								});
+
+								this.imgUploads.push(_info) ;
+							};
+					}else{
+						this.msg.error("获取资料信息出错,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+	getTelResult(){
+		this.orderSer.getTelResult(this.checkInfo['id'])
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let obj = {} ;
+						
+						for(let keys in res['data']){
+							let val = res['data'][keys] ;
+							if(typeof val != 'object'){
+								res['data'][keys] = res['data'][keys] + "" ;
+							};
+
+							if(res['data'][keys]){
+								obj[keys] = res['data'][keys] ;
+							}
+						};
+						this.telCheckForm.patchValue(obj)
+					}else{
+						this.msg.error("电核结果,原因:" + res['msg']) ;
+					};
+				}
+			)
 	};
 };

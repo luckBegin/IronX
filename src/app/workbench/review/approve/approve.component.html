@@ -49,7 +49,7 @@
 						<!-- <nz-input-group nzAddOnAfter="月"> -->
 						<input nz-input formControlName="lastTimeWorkUnit" id="lastTimeWorkUnit">
 						<!-- </nz-input-group> -->
-						<nz-form-explain *ngIf="reportForm.get('lastTimeWorkUnit').dirty && reportForm.get('lastTimeWorkUnit').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('lastTimeWorkUnit').dirty && reportForm.get('lastTimeWorkUnit').errors">最近一次工作单位不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 			</div>
@@ -61,7 +61,7 @@
 						<nz-input-group nzAddOnAfter="年">
 							<input nz-input formControlName="loanRecord" id="loanRecord">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanRecord').dirty && reportForm.get('loanRecord').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanRecord').dirty && reportForm.get('loanRecord').errors">贷款记录不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 	
@@ -71,7 +71,7 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="loanTotalCreditAmount" id="loanTotalCreditAmount">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanTotalCreditAmount').dirty && reportForm.get('loanTotalCreditAmount').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanTotalCreditAmount').dirty && reportForm.get('loanTotalCreditAmount').errors">总授信不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 	
@@ -81,7 +81,7 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="loanBalance" id="loanBalance">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanBalance').dirty && reportForm.get('loanBalance').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanBalance').dirty && reportForm.get('loanBalance').errors">余额不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>		
 				
@@ -91,44 +91,44 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="loanDue" id="loanDue">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanDue').dirty && reportForm.get('loanDue').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanDue').dirty && reportForm.get('loanDue').errors">逾期不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 	
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="loanMOne">M1</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="loanMOne" id="loanMOne">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanMOne').dirty && reportForm.get('loanMOne').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanMOne').dirty && reportForm.get('loanMOne').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="loanMTwo">M2</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="loanMTwo" id="loanMTwo">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanMTwo').dirty && reportForm.get('loanMTwo').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanMTwo').dirty && reportForm.get('loanMTwo').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="loanMThree">M3</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="loanMThree" id="loanMThree">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanMThree').dirty && reportForm.get('loanMThree').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanMThree').dirty && reportForm.get('loanMThree').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="loanMSeven">M7</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="loanMSeven" id="loanMSeven">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('loanMSeven').dirty && reportForm.get('loanMSeven').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('loanMSeven').dirty && reportForm.get('loanMSeven').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>		
 			</div>
@@ -141,7 +141,7 @@
 						<nz-input-group nzAddOnAfter="年">
 							<input nz-input formControlName="creditCardUseRecord" id="creditCardUseRecord">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardUseRecord').dirty && reportForm.get('creditCardUseRecord').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardUseRecord').dirty && reportForm.get('creditCardUseRecord').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 	
@@ -151,7 +151,7 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="creditCardTotalCreditAmount" id="creditCardTotalCreditAmount">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardTotalCreditAmount').dirty && reportForm.get('creditCardTotalCreditAmount').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardTotalCreditAmount').dirty && reportForm.get('creditCardTotalCreditAmount').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				
@@ -161,7 +161,7 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="creditCardHaveUsedAmount" id="creditCardHaveUsedAmount">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardHaveUsedAmount').dirty && reportForm.get('creditCardHaveUsedAmount').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardHaveUsedAmount').dirty && reportForm.get('creditCardHaveUsedAmount').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 	
@@ -171,44 +171,44 @@
 						<nz-input-group nzAddOnAfter="元">
 							<input nz-input formControlName="creditCardSixMonthAverageAmount" id="creditCardSixMonthAverageAmount">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardSixMonthAverageAmount').dirty && reportForm.get('creditCardSixMonthAverageAmount').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardSixMonthAverageAmount').dirty && reportForm.get('creditCardSixMonthAverageAmount').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>		
 	
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="creditCardMOne">M1</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="creditCardMOne" id="creditCardMOne">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardMOne').dirty && reportForm.get('creditCardMOne').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardMOne').dirty && reportForm.get('creditCardMOne').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="creditCardMTwo">M2</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="creditCardMTwo" id="creditCardMTwo">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardMTwo').dirty && reportForm.get('creditCardMTwo').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardMTwo').dirty && reportForm.get('creditCardMTwo').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="creditCardMThree">M3</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="creditCardMThree" id="creditCardMThree">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardMThree').dirty && reportForm.get('creditCardMThree').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardMThree').dirty && reportForm.get('creditCardMThree').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="creditCardMSeven">M7</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-input-group nzAddOnAfter="元">
+						<nz-input-group nzAddOnAfter="个">
 							<input nz-input formControlName="creditCardMSeven" id="creditCardMSeven">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('creditCardMSeven').dirty && reportForm.get('creditCardMSeven').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('creditCardMSeven').dirty && reportForm.get('creditCardMSeven').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>			
 			</div>
@@ -220,7 +220,7 @@
 						<nz-input-group nzAddOnAfter="次">
 							<input nz-input formControlName="threeMonthLoan" id="threeMonthLoan">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('threeMonthLoan').dirty && reportForm.get('threeMonthLoan').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('threeMonthLoan').dirty && reportForm.get('threeMonthLoan').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 				<nz-form-item class='formSec'>
@@ -229,7 +229,7 @@
 						<nz-input-group nzAddOnAfter="次">
 							<input nz-input formControlName="threeMonthCreditCard" id="threeMonthCreditCard">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('threeMonthCreditCard').dirty && reportForm.get('threeMonthCreditCard').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('threeMonthCreditCard').dirty && reportForm.get('threeMonthCreditCard').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 				<nz-form-item class='formSec'>
@@ -238,7 +238,7 @@
 						<nz-input-group nzAddOnAfter="次">
 							<input nz-input formControlName="threeMonthGuarantee" id="threeMonthGuarantee">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('threeMonthGuarantee').dirty && reportForm.get('threeMonthGuarantee').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('threeMonthGuarantee').dirty && reportForm.get('threeMonthGuarantee').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>	
 				<nz-form-item class='formSec'>
@@ -247,7 +247,7 @@
 						<nz-input-group nzAddOnAfter="次">
 							<input nz-input formControlName="threeMonthGuaranteeBefore" id="threeMonthGuaranteeBefore">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('threeMonthGuaranteeBefore').dirty && reportForm.get('threeMonthGuaranteeBefore').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('threeMonthGuaranteeBefore').dirty && reportForm.get('threeMonthGuaranteeBefore').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec'>
@@ -256,7 +256,7 @@
 						<nz-input-group nzAddOnAfter="次">
 							<input nz-input formControlName="threeMonthPersonage" id="threeMonthPersonage">
 						</nz-input-group>
-						<nz-form-explain *ngIf="reportForm.get('threeMonthPersonage').dirty && reportForm.get('threeMonthPersonage').errors">借款期限必须为6的倍数</nz-form-explain>
+						<nz-form-explain *ngIf="reportForm.get('threeMonthPersonage').dirty && reportForm.get('threeMonthPersonage').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>									
 			</div>			
@@ -531,7 +531,7 @@
 										<nz-input-group nzAddOnAfter="年">
 											<input nz-input formControlName="liveYears" id="liveYears">
 										</nz-input-group>
-										<nz-form-explain *ngIf="telCheckForm.get('liveYears').dirty && telCheckForm.get('liveYears').errors">居住年限必须输入</nz-form-explain>
+										<nz-form-explain *ngIf="telCheckForm.get('liveYears').dirty && telCheckForm.get('liveYears').errors">不能为空</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 								<nz-form-item class='formSec'>
@@ -540,7 +540,7 @@
 										<nz-input-group nzAddOnAfter="人">
 											<input nz-input formControlName="permanentPopulation" id="permanentPopulation">
 										</nz-input-group>
-										<nz-form-explain *ngIf="telCheckForm.get('permanentPopulation').dirty && telCheckForm.get('permanentPopulation').errors">居住年限必须输入</nz-form-explain>
+										<nz-form-explain *ngIf="telCheckForm.get('permanentPopulation').dirty && telCheckForm.get('permanentPopulation').errors">不能为空</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 								<nz-form-item class='formSec'>
@@ -549,7 +549,7 @@
 										<nz-input-group nzAddOnAfter="㎡">
 											<input nz-input formControlName="buildingArea" id="buildingArea">
 										</nz-input-group>
-										<nz-form-explain *ngIf="telCheckForm.get('buildingArea').dirty && telCheckForm.get('buildingArea').errors">居住年限必须输入</nz-form-explain>
+										<nz-form-explain *ngIf="telCheckForm.get('buildingArea').dirty && telCheckForm.get('buildingArea').errors">不能为空</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 								<nz-form-item class='formSec'>
@@ -558,7 +558,7 @@
 										<!-- <nz-input-group nzAddOnAfter="㎡"> -->
 										<input type="date" nz-input formControlName="constructionTime" id="constructionTime">
 										<!-- </nz-input-group> -->
-										<nz-form-explain *ngIf="telCheckForm.get('constructionTime').dirty && telCheckForm.get('constructionTime').errors">居住年限必须输入</nz-form-explain>
+										<nz-form-explain *ngIf="telCheckForm.get('constructionTime').dirty && telCheckForm.get('constructionTime').errors">不能为空</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 								<nz-form-item class='formSec'>
@@ -567,7 +567,7 @@
 										<nz-input-group nzAddOnAfter="元">
 											<input type="text" nz-input formControlName="decorationCost" id="decorationCost">
 										</nz-input-group>
-										<nz-form-explain *ngIf="telCheckForm.get('decorationCost').dirty && telCheckForm.get('decorationCost').errors">居住年限必须输入</nz-form-explain>
+										<nz-form-explain *ngIf="telCheckForm.get('decorationCost').dirty && telCheckForm.get('decorationCost').errors">不能为空</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 								<nz-form-item class='formSec'>
@@ -707,7 +707,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input nz-input formControlName="companyName" id="companyName">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('companyName').dirty && telCheckForm.get('companyName').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('companyName').dirty && telCheckForm.get('companyName').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -717,7 +717,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input nz-input formControlName="companyPhoneNumber" id="companyPhoneNumber">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('companyPhoneNumber').dirty && telCheckForm.get('companyPhoneNumber').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('companyPhoneNumber').dirty && telCheckForm.get('companyPhoneNumber').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -727,7 +727,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input nz-input formControlName="jobTitle" id="jobTitle">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('jobTitle').dirty && telCheckForm.get('jobTitle').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('jobTitle').dirty && telCheckForm.get('jobTitle').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -737,7 +737,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="date" nz-input formControlName="currentCompanyEntryTime" id="currentCompanyEntryTime">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('currentCompanyEntryTime').dirty && telCheckForm.get('currentCompanyEntryTime').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('currentCompanyEntryTime').dirty && telCheckForm.get('currentCompanyEntryTime').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -747,7 +747,7 @@
 									<nz-input-group nzAddOnAfter="年">
 										<input type="text" nz-input formControlName="workingYears" id="workingYears">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('workingYears').dirty && telCheckForm.get('workingYears').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('workingYears').dirty && telCheckForm.get('workingYears').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -757,7 +757,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="monthlyIncome" id="monthlyIncome">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('monthlyIncome').dirty && telCheckForm.get('monthlyIncome').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('monthlyIncome').dirty && telCheckForm.get('monthlyIncome').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -767,7 +767,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="text" nz-input formControlName="incomeCertifies" id="incomeCertifies">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('incomeCertifies').dirty && telCheckForm.get('incomeCertifies').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('incomeCertifies').dirty && telCheckForm.get('incomeCertifies').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -777,7 +777,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="text" nz-input formControlName="incomeCertifiesJobTitle" id="incomeCertifiesJobTitle">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('incomeCertifiesJobTitle').dirty && telCheckForm.get('incomeCertifiesJobTitle').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('incomeCertifiesJobTitle').dirty && telCheckForm.get('incomeCertifiesJobTitle').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -797,7 +797,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="providentFundAmount" id="providentFundAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('providentFundAmount').dirty && telCheckForm.get('providentFundAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('providentFundAmount').dirty && telCheckForm.get('providentFundAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -818,7 +818,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="currentCompanyAddress" id="currentCompanyAddress">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('currentCompanyAddress').dirty && telCheckForm.get('currentCompanyAddress').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('currentCompanyAddress').dirty && telCheckForm.get('currentCompanyAddress').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -856,7 +856,7 @@
 									<nz-input-group nzAddOnAfter="年">
 										<input type="text" nz-input formControlName="operatingYears" id="operatingYears">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('operatingYears').dirty && telCheckForm.get('operatingYears').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('operatingYears').dirty && telCheckForm.get('operatingYears').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -866,7 +866,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="initialInvestment" id="initialInvestment">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('initialInvestment').dirty && telCheckForm.get('initialInvestment').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('initialInvestment').dirty && telCheckForm.get('initialInvestment').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -876,7 +876,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="annualOperatingIncome" id="annualOperatingIncome">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('annualOperatingIncome').dirty && telCheckForm.get('annualOperatingIncome').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('annualOperatingIncome').dirty && telCheckForm.get('annualOperatingIncome').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -886,7 +886,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="employeeNumber" id="employeeNumber">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('employeeNumber').dirty && telCheckForm.get('employeeNumber').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('employeeNumber').dirty && telCheckForm.get('employeeNumber').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -916,7 +916,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="laborCosts" id="laborCosts">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('laborCosts').dirty && telCheckForm.get('laborCosts').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('laborCosts').dirty && telCheckForm.get('laborCosts').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -926,7 +926,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="utilities" id="utilities">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('utilities').dirty && telCheckForm.get('utilities').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('utilities').dirty && telCheckForm.get('utilities').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -936,7 +936,7 @@
 									<nz-input-group nzAddOnAfter="%">
 										<input type="text" nz-input formControlName="operatingProfit" id="operatingProfit">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('operatingProfit').dirty && telCheckForm.get('operatingProfit').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('operatingProfit').dirty && telCheckForm.get('operatingProfit').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -946,7 +946,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="inventoryValue" id="inventoryValue">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('inventoryValue').dirty && telCheckForm.get('inventoryValue').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('inventoryValue').dirty && telCheckForm.get('inventoryValue').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -956,7 +956,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="receivableAmount" id="receivableAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('receivableAmount').dirty && telCheckForm.get('receivableAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('receivableAmount').dirty && telCheckForm.get('receivableAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -966,7 +966,7 @@
 									<nz-input-group nzAddOnAfter="天">
 										<input type="text" nz-input formControlName="accountPeriod" id="accountPeriod">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('accountPeriod').dirty && telCheckForm.get('accountPeriod').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('accountPeriod').dirty && telCheckForm.get('accountPeriod').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -976,7 +976,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="payableAmount" id="payableAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('payableAmount').dirty && telCheckForm.get('payableAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('payableAmount').dirty && telCheckForm.get('payableAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -986,7 +986,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="upstreamCooperation" id="upstreamCooperation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('upstreamCooperation').dirty && telCheckForm.get('upstreamCooperation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('upstreamCooperation').dirty && telCheckForm.get('upstreamCooperation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -996,7 +996,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="downstreamCooperation" id="downstreamCooperation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('downstreamCooperation').dirty && telCheckForm.get('downstreamCooperation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('downstreamCooperation').dirty && telCheckForm.get('downstreamCooperation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1058,7 +1058,7 @@
 									<nz-input-group nzAddOnAfter="套">
 										<input type="text" nz-input formControlName="realEstateAmount" id="realEstateAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('realEstateAmount').dirty && telCheckForm.get('realEstateAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('realEstateAmount').dirty && telCheckForm.get('realEstateAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1068,7 +1068,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="housingValuation" id="housingValuation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('housingValuation').dirty && telCheckForm.get('housingValuation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('housingValuation').dirty && telCheckForm.get('housingValuation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1078,7 +1078,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="jianAnValuation" id="jianAnValuation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('jianAnValuation').dirty && telCheckForm.get('jianAnValuation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('jianAnValuation').dirty && telCheckForm.get('jianAnValuation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1088,7 +1088,7 @@
 									<nz-input-group nzAddOnAfter="辆">
 										<input type="text" nz-input formControlName="vehicleNumber" id="vehicleNumber">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('vehicleNumber').dirty && telCheckForm.get('vehicleNumber').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('vehicleNumber').dirty && telCheckForm.get('vehicleNumber').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1098,7 +1098,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="text" nz-input formControlName="vehicleBrands" id="vehicleBrands">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('vehicleBrands').dirty && telCheckForm.get('vehicleBrands').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('vehicleBrands').dirty && telCheckForm.get('vehicleBrands').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1108,7 +1108,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="vehicleValuation" id="vehicleValuation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('vehicleValuation').dirty && telCheckForm.get('vehicleValuation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('vehicleValuation').dirty && telCheckForm.get('vehicleValuation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1118,7 +1118,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="text" nz-input formControlName="otherAssets" id="otherAssets">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('otherAssets').dirty && telCheckForm.get('otherAssets').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('otherAssets').dirty && telCheckForm.get('otherAssets').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1128,7 +1128,7 @@
 									<!-- <nz-input-group nzAddOnAfter="元"> -->
 										<input type="text" nz-input formControlName="otherAssetsDetail" id="otherAssetsDetail">
 									<!-- </nz-input-group> -->
-									<nz-form-explain *ngIf="telCheckForm.get('otherAssetsDetail').dirty && telCheckForm.get('otherAssetsDetail').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('otherAssetsDetail').dirty && telCheckForm.get('otherAssetsDetail').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1138,7 +1138,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="otherAssetsValuation" id="otherAssetsValuation">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('otherAssetsValuation').dirty && telCheckForm.get('otherAssetsValuation').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('otherAssetsValuation').dirty && telCheckForm.get('otherAssetsValuation').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1148,7 +1148,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="totalAssetsAmount" id="totalAssetsAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('totalAssetsAmount').dirty && telCheckForm.get('totalAssetsAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('totalAssetsAmount').dirty && telCheckForm.get('totalAssetsAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 						</div>
@@ -1168,7 +1168,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="totalCreditLiabilityAmount" id="totalCreditLiabilityAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('totalCreditLiabilityAmount').dirty && telCheckForm.get('totalCreditLiabilityAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('totalCreditLiabilityAmount').dirty && telCheckForm.get('totalCreditLiabilityAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1188,7 +1188,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="creditCardMonthRepayAmount" id="creditCardMonthRepayAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('creditCardMonthRepayAmount').dirty && telCheckForm.get('creditCardMonthRepayAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('creditCardMonthRepayAmount').dirty && telCheckForm.get('creditCardMonthRepayAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1198,7 +1198,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="loanMonthRepayAmount" id="loanMonthRepayAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('loanMonthRepayAmount').dirty && telCheckForm.get('loanMonthRepayAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('loanMonthRepayAmount').dirty && telCheckForm.get('loanMonthRepayAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1281,7 +1281,7 @@
 					<nz-input-group nzAddOnAfter="元">
 						<input nz-input formControlName="mockMoney" id="mockMoney">
 					</nz-input-group>
-					<nz-form-explain *ngIf="makeCheckForm.get('mockMoney').dirty && makeCheckForm.get('mockMoney').errors">借款期限必须为6的倍数</nz-form-explain>
+					<nz-form-explain *ngIf="makeCheckForm.get('mockMoney').dirty && makeCheckForm.get('mockMoney').errors">不能为空</nz-form-explain>
 				</nz-form-control>
 			</nz-form-item>
 			<nz-form-item class='formContent'>
@@ -1372,14 +1372,14 @@
 					<nz-form-label [nzSm]="11" nzRequired nzFor="contactName">联系人</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 						<input nz-input formControlName="contactName" id="contactName">
-						<nz-form-explain *ngIf="telRecordForm.get('contactName').dirty && telRecordForm.get('contactName').errors">产品名称必须输入</nz-form-explain>
+						<nz-form-explain *ngIf="telRecordForm.get('contactName').dirty && telRecordForm.get('contactName').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec_form'>
 					<nz-form-label [nzSm]="11" nzRequired nzFor="contactPhoneNumber">电话</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 						<input nz-input formControlName="contactPhoneNumber" id="contactPhoneNumber">
-						<nz-form-explain *ngIf="telRecordForm.get('contactPhoneNumber').dirty && telRecordForm.get('contactPhoneNumber').errors">产品名称必须输入</nz-form-explain>
+						<nz-form-explain *ngIf="telRecordForm.get('contactPhoneNumber').dirty && telRecordForm.get('contactPhoneNumber').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec_form'>
@@ -1402,7 +1402,7 @@
 					<nz-form-label [nzSm]="11" nzRequired nzFor="phoneAuditTime">电核时间</nz-form-label>
 					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 						<input type="date" nz-input formControlName="phoneAuditTime" id="phoneAuditTime">
-						<nz-form-explain *ngIf="telRecordForm.get('phoneAuditTime').dirty && telRecordForm.get('phoneAuditTime').errors">产品名称必须输入</nz-form-explain>
+						<nz-form-explain *ngIf="telRecordForm.get('phoneAuditTime').dirty && telRecordForm.get('phoneAuditTime').errors">不能为空</nz-form-explain>
 					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item class='formSec_form'>

@@ -1,0 +1,114 @@
+<div class="container">
+	<!-- <div class="infoWrap">
+        <div class="info_title">
+            初审意见
+        </div>
+        <div class="info_content" *ngIf='result'>
+            <div class="secItem">
+                <span>拟批</span>
+                <span>
+                    {{result.mockMoney}} 元
+                </span>
+            </div>
+            <div class="secItem">
+                <span class="title">拟批备注</span>
+                <p class="pgh">
+                     {{result.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="infoWrap">
+        <div class="info_title">
+            复审意见
+        </div>
+        <div class="info_content" *ngIf='secondResult'>
+            <div class="secItem">
+                <span>拟批</span>
+                <span>
+                    {{secondResult.mockMoney}} 元
+                </span>
+            </div>
+            <div class="secItem">
+                <span class="title">拟批备注</span>
+                <p class="pgh">
+                     {{secondResult.description}}
+                </p>
+            </div>
+        </div>
+    </div> -->
+    <div class="formRow_img c-flex-row-start">
+        <div class="formItem_title">
+            资料上传:
+        </div>
+        <div>
+            <nz-select [(ngModel)]='imgSelect' style="width: 130px;" nzAllowClear nzPlaceHolder="资料类型">
+                <nz-option nzValue="3800" nzLabel="预签约材料"></nz-option>
+            </nz-select>
+        </div>
+        <div  class="c-flex-row-start">
+            <div class="uploadWrap c-flex-row-start">
+                <button nzType="primary" class="imgUploadBtn c-btn-width" nz-button>浏览本地</button>
+                <input type="file" id="fileUpload" (change)='imgUpload($event)'>
+            </div>
+            <div>
+                <i class="anticon anticon-info-circle-o" style="color:#f00"></i>
+                <span>上传资料之前请先选择资料类型</span>
+            </div>
+        </div>
+    </div>
+    <div class="formRow_img c-flex-row-start">
+        <table class="img_table">
+            <thead>
+                <tr>
+                    <th class="table-type">类型</th>
+                    <th class="table-img">支持同类型图片上传多张,格式png,jpg,单张限制1M</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = 'let item of imgUploads;let idx = index' >
+                    <td>
+                        {{ item.title }}
+                    </td>
+                    <td class="c-flex-row-start c-flex-auto-wrap">
+
+                        <div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
+                            <div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
+                            </div>
+                            <div class="textWrap">
+                                <div class="imgName c-text-overflow">
+                                    {{img.name}}
+                                </div>
+                                <div class="imgSize">
+                                    图片大小 : {{img.size}}KB
+                                </div>
+                            </div>
+                            <div class="c-flex-row-end operWrap">
+                                <div class="firstBtn" nz-tooltip="点我查看图片" (click)='makeLook(idx,idx2)'>
+                                    <i class="anticon anticon-eye-o watch" ></i>
+                                </div>
+                                <div>
+                                    <nz-popconfirm [nzTitle]="'确定删除该图片'" (nzOnConfirm)="delImg(idx , idx2)" [nzPlacement]="'topRight'">
+                                        <div nz-popconfirm nz-tooltip="点我删除图片">
+                                            <i class="anticon anticon-delete delbtn"></i>
+                                        </div>
+                                    </nz-popconfirm>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+    <div class="btnGroup c-flex-row-start">
+        <!-- <button nz-button nzType="primary" class="c-btn-width usr_cancel" (click)='showRefuse()'>
+            拒绝
+        </button> -->
+        <!-- <button nz-button nzType="primary" class="c-btn-width" (click)="pass()"> -->
+        <button nz-button nzType="primary" class="c-btn-width" (click)="submit()">
+            客户确认
+        </button>
+    </div>
+</div>

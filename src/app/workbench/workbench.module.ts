@@ -14,7 +14,12 @@ import { InComeComponent } from './income/income.component' ;
 import { SecondComponent } from './review/second/second.component' ;
 import { ReApproveComponent } from './review/reApprove/reApprove.component' ;
 import { ThirdComponent } from './review/third/third.component' ;
-import { FinalCheckComponent } from './review/finalCheck/finalCheck.component'
+import { FinalCheckComponent } from './review/finalCheck/finalCheck.component';
+import { VerifyComponent } from './verify/verify.component';
+import { UsrVerifyComponent } from './usrVerify/usrVerify.component';
+import { TransformComponent } from './transform/transform.component'
+import { SureComponent } from './sure/sure.component'
+import { ProfileTransComponent } from './profileTrans/profileTrans.component'
 const compoents = [
 	IntoComponent ,
 	AllComponent,
@@ -28,7 +33,12 @@ const compoents = [
 	SecondComponent ,
 	ReApproveComponent ,
 	ThirdComponent ,
-	FinalCheckComponent
+	FinalCheckComponent,
+	VerifyComponent,
+	UsrVerifyComponent,
+	TransformComponent,
+	SureComponent,
+	ProfileTransComponent
 ];
 
 const routes  : Routes = [
@@ -76,6 +86,21 @@ const routes  : Routes = [
 	},{
 		path : "finalCheck/:id" , 
 		component : FinalCheckComponent
+	},{
+		path : "verify" ,
+		component : VerifyComponent
+	},{
+		path:"usrVerify/:id" ,
+		component : UsrVerifyComponent
+	},{
+		path : "wait" ,
+		component : TransformComponent
+	},{
+		path : "sure" ,
+		component : SureComponent
+	},{
+		path : "profileTrans/:id" ,
+		component : ProfileTransComponent
 	}
 ];
 @NgModule({

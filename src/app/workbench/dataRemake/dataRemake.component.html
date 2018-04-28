@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="tabContent" [ngClass]='{activeTab : current == 1}'>
-			<nz-tabset [nzTabPosition]="position" [nzType]="'line'">
+			<nz-tabset>
 				<nz-tab [nzTitle]="'申请信息'">
 					<form nz-form [nzLayout]="'inline'" [formGroup]="validForm">
 						<div class="c-fold-wrap"  formGroupName='clientInfoInputVO'>
@@ -116,7 +116,7 @@
 										<nz-input-group nzAddOnAfter="元">
 											<input nz-input formControlName="monthlyIncome" id="monthlyIncome">
 										</nz-input-group>
-										<nz-form-explain *ngIf="validForm.get('clientInfoInputVO.monthlyIncome').dirty && validForm.get('clientInfoInputVO.monthlyIncome').errors">身份证必须输入或格式不对</nz-form-explain>
+										<nz-form-explain *ngIf="validForm.get('clientInfoInputVO.monthlyIncome').dirty && validForm.get('clientInfoInputVO.monthlyIncome').errors">月收入必须输入或格式不对</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 
@@ -271,9 +271,9 @@
 								<nz-form-item class='formSec'>
 									<nz-form-label [nzSm]="11" nzRequired nzFor="unitName">单位名称</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-										<nz-input-group nzAddOnAfter="元">
+										<!-- <nz-input-group nzAddOnAfter="元"> -->
 											<input nz-input formControlName="unitName" id="unitName">
-										</nz-input-group>
+										<!-- </nz-input-group> -->
 										<nz-form-explain *ngIf="validForm.get('clientUnitInputVO.unitName').dirty && validForm.get('clientUnitInputVO.unitName').errors">单位名称必须输入</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
@@ -281,9 +281,9 @@
 								<nz-form-item class='formSec'>
 									<nz-form-label [nzSm]="11" nzRequired nzFor="department">所在部门</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-										<nz-input-group nzAddOnAfter="元">
+										<!-- <nz-input-group nzAddOnAfter="元"> -->
 											<input nz-input formControlName="department" id="department">
-										</nz-input-group>
+										<!-- </nz-input-group> -->
 										<nz-form-explain *ngIf="validForm.get('clientUnitInputVO.department').dirty && validForm.get('clientUnitInputVO.department').errors">所在部门必须输入</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
@@ -341,8 +341,8 @@
 								<nz-form-item class='formSec'>
 									<nz-form-label [nzSm]="11" nzRequired nzFor="currentUnitWorkYears">工作年限</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-										<nz-input-group nzAddOnAfter="年">
-											<input type="date" nz-input formControlName="currentUnitWorkYears" id="currentUnitWorkYears">
+										<nz-input-group nzAddOnAfter="年"> 
+											<input type="text" nz-input formControlName="currentUnitWorkYears" id="currentUnitWorkYears">
 										</nz-input-group>
 										<nz-form-explain *ngIf="validForm.get('clientUnitInputVO.currentUnitEntryDate').dirty && validForm.get('clientUnitInputVO.currentUnitWorkYears').errors">工作年限必须输入</nz-form-explain>
 									</nz-form-control>
@@ -351,7 +351,7 @@
 									<nz-form-label [nzSm]="11" nzRequired nzFor="unitPhone">单位电话</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 										<!-- <nz-input-group nzAddOnAfter="年"> -->
-											<input type="date" nz-input formControlName="unitPhone" id="unitPhone">
+											<input type="text" nz-input formControlName="unitPhone" id="unitPhone">
 										<!-- </nz-input-group> -->
 										<nz-form-explain *ngIf="validForm.get('clientUnitInputVO.unitPhone').dirty && validForm.get('clientUnitInputVO.unitPhone').errors">单位电话必须输入</nz-form-explain>
 									</nz-form-control>
@@ -501,11 +501,11 @@
 									</nz-form-control>
 								</nz-form-item>
 
-								<nz-form-item class='formSec' *ngIf = 'proListData && proList_active'>
-									<nz-form-label [nzSm]="11" nzRequired nzFor="payBackType">贷款用途</nz-form-label>
+								<nz-form-item class='formSec'>
+									<nz-form-label [nzSm]="11" nzRequired nzFor="use">贷款用途</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-										<input nz-input formControlName="applyMoney" id="applyMoney">
-										<nz-form-explain *ngIf="validForm.get('applyOrderVO.payBackType').dirty && validForm.get('applyOrderVO.payBackType').errors">贷款用途必须输入</nz-form-explain>
+										<input nz-input formControlName="use" id="use">
+										<nz-form-explain *ngIf="validForm.get('applyOrderVO.use').dirty && validForm.get('applyOrderVO.use').errors">贷款用途必须输入</nz-form-explain>
 									</nz-form-control>
 								</nz-form-item>
 
@@ -523,9 +523,12 @@
 							</div>
 						</div>
 					</form>
+					<div class="c-flex-row-end">
+						<button class="c-btn-width" nz-button nzType="primary" (click)='submitCheck()'>资料保存</button> 
+					</div>
 				</nz-tab>
 				<nz-tab [nzTitle]="'资料清单'">
-					<div class="formRow c-flex-row-start">
+					<div class="formRow_img c-flex-row-start">
 						<div class="formItem_title">
 							资料上传:
 						</div>
@@ -545,7 +548,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="formRow c-flex-row-start">
+					<div class="formRow_img c-flex-row-start">
 						<table class="img_table">
 							<thead>
 								<tr>
@@ -560,7 +563,7 @@
 									</td>
 									<td class="c-flex-row-start c-flex-auto-wrap">
 
-										<!-- <div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
+										<div class="tableImgWrap flexColumnCenter" *ngFor = 'let img of item.imgs;let idx2 = index'>
 											<div class='imgSmall' [ngStyle]="{'background-image': 'url(' + img.url + ')'}">
 											</div>
 											<div class="textWrap">
@@ -583,7 +586,7 @@
 													</nz-popconfirm>
 												</div>
 											</div>
-										</div> -->
+										</div>
 									</td>
 								</tr>
 							</tbody>
@@ -616,7 +619,7 @@
 	<div class="btnGroup c-flex-row-center">
 		<button class="usr_cancel c-btn-width" nz-button (click)='usrCancel()'>客户取消</button>
 		<button class="c-btn-width" nz-button nzType="primary" (click)='nextStep()' *ngIf = 'current < 1'>下一步</button>
-		<button class="c-btn-width" nz-button nzType="primary" (click)='submitCheck()' *ngIf = 'current >= 1'>资料保存</button>
+		<!-- <button class="c-btn-width" nz-button nzType="primary" (click)='submitCheck()' *ngIf = 'current >= 1'>资料保存</button> -->
 	</div>
 </div>
 

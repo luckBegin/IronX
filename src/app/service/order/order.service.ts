@@ -43,6 +43,13 @@ export class OrderSevice{
 		});
 	};
 
+	getRepost( id : number | string ){
+		let url = GLOBAL.API.order.saveReport + id ;
+
+		return this.http.get(url);
+	};
+
+
 	saveRepost( obj : object ){
 		let url = GLOBAL.API.order.saveReport ;
 		let header = new HttpHeaders()
@@ -94,10 +101,33 @@ export class OrderSevice{
 		let url = GLOBAL.API.order.getSecondCheckRst + orderId ;
 		return this.http.get(url) ;
 	};
-	
-  getAntiFraud(clientId: number) {
-    // let url = GLOBAL.API.order.getAntiFraud + clientId;
-    let url = 'http://localhost:8083/audit/td/anti/fraud/18';
-    return this.http.get(url);
-  }
+
+	getFirstImg(id : number ) {
+		let url = GLOBAL.API.order.getFirstImg + id ;
+		return this.http.get(url) ;
+	}
+		
+	getAntiFraud(clientId: number) {
+		let url = GLOBAL.API.order.getAntiFraud + clientId;
+		// let url = 'http://localhost:8083/audit/td/anti/fraud/18';
+		return this.http.get(url);
+	};
+
+	getTelResult(id : number){
+		let url = GLOBAL.API.order.telResult + id;
+		return this.http.get(url);
+	};
+
+	postVerify(obj : object , id : number){
+		let url = GLOBAL.API.order.verify + id;
+		let header = new HttpHeaders()
+		.set("Content-type" , "application/json") ;
+		return this.http.put(url , obj , {
+			headers :header
+		});
+	};
+	getAllImg(id : number ){
+		let url = GLOBAL.API.order.allImg + id ;
+		return this.http.get(url) ;
+	}
 };

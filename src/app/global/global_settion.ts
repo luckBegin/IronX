@@ -1,5 +1,5 @@
-const host = 'http://151.28ms.com:8189' ;
-// const host = 'http://192.168.0.147:8083' ;
+// const host = 'http://151.28ms.com:8189' ;
+const host = 'http://151.28ms.com:8088' ;
 const workbench = {
 	orderList : host + '/order/getStatus' ,
 	orderType : host + "/order/undisposedOrders" ,
@@ -70,7 +70,11 @@ const order = {
 	getFirestCheclRst : host + "/flow/getFirstCheck/" ,
     getAntiFraud: host + "/audit/td/anti/fraud/",
 	saveSecondCheck:host + "/flow/saveSecoundCheck" ,
-	getSecondCheckRst : host + "/flow/getSecoundCheck/"
+	getSecondCheckRst : host + "/flow/getSecoundCheck/",
+	getFirstImg : host + "/order/ordersource/firstcheck/" ,
+	telResult :host + "/audit/phoneAudit/" ,
+	verify :host + "/flow/confirm2NextStatus" ,
+	allImg : host  + "/order/ordersource/"
 }
 const role = {
 	getRoleList : host + "/system/role/getAllRole"
@@ -88,6 +92,9 @@ const afterLoan = {
 	exportExcel : host + "/loanAfter/repaymentManage/export" ,
 	addRecord : host + "/loanAfter/repaymentPlan" ,
 }
+const download = {
+	img : host + "/order/output/toZip/"
+}
 export const GLOBAL = {
 	API : {
 		workbench : workbench ,
@@ -95,11 +102,12 @@ export const GLOBAL = {
 		product : product ,
 		enum : enums,
 		upload : upload ,
-		login : host + "/login_user" ,
+		login : host + "/login" ,
 		usr : usr ,
 		order : order ,
 		role : role ,
 		financial: financial ,
-		afterLoan : afterLoan
+		afterLoan : afterLoan,
+		download : download
 	}
 }
