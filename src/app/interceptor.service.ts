@@ -28,6 +28,9 @@ export class LoginInterceptor implements HttpInterceptor {
         return event ;
       }, err => {
         let code = err['status'] ;
+        if(code == 404){
+          this.router.navigate(['/login']) ;
+        }
       })
   };
 };

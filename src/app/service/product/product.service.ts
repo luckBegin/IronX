@@ -34,10 +34,8 @@ export class ProductService{
 
 	editPro(obj){
 				let url = GLOBAL.API.product.edit ;
-		let headers = new HttpHeaders()
-			.set("content-type" , "application/json");
-		return this.http.put(url , obj ,{
-			headers : headers
-		})
+		// let headers = new HttpHeaders()
+		// 	.set("content-type" , "application/json");
+		return this.http.put(url , obj )
 	}
 };

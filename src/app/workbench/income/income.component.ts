@@ -8,6 +8,8 @@ import { ImgService } from '../../service/img/img.service';
 import { Userservice } from '../../service/user/user.service' ;
 import { PostDataModel } from './postData.model';
 import { SessionStorageService } from '../../service/storage/session_storage';
+import { OrderSevice } from '../../service/order/order.service';
+import { WorkbenchAll } from '../../service/workbench/all.service'
 @Component({
 	selector : "app-income" ,
 	templateUrl : './income.component.html' ,
@@ -22,66 +24,158 @@ export class InComeComponent implements OnInit{
 		private fb: FormBuilder ,
 		private imgSer : ImgService,
 		private lgo : SessionStorageService ,
-		private usrSer : Userservice
+		private usrSer : Userservice ,
+		private orderSer : OrderSevice ,
+		private allSer : WorkbenchAll
 	){};
 
 	ngOnInit(){
 
-		this.reportForm = this.fb.group({
-			"userName" : [null , [Validators.required]] ,
-			"idNumber" : [null , [Validators.required]] ,
-			"houseAddress" : [null , [Validators.required]] ,
-			"nowAddress" : [null , [Validators.required]] ,
-			"nowAddressHasReal" : [null ,[Validators.required]] ,
-			"maritalCondition" : [null ,[Validators.required]] ,
-			"houseAddressHasReal" : [null , [Validators.required]] ,
-			"childrenCondition" : [null ,[Validators.required]] ,		
-			"folkHasKnow" : [null ,[Validators.required]] ,		
-			"folkHasKnowRemark" : [null ,[Validators.required]] ,		
-			"userPhone" : [null ,[Validators.required]] ,		
-			"unitPhone" : [null ,[Validators.required]] ,		
-			"matePhone" : [null ,[Validators.required]] ,		
-			"companyName" : [null ,[Validators.required]] ,		
-			"companyAddress" : [null ,[Validators.required]] ,		
-			"companyAddressHasReal" : [null ,[Validators.required]] ,
-			"workingTime" : [null ,[Validators.required]] ,
-			"industry" : [null ,[Validators.required]] ,
-			"workingSeniority" : [null ,[Validators.required]] ,
-			"share" : [null ,[Validators.required]] ,
-			"monthlyIncome" : [null ,[Validators.required]] ,
-			"hasSocialSecurity" : [null ,[Validators.required]] ,
-			"welfare" : [null ,[Validators.required]] ,
-			"houseNumber" : [null ,[Validators.required]] ,
-			"carNumber" : [null ,[Validators.required]] ,
-			"carBrand" : [null ,[Validators.required]] ,
-			"loanAmount" : [null ,[Validators.required]] ,
-			"folkLoan" : [null ,[Validators.required]] ,
-			"folkLoanNumber" : [null ,[Validators.required]] ,
-			"folkLoanAmount" : [null ,[Validators.required]] ,
-			"familyFirstIncome" : [null ,[Validators.required]] ,
-			"familySecondIncome" : [null ,[Validators.required]] ,
-			"publicPraise" : [null ,[Validators.required]] ,
-			"addressHasReal" : [null ,[Validators.required]] ,
-			"inhabitantNumber" : [null ,[Validators.required]] ,
-			"inhabitant" : [null ,[Validators.required]] ,
-			"loanPurposeHasReal" : [null ,[Validators.required]] ,
-			"repayPower" : [null ,[Validators.required]] ,
-			"settleCondition" : [null ,[Validators.required]] ,
-			"creditCondition" : [null ,[Validators.required]] ,
-			"conclusion" : [null ,[Validators.required]] ,
-			"negativeInformation" : [null , [Validators.required]],
-			"negativeInformationRemark" : [null , [Validators.required]],
-			"publicPraiseRemark" : [null , [Validators.required]],
-			"loanPurpose" : [null , [Validators.required]],
-			"loanPurposeRemark" : [null , [Validators.required]],
-			"interviewTime" : [null , [Validators.required]],
-			"ombudsman" : [null , [Validators.required]],
-		}) ;
 
+		// this.reportForm = this.fb.group({
+		// 	"userName" : [null ,  ] ,
+		// 	"idNumber" : [null ,  ] ,
+		// 	"houseAddress" : [null ,  ] ,
+		// 	"nowAddress" : [null ,  ] ,
+		// 	"nowAddressHasReal" : [null , ] ,
+		// 	"maritalCondition" : [null , ] ,
+		// 	"houseAddressHasReal" : [null ,  ] ,
+		// 	"childrenCondition" : [null , ] ,		
+		// 	"folkHasKnow" : [null , ] ,		
+		// 	"folkHasKnowRemark" : [null , ] ,		
+		// 	"userPhone" : [null , ] ,		
+		// 	"unitPhone" : [null , ] ,		
+		// 	"matePhone" : [null , ] ,		
+		// 	"companyName" : [null , ] ,		
+		// 	"companyAddress" : [null , ] ,		
+		// 	"companyAddressHasReal" : [null , ] ,
+		// 	"workingTime" : [null , ] ,
+		// 	"industry" : [null , ] ,
+		// 	"workingSeniority" : [null , ] ,
+		// 	"share" : [null , ] ,
+		// 	"monthlyIncome" : [null , ] ,
+		// 	"hasSocialSecurity" : [null , ] ,
+		// 	"welfare" : [null , ] ,
+		// 	"houseNumber" : [null , ] ,
+		// 	"carNumber" : [null , ] ,
+		// 	"carBrand" : [null , ] ,
+		// 	"loanAmount" : [null , ] ,
+		// 	"folkLoan" : [null , ] ,
+		// 	"folkLoanNumber" : [null , ] ,
+		// 	"folkLoanAmount" : [null , ] ,
+		// 	"familyFirstIncome" : [null , ] ,
+		// 	"familySecondIncome" : [null , ] ,
+		// 	"publicPraise" : [null , ] ,
+		// 	"addressHasReal" : [null , ] ,
+		// 	"inhabitantNumber" : [null , ] ,
+		// 	"inhabitant" : [null , ] ,
+		// 	"loanPurposeHasReal" : [null , ] ,
+		// 	"repayPower" : [null , ] ,
+		// 	"settleCondition" : [null , ] ,
+		// 	"creditCondition" : [null , ] ,
+		// 	"conclusion" : [null , ] ,
+		// 	"negativeInformation" : [null ,  ],
+		// 	"negativeInformationRemark" : [null ,  ],
+		// 	"publicPraiseRemark" : [null ,  ],
+		// 	"loanPurpose" : [null ,  ],
+		// 	"loanPurposeRemark" : [null ,  ],
+		// 	"interviewTime" : [null ,  ],
+		// 	"ombudsman" : [null ,  ],
+		// }) ;
+		this.orderInfo = this.lgo.get("orderInfo") ;
 		this.getAllDue() ;
-	};
+		this.getOrderInfo() ;
 
+		this.initReportForm() ;
+	};
+	orderInfo : object ;
 	reportForm : FormGroup ;
+
+	initReportForm(){
+		this.reportForm = this.fb.group({
+			dueDiligenceAssetsLiabilitiesVO : this.fb.group({
+				carBrand : [null ,  ],
+				carNumber: [null ,  ],
+				familyFirstIncome : [null ,  ],
+				familySecondIncome : [null ,  ],
+				folkLoan: [null ,  ],
+				folkLoanAmount : [null ,  ],
+				folkLoanNumber: [null ,  ],
+				houseNumber: [null ,  ],
+				loanPurposeRemark : [null ,  ],
+				loanAmount: [null ,  ],
+				loanNumber: [null ,  ],
+				loanPurpose: [null ,  ],
+				negativeInformation : [null ,  ],
+				negativeInformationRemark : [null ,  ],
+				orderId : [null ,  ],
+				publicPraise : [null ,  ],
+				publicPraiseRemark : [null ,  ]
+			}),
+			dueDiligenceBasicInformationVO : this.fb.group({
+				childrenCondition:[null , ],
+				companyAddress:[null , ],
+				companyName:[null , ],
+				diligencePurpose:[null , ],
+				folkHasKnow:[null , ],
+				folkHasKnowRemark:[null , ],
+				houseAddress:[null , ],
+				houseAddressHasReal:[null , ],
+				id:[null],
+				idNumber:[null , ],
+				maritalCondition:[null , ],
+				matePhone:[null , ],
+				nowAddress:[null , ],
+				nowAddressHasReal:[null , ],
+				orderId:[null , ],
+				type:[null , ],
+				unitPhone:[null , ],
+				userName:[null , ],
+				userPhone:[null , ],
+			}),
+			dueDiligenceComprehensiveAssessmentVO : this.fb.group({
+				conclusion:[null , ],
+				creditCondition:[null , ],
+				interviewTime:[null , ],
+				loanPurposeHasReal:[null , ],
+				ombudsman:[null , ],
+				orderId:[null , ],
+				repayPower:[null , ],
+				repayWill:[null , ],
+				settleCondition:[null , ],
+			}),
+			dueDiligenceSurveyAddressVO : this.fb.group({
+				addressHasReal:[null , ],
+				dwellingEnvironment:[null , ],
+				inhabitant:[null , ],
+				inhabitantNumber:[null , ],
+				orderId:[null , ],
+			}),
+			dueDiligenceWorkConditionVO : this.fb.group({
+				companyAddressHasReal:[null],
+				companyArea:[null],
+				companyNature:[null],
+				downstreamCompanyName:[null],
+				downstreamCompanyPhone:[null],
+				employeeAverageSalary:[null],
+				employeeNumber:[null],
+				hasSocialSecurity:[null],
+				id:[null],
+				industry:[null],
+				localLeader:[null],
+				monthlyIncome:[null],
+				orderId:[null],
+				profitMargin:[null],
+				share:[null],
+				shareHolderNumber:[null],
+				upstreamCompanyName:[null],
+				upstreamCompanyPhone:[null],
+				welfare:[null],
+				workingSeniority:[null],
+				workingTime:[null],
+			})
+		})
+	}
 	switchTab($el){
 		let className = $el.target.className ;
 		let parentWrap = $el.target.parentElement.parentElement ;
@@ -102,7 +196,6 @@ export class InComeComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.AllDueList = res['data'] ;
-						console.log(res['data']) ;
 					}else{
 						this.msg.error("获取尽调人员失败") ;
 					};
@@ -217,4 +310,66 @@ export class InComeComponent implements OnInit{
 	delItem(idx){
 		this.imgUploads.splice( idx , 1 ) ;
 	};
+
+	saveReport(){
+		let postData = this.reportForm.value ;
+		postData['orderStatus'] = this.orderInfo['status'] ;
+		postData['dueDiligenceBasicInformationVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
+		postData['dueDiligenceComprehensiveAssessmentVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
+		postData['dueDiligenceSurveyAddressVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
+		postData['dueDiligenceWorkConditionVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
+		postData['dueDiligenceAssetsLiabilitiesVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
+
+		postData['dueDiligenceBasicInformationVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
+		postData['dueDiligenceComprehensiveAssessmentVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
+		postData['dueDiligenceSurveyAddressVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
+		postData['dueDiligenceWorkConditionVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
+		postData['dueDiligenceAssetsLiabilitiesVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
+		postData['dueDiligenceBasicInformationVO']['type'] = 0 ;
+
+		if(!this.reportForm.valid){
+			this.msg.warn("请检测每项填写信息");
+			return ;
+		};
+
+		this.orderSer.postReport(postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("图片删除成功");
+					}else{
+						this.msg.error("保存失败,原因:" +res['msg']) ;
+					}
+				}
+			);
+	};
+	reportInfo : object ;
+	getOrderInfo(){
+		let id = this.orderInfo['id']
+		this.orderSer.getReport(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.reportInfo = res['data'][_arr(res['data'])]
+					}else{
+						this.msg.error("获取相关信息失败,原因:"+res['msg']) ;
+					}
+				}
+			)
+	}
+};
+
+let _arr = (obj : object) => {
+	let _arr = [] ;
+	for(let keys in obj){
+		_arr.push(keys) ;
+	};
+
+	_arr.sort(function(a,b){
+		if(a<b)
+			return 1 ;
+		else
+			return -1 ;
+	});
+	return _arr[0] ;
 }

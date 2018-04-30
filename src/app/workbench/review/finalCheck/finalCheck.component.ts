@@ -28,10 +28,13 @@ export class FinalCheckComponent implements OnInit{
 	checkInfo : object ;
 	ngOnInit(){
 		__this = this ;
+
 		this.orderId = this.routerInfo.snapshot.params['id'] ; 
+
 		this.getFirstCheckResult() ;
 		this.getSecondRst() ;
 		this.getProLst() ;
+		
 		this.thirdForm = this.fb.group({
 			"agreeMoney": [null , [Validators.required]],
 			"annualInterestRate": [null,[Validators.required]],
@@ -43,6 +46,7 @@ export class FinalCheckComponent implements OnInit{
 			"status":  [null,[Validators.required]],
 		});
 	};
+
 
 	orderId : number ;
 	result : object ; 
@@ -89,6 +93,12 @@ export class FinalCheckComponent implements OnInit{
 			)
 	};
 	submit(){
-
+		let postData = this.thirdForm.value ;
+		this.orderSer.saveLastCheck(postData)
+			.subscribe(
+				res => {
+					console.log(res) ;
+				}
+			)
 	}
 };

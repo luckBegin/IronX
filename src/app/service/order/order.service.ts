@@ -129,5 +129,29 @@ export class OrderSevice{
 	getAllImg(id : number ){
 		let url = GLOBAL.API.order.allImg + id ;
 		return this.http.get(url) ;
+	};
+
+	postReport(obj:object){
+		let url = GLOBAL.API.order.postReport ;
+		let header = new HttpHeaders()
+		.set("Content-type" , "application/json") ;
+		return this.http.post(url , obj , {
+			headers :header
+		});
+	};
+	getReport(id : number){
+		let url = GLOBAL.API.order.postReport  + '/'+id ;
+		return this.http.get(url) ;
 	}
+
+	saveLastCheck(obj : object) {
+		let url = GLOBAL.API.order.lastCheck ;
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.post(url, obj , {
+			headers : header
+		});
+	};
 };

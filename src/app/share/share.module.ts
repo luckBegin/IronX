@@ -28,6 +28,7 @@ import {CityService} from '../service/city/city.service';
 import {OrderSevice} from '../service/order/order.service';
 import {FinancialService} from '../service/financial/financial.service';
 import {AfterLoanService} from '../service/afterLoan/afterLoan.service';
+import { ToolService } from '../service/tool/tool.service'
 
 import {LoginComponent} from '../login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -45,8 +46,8 @@ import {unitNaturePipe} from '../pipe/unitNature.pipe';
 import {nullPipe} from '../pipe/null.pipe';
 import {RelationPipe} from '../pipe/relation.pipe';
 import {FinalDecisionResultPipe} from '../pipe/finalDecisionResult.pipe';
-import {GenderPipe} from '../pipe/gender.pipe';
-
+import { GenderPipe } from '../pipe/gender.pipe';
+import { PercentPipe } from '../pipe/percent.pipe';
 const layOut = [
   SideMenuComponent,
   TagNavComponent,
@@ -55,7 +56,6 @@ const layOut = [
   LoginComponent,
   HeaderTitleComponent
 ];
-
 const services = [
   MenuService,
   SessionStorageService,
@@ -68,7 +68,8 @@ const services = [
   CityService,
   OrderSevice,
   FinancialService,
-  AfterLoanService
+  AfterLoanService,
+  ToolService
 ];
 
 const workbench_services = [
@@ -97,7 +98,8 @@ const pipe = [
   nullPipe,
   RelationPipe,
   FinalDecisionResultPipe,
-  GenderPipe
+  GenderPipe,
+  PercentPipe
 ];
 
 @NgModule({

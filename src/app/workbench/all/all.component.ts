@@ -101,7 +101,6 @@ const verify = {
 const operData = [
 	{desc:"待预审" , status : "1" , oper : [pass , refues , cancel] } ,
 	{desc:"待补录" , status : "2" , oper : [profile_remake , cancel] } ,
-	{desc:"待提交" , status : "3" , oper : [detail ,submit_order,cancel , record] } ,
 	{desc:"待初审" , status : "4" , oper : [detail , rightNow , reback ,cancel , record]} ,
 	{desc:"待复审" , status : "5" , oper : [detail , rightNow , reback ,cancel , record]} ,
 	{desc:"待终审" , status : "6" , oper : [detail , rightNow , reback ,cancel , record]} ,
@@ -182,7 +181,7 @@ export class AllComponent implements OnInit{
 						this.tableData['data'] = res['data'] ;
 						this.totalSize = res['page']?res['page']['totalNumber']:0 ;
 					}else{
-						this.msg.warn('获取数据列表出错');
+						this.msg.warn('获取数据列表出错,原因:' + res['msg']);
 					};
 				}
 			);
@@ -205,7 +204,6 @@ export class AllComponent implements OnInit{
 	changeType(idx : number) : void{
 		this.activeState = idx ;
 		this.reset();
-		this.getData();
 	};
 
 	reset(){
@@ -230,7 +228,7 @@ export class AllComponent implements OnInit{
 						} ;
 						this.departList = DateReflect(map , res['data']) ;
 					}else{
-						this.msg.warn("获取部门数据失败");
+						this.msg.warn("获取部门数据失败,原因:" + res['msg']) ;
 					};
 				}
 			)
@@ -249,7 +247,7 @@ export class AllComponent implements OnInit{
 						} ;
 						this.productList = DateReflect(map, res['data']) ;
 					}else{
-						this.msg.warn("获取产品数据失败") ;
+						this.msg.warn("获取产品数据失败,原因:" + res['msg']) ;
 					};
 				}
 			);
@@ -268,7 +266,7 @@ export class AllComponent implements OnInit{
 						};
 						this.userManagerList = DateReflect(map , res['data']) ;
 					}else{
-						this.msg.warn("获取客户经理失败");
+						this.msg.warn("获取客户经理失败,原因:" + res['msg']) ;
 					}
 				}
 			)
@@ -291,7 +289,7 @@ export class AllComponent implements OnInit{
 						};
 						this.processList = _arr ;
 					}else{
-						this.msg.warn("获取流程节点失败") ;
+						this.msg.warn("获取流程节点失败,原因:" + res['msg']) ;
 					}
 				}
 			)
@@ -310,7 +308,7 @@ export class AllComponent implements OnInit{
 						} ;
 						this.dealUserList = DateReflect(map , res['data'])
 					}else{
-						this.msg.warn("获取处理人员信息失败");
+						this.msg.warn("获取处理人员信息失败,原因:" + res['msg']) ;
 					}
 				}
 			)

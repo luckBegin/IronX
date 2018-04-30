@@ -92,7 +92,7 @@ export class LayoutComponent implements OnInit {
 
     logOut : Function = () => {
       this.sgo.remove(['loginInfo']) ;
-      this.msg.notifySuccess("操作成功","当前用户已推出登陆") ;
+      this.msg.notifySuccess("操作成功","当前用户已退出登陆") ;
       this.router.navigate(['/login']) ;
     };
 };

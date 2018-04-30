@@ -60,7 +60,7 @@
             <nz-form-item class='formContent'>
                 <nz-form-label [nzSm]="7" nzRequired nzFor="deadLine">借款期限</nz-form-label>
                 <nz-form-control [nzSm]="16"  [nzOffset]='1'>
-                    <nz-input-group nzAddOnAfter="年">
+                    <nz-input-group nzAddOnAfter="期">
                         <input nz-input formControlName="deadLine" id="deadLine">
                     </nz-input-group>
                     <nz-form-explain *ngIf="thirdForm.get('deadLine').dirty && thirdForm.get('deadLine').errors">借款期限必须为6的倍数</nz-form-explain>
@@ -69,9 +69,9 @@
 
             
             <nz-form-item class='formContent'>
-                <nz-form-label [nzSm]="7" nzRequired nzFor="status">贷款产品</nz-form-label>
+                <nz-form-label [nzSm]="7" nzRequired nzFor="productId">贷款产品</nz-form-label>
                 <nz-form-control [nzSm]="16"  [nzOffset]='1'>
-                    <nz-select name="select-error" formControlName="status" id="status">
+                    <nz-select name="select-error" formControlName="productId" id="productId">
                         <nz-option *ngFor='let item of proList' [nzValue]="item.id" [nzLabel]="item.productName"></nz-option>
                     </nz-select>
                 </nz-form-control>

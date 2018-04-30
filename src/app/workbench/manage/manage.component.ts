@@ -45,7 +45,7 @@ export class ManageComponent implements OnInit{
 				};
 				if($event == '马上尽调'){
 					__this.sgo.set("orderInfo" , data) ;
-					__this.router.navigate("/workbench/income")
+					__this.router.navigate(["/workbench/income"]);
 				};
 			}} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},

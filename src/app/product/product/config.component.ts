@@ -219,17 +219,33 @@ export class ConfigComponent implements OnInit{
 		data['id'] = this.productInfo.id ;
 		data['annualInterestRate'] = data['annualInterestRate'] / 100 ;
 		data['overdueFine'] = data['overdueFine'] / 100 ;
-		this.proSer.editPro(data)
-			.subscribe(
-				res => {
-					if(res['success'] == true){
-						this.msg.success("保存成功") ;
-						this.infoBoxShow = false ;
-						this.getData() ;
-					}else{
-						this.msg.error("保存失败,原因:" + res['msg']) ;
-					};
-				}
-			)
+
+		var formData = new FormData() ;
+		formData.append("productName" , data['productName']);
+		formData.append("annualInterestRate" , data['annualInterestRate']);
+		formData.append("interestPenalty" , data['interestPenalty']);
+		formData.append("overdueFine" , data['overdueFine']);
+		formData.append("repaymentMode" , data['repaymentMode']);
+		formData.append("loanDeadline" , data['loanDeadline']);
+		formData.append("loanLimit" , data['loanLimit']);
+		formData.append("remark" , data['remark']);
+
+		let file = document.querySelector("#files")['files'][0] ;
+			formData.append("file" , file)  ;
+
+		console.log(formData) ;
+		
+		// this.proSer.editPro(formData)
+		// 	.subscribe(
+		// 		res => {
+		// 			if(res['success'] == true){
+		// 				this.msg.success("保存成功") ;
+		// 				this.infoBoxShow = false ;
+		// 				this.getData() ;
+		// 			}else{
+		// 				this.msg.error("保存失败,原因:" + res['msg']) ;
+		// 			};
+		// 		}
+		// 	)
 	}
 }

@@ -1,42 +1,77 @@
-<div class="container">
-	<!-- <div class="infoWrap">
+<div class="container" *ngIf='orderInfo'>
+	<div class="infoWrap">
         <div class="info_title">
-            初审意见
+            申请信息
         </div>
-        <div class="info_content" *ngIf='result'>
+        <div class="info_content">
             <div class="secItem">
-                <span>拟批</span>
+                <span>申请金额</span>
                 <span>
-                    {{result.mockMoney}} 元
+                    {{orderInfo.applyMoney}} 元
                 </span>
-            </div>
-            <div class="secItem">
-                <span class="title">拟批备注</span>
-                <p class="pgh">
-                     {{result.description}}
-                </p>
             </div>
         </div>
     </div>
     <div class="infoWrap">
         <div class="info_title">
-            复审意见
+            核批金额
         </div>
-        <div class="info_content" *ngIf='secondResult'>
+        <div class="info_content">
             <div class="secItem">
-                <span>拟批</span>
+                <span>核批金额</span>
                 <span>
-                    {{secondResult.mockMoney}} 元
+                    {{orderInfo.mockMoney}} 元
                 </span>
             </div>
             <div class="secItem">
-                <span class="title">拟批备注</span>
-                <p class="pgh">
-                     {{secondResult.description}}
-                </p>
+                <span class="title">借款期限</span>
+                <span>
+                     {{orderInfo.deadline}}期
+                </span>
+            </div>
+             <div class="secItem">
+                <span class="title">借款利率</span>
+                <span>
+                     {{orderInfo.annualInterestRate | PercentPipe }}%
+                </span>
             </div>
         </div>
-    </div> -->
+    </div>
+    <div class="infoWrap">
+        <div class="info_title">
+            核批金额
+        </div>
+        <div class="info_content">
+            <c-table [tableData]='tableData'>
+            </c-table>
+          <!--   <table>
+                <thead>
+                    <tr>
+                        <th>期数</th>
+                        <th>本期应还(元)</th>
+                        <th>应还本金(元)</th>
+                        <th>应还利息(元)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = 'let item of calcList'>
+                        <td>
+                            {{ item.period }}
+                        </td>
+                        <td>
+                            {{ item.totalAmount }}
+                        </td>
+                         <td>
+                            {{ item.principal }}
+                        </td>
+                         <td>
+                            {{ item.totalAmount }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+    </div>
     <div class="formRow_img c-flex-row-start">
         <div class="formItem_title">
             资料上传:

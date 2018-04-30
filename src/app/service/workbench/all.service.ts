@@ -95,5 +95,5 @@ export class WorkbenchAll{
 	getDealUser(){
 		let url = GLOBAL.API.workbench.dealUserList ;
 		return this.http.get(url )
-	}
+	};
 };

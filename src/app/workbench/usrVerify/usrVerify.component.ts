@@ -7,7 +7,8 @@ import { ProductService } from '../../service/product/product.service'
 import { FormBuilder,FormGroup,Validators , FormControl , FormArray} from '@angular/forms';
 import { dataFormat } from '../../format/dateFormat';
 import { ValueTransformer } from '@angular/compiler/src/util';
-import { ImgService} from '../../service/img/img.service'
+import { ImgService} from '../../service/img/img.service';
+import { ToolService } from '../../service/tool/tool.service'
 declare var $: any; 
 let __this  ;
 @Component({
@@ -24,14 +25,16 @@ export class UsrVerifyComponent implements OnInit{
 		private fb : FormBuilder ,
 		private routerInfo : ActivatedRoute ,
 		private proSer : ProductService ,
-		private imgSer :ImgService
+		private imgSer :ImgService ,
+		private toolSer : ToolService
 	){};
 
 	checkInfo : object ;
 	ngOnInit(){
 		__this = this ;
 		this.orderId = this.routerInfo.snapshot.params['id'] ; 
-		this.orderInfo = this.sgo.get("checkInfo")
+		this.orderInfo = this.sgo.get("checkInfo") ;
+		this.getCalc() ;
 	};
 
 	orderId : number ;
@@ -160,4 +163,34 @@ export class UsrVerifyComponent implements OnInit{
 				}
 			)
 	};
+
+	tableData : Object = {
+		showIndex : true,
+		tableTitle : [
+			{ name : "期数"  , type:"text" ,reflect : "period"},
+			{ name : "本期应还(元)"  , type:"text" ,reflect : "totalAmount"},
+			{ name : "应还本金(元)"  , type:"text" ,reflect : "principal"},
+			{ name : "应还利息(元)"  , type:"text" ,reflect : "totalAmount"}
+		] ,
+		data : [],
+	};
+
+	getCalc(){
+		let id = this.orderId;
+		let obj = {
+			"borrowAmount" :this.orderInfo['agreeMoney'],
+			"productId"  : this.orderInfo['productId'] ,
+			"loanDeadline" :this.orderInfo['deadline'] ,
+		} ;
+		this.toolSer.getCalc(obj)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.tableData['data'] = res['data']['repayPlans'];
+ 					}else{
+						this.msg.error("获取还款计划,原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
 };
