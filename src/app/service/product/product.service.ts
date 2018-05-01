@@ -20,11 +20,8 @@ export class ProductService{
 
 	createPro(obj : object ) {
 		let url = GLOBAL.API.product.create ;
-		let headers = new HttpHeaders()
-			.set("content-type" , "application/json");
-		return this.http.post(url , obj ,{
-			headers : headers
-		})
+
+		return this.http.post(url , obj)
 	};
 
 	deletePro( id : number){

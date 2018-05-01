@@ -20,7 +20,8 @@
       "prefix": "app",
       "styles": [
         "styles.less",
-        "../node_modules/ng-zorro-antd/src/ng-zorro-antd.less"
+        "../node_modules/ng-zorro-antd/src/ng-zorro-antd.less",
+        "../node_modules/imageviewer/dist/viewer.min.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

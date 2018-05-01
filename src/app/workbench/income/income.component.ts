@@ -84,12 +84,13 @@ export class InComeComponent implements OnInit{
 		// }) ;
 		this.orderInfo = this.lgo.get("orderInfo") ;
 		this.getAllDue() ;
-		this.getOrderInfo() ;
-
 		this.initReportForm() ;
+		this.initReportForm2() ;
+		this.getOrderInfo() ;
 	};
 	orderInfo : object ;
 	reportForm : FormGroup ;
+	reportForm2 : FormGroup ;
 
 	initReportForm(){
 		this.reportForm = this.fb.group({
@@ -110,7 +111,8 @@ export class InComeComponent implements OnInit{
 				negativeInformationRemark : [null ,  ],
 				orderId : [null ,  ],
 				publicPraise : [null ,  ],
-				publicPraiseRemark : [null ,  ]
+				publicPraiseRemark : [null ,  ] ,
+				id : [null]
 			}),
 			dueDiligenceBasicInformationVO : this.fb.group({
 				childrenCondition:[null , ],
@@ -143,6 +145,7 @@ export class InComeComponent implements OnInit{
 				repayPower:[null , ],
 				repayWill:[null , ],
 				settleCondition:[null , ],
+				id : [null]
 			}),
 			dueDiligenceSurveyAddressVO : this.fb.group({
 				addressHasReal:[null , ],
@@ -150,6 +153,7 @@ export class InComeComponent implements OnInit{
 				inhabitant:[null , ],
 				inhabitantNumber:[null , ],
 				orderId:[null , ],
+				id : [null]
 			}),
 			dueDiligenceWorkConditionVO : this.fb.group({
 				companyAddressHasReal:[null],
@@ -161,10 +165,10 @@ export class InComeComponent implements OnInit{
 				employeeNumber:[null],
 				hasSocialSecurity:[null],
 				id:[null],
+				orderId : [null ,  ],
 				industry:[null],
 				localLeader:[null],
 				monthlyIncome:[null],
-				orderId:[null],
 				profitMargin:[null],
 				share:[null],
 				shareHolderNumber:[null],
@@ -176,6 +180,131 @@ export class InComeComponent implements OnInit{
 			})
 		})
 	}
+
+	initReportForm2(){
+		this.reportForm2 = this.fb.group({
+			dueDiligenceAssetsLiabilitiesVO : this.fb.group({
+				carBrand : [null ,  ],
+				carNumber: [null ,  ],
+				familyFirstIncome : [null ,  ],
+				familySecondIncome : [null ,  ],
+				folkLoan: [null ,  ],
+				folkLoanAmount : [null ,  ],
+				folkLoanNumber: [null ,  ],
+				houseNumber: [null ,  ],
+				loanPurposeRemark : [null ,  ],
+				loanAmount: [null ,  ],
+				loanNumber: [null ,  ],
+				loanPurpose: [null ,  ],
+				negativeInformation : [null ,  ],
+				negativeInformationRemark : [null ,  ],
+				orderId : [null ,  ],
+				publicPraise : [null ,  ],
+				publicPraiseRemark : [null ,  ] ,
+				id : [null]
+			}),
+			dueDiligenceBasicInformationVO : this.fb.group({
+				childrenCondition:[null , ],
+				companyAddress:[null , ],
+				companyName:[null , ],
+				diligencePurpose:[null , ],
+				folkHasKnow:[null , ],
+				folkHasKnowRemark:[null , ],
+				houseAddress:[null , ],
+				houseAddressHasReal:[null , ],
+				id:[null],
+				idNumber:[null , ],
+				maritalCondition:[null , ],
+				matePhone:[null , ],
+				nowAddress:[null , ],
+				nowAddressHasReal:[null , ],
+				orderId:[null , ],
+				type:[null , ],
+				unitPhone:[null , ],
+				userName:[null , ],
+				userPhone:[null , ],
+				
+			}),
+			dueDiligenceComprehensiveAssessmentVO : this.fb.group({
+				conclusion:[null , ],
+				creditCondition:[null , ],
+				interviewTime:[null , ],
+				loanPurposeHasReal:[null , ],
+				ombudsman:[null , ],
+				orderId:[null , ],
+				repayPower:[null , ],
+				repayWill:[null , ],
+				settleCondition:[null , ],
+				id : [null]
+			}),
+			dueDiligenceSurveyAddressVO : this.fb.group({
+				addressHasReal:[null , ],
+				dwellingEnvironment:[null , ],
+				inhabitant:[null , ],
+				inhabitantNumber:[null , ],
+				orderId:[null , ],
+				id : [null]
+			}),
+			dueDiligenceWorkConditionVO : this.fb.group({
+				companyAddressHasReal:[null],
+				companyArea:[null],
+				companyNature:[null],
+				downstreamCompanyName:[null],
+				downstreamCompanyPhone:[null],
+				employeeAverageSalary:[null],
+				employeeNumber:[null],
+				hasSocialSecurity:[null],
+				id:[null],
+				orderId : [null] ,
+				industry:[null],
+				localLeader:[null],
+				monthlyIncome:[null],
+				profitMargin:[null],
+				share:[null],
+				shareHolderNumber:[null],
+				upstreamCompanyName:[null],
+				upstreamCompanyPhone:[null],
+				welfare:[null],
+				workingSeniority:[null],
+				workingTime:[null],
+			}),
+			dueDiligenceCompanyReconnaissanceVO : this.fb.group({
+				hasMechanicalEquipment:[null],
+				hasSeasonality:[null],
+				homesUsing:[null],
+				id:[null],
+				mainRepertory:[null],
+				mechanicalEquipmentNumber:[null],
+				mechanicalEquipmentType:[null],
+				monthUtilities:[null],
+				orderId:[null],
+				otherAssetRemark:[null],
+				power:[null],
+				repertoryNumber:[null],
+				seasonalityDistribution:[null],
+				workRate:[null],
+				workSiteNature:[null],
+			}),
+			dueDiligenceCompanyOperationConditionVO : this.fb.group({
+				appreciationTax:[null],
+				businessTax:[null],
+				id:[null],
+				mainManageProject:[null],
+				monthTurnover:[null],
+				orderId:[null],
+				otherAmount:[null],
+				preTaxProfit:[null],
+				productCost:[null],
+				receiveRepayAmount:[null],
+				receiveType:[null],
+				rentCost:[null],
+				salaryCost:[null],
+				sellCost:[null],
+			})
+		})
+	}
+
+
 	switchTab($el){
 		let className = $el.target.className ;
 		let parentWrap = $el.target.parentElement.parentElement ;
@@ -312,20 +441,15 @@ export class InComeComponent implements OnInit{
 	};
 
 	saveReport(){
-		let postData = this.reportForm.value ;
+		let type = this.reportInfo['dueDiligenceBasicInformationVO']['type'] ; 
+		let postData ; 
+		if(type == 0){
+			postData = this.reportForm2.value ;
+		}else{
+			postData = this.reportForm.value ;
+		};
 		postData['orderStatus'] = this.orderInfo['status'] ;
-		postData['dueDiligenceBasicInformationVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
-		postData['dueDiligenceComprehensiveAssessmentVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
-		postData['dueDiligenceSurveyAddressVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
-		postData['dueDiligenceWorkConditionVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
-		postData['dueDiligenceAssetsLiabilitiesVO']['id'] = this.reportInfo['dueDiligenceBasicInformationVO']['id'] ;
-
-		postData['dueDiligenceBasicInformationVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
-		postData['dueDiligenceComprehensiveAssessmentVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
-		postData['dueDiligenceSurveyAddressVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
-		postData['dueDiligenceWorkConditionVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
-		postData['dueDiligenceAssetsLiabilitiesVO']['orderId'] = this.reportInfo['dueDiligenceBasicInformationVO']['orderId'] ;
-		postData['dueDiligenceBasicInformationVO']['type'] = 0 ;
+		console.log(postData) ;
 
 		if(!this.reportForm.valid){
 			this.msg.warn("请检测每项填写信息");
@@ -344,13 +468,54 @@ export class InComeComponent implements OnInit{
 			);
 	};
 	reportInfo : object ;
+	type : number ;
 	getOrderInfo(){
 		let id = this.orderInfo['id']
 		this.orderSer.getReport(id)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.reportInfo = res['data'][_arr(res['data'])]
+						this.reportInfo = res['data'][_arr(res['data'])] ;
+
+						this.type = this.reportInfo['dueDiligenceBasicInformationVO']['type'] ;
+						if(this.type == 1){
+							this.reportForm2.patchValue(res['data']) ;
+
+							for(let keys in this.reportInfo){
+								let control = this.reportForm2.controls[keys] ;
+
+								if(control){
+									let data = this.reportInfo[keys] ;
+									let _data = {} ;
+									for(let keys2 in data){
+										if(data[keys2] != 'null' || data[keys2] != null){
+											_data[keys] = data[keys2] ;
+										};
+									};
+									control.patchValue(this.reportInfo[keys]) ;
+								};
+							};
+							 
+						}else{
+							this.reportForm.patchValue(res['data']) ;
+							this.reportForm2.patchValue(res['data'])
+
+							console.log(this.reportInfo)
+							for(let keys in this.reportInfo){
+								let control = this.reportForm2.controls[keys] ;
+
+								if(control){
+									let data = this.reportInfo[keys] ;
+									let _data = {} ;
+									for(let keys2 in data){
+										if(data[keys2] != 'null' || data[keys2] != null){
+											_data[keys] = data[keys2] ;
+										};
+									};
+									control.patchValue(this.reportInfo[keys]) ;
+								};
+							};
+						};
 					}else{
 						this.msg.error("获取相关信息失败,原因:"+res['msg']) ;
 					}

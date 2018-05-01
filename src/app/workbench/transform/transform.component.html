@@ -173,3 +173,40 @@
     <button nz-button nzType="primary" (click)="cancel()">客户取消</button>
   </ng-template>
 </nz-modal>
+
+
+<nz-modal [(nzVisible)]="orderBack" [nzTitle]="orderTitle" [nzContent]="orderContent" [nzFooter]="orderFooter" (nzOnCancel)="orderBack = false">
+	<ng-template #orderTitle>
+		<span *ngIf='!editMark'>新增产品</span>
+		<span *ngIf='editMark'>编辑产品</span>
+	</ng-template>
+
+	<ng-template #orderContent>
+		<form nz-form [nzLayout]="'inline'" [formGroup]="bakckForm" (ngSubmit)="submitForm()">
+			<nz-form-item class='c-formSec'>
+				<nz-form-label [nzSm]="7" nzRequired nzFor="destOrderStatus">回退节点</nz-form-label>
+				<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+					<nz-select name="select-error" formControlName="destOrderStatus" id="destOrderStatus">
+						<nz-option nzValue="2" nzLabel="补录阶段"></nz-option>
+						<nz-option nzValue="4" nzLabel="初审阶段"></nz-option>
+						<nz-option nzValue="5" nzLabel="复审阶段"></nz-option>
+						<nz-option nzValue="6" nzLabel="终审阶段"></nz-option>
+						<nz-option nzValue="8" nzLabel="客户确认阶段"></nz-option>
+					</nz-select>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='c-formSec'>
+				<nz-form-label [nzSm]="7" nzFor="opinion">备注</nz-form-label>
+				<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+					<input nz-input formControlName="opinion" id="opinion">
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+	</ng-template>
+
+	<ng-template #orderFooter>
+		<button nz-button nzType="primary" [disabled]="!bakckForm.valid" (click)='backSure()'>确定</button>
+		<button nz-button nzType="default" (click)='orderBack = false'>关闭</button>
+	</ng-template>
+</nz-modal>

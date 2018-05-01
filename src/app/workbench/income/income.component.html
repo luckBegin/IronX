@@ -1,7 +1,7 @@
 <div class="container">
     <nz-tabset>
         <nz-tab [nzTitle]="'尽调报告'">
-            <div class="c-fold-wrap">
+            <div class="c-fold-wrap" *ngIf ='type == 1'>
                 <div class="c-fold-title c-flex-row-space">
                     <div>
                         尽调目的
@@ -32,14 +32,14 @@
                             </div>
                             <div class="c-fold-content">
                                  <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="userName">姓名</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="userName">姓名</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="userName" id="userName">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.userName').dirty && reportForm.get('dueDiligenceBasicInformationVO.userName').errors">产品名称必须输入</nz-form-explain>
                                     </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="idNumber">身份证</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="idNumber">身份证</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="idNumber" id="idNumber">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.idNumber').dirty && reportForm.get('dueDiligenceBasicInformationVO.idNumber').errors">产品名称必须输入</nz-form-explain>
@@ -47,14 +47,14 @@
                                 </nz-form-item>
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="houseAddress">房产地址</nz-form-label>
-                                        <nz-form-control [nzSm]="19">
+                                        <nz-form-label [nzSm]="9"  nzFor="houseAddress">房产地址</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzOffset]='1'>
                                             <input type="text" nz-input formControlName="houseAddress" id="houseAddress">
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="houseAddressHasReal">是否真实</nz-form-label>
-                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-form-label [nzSm]="7"  nzFor="houseAddressHasReal">是否真实</nz-form-label>
+                                        <nz-form-control [nzSm]="16"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="houseAddressHasReal" id="houseAddressHasReal">
                                                 <nz-option nzValue="0" nzLabel="不真实"></nz-option>
                                                 <nz-option nzValue="1" nzLabel="真实"></nz-option>
@@ -64,13 +64,13 @@
                                 </div>
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="nowAddress">现住地址</nz-form-label>
-                                        <nz-form-control [nzSm]="19">
+                                        <nz-form-label [nzSm]="9"  nzFor="nowAddress">现住地址</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzOffset]='1'>
                                             <input type="text" nz-input formControlName="nowAddress" id="nowAddress">
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="nowAddressHasReal">是否真实</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="nowAddressHasReal">是否真实</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="nowAddressHasReal" id="nowAddressHasReal">
                                                 <nz-option nzValue="0" nzLabel="不真实"></nz-option>
@@ -80,7 +80,7 @@
                                     </nz-form-item>
                                 </div>
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="maritalCondition">婚姻状况</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="maritalCondition">婚姻状况</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="maritalCondition" id="maritalCondition">
                                             <nz-option nzValue="0" nzLabel="已婚"></nz-option>
@@ -91,7 +91,7 @@
                                     </nz-form-control>
                                 </nz-form-item>                         
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="childrenCondition">子女情况</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="childrenCondition">子女情况</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="childrenCondition" id="childrenCondition">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.childrenCondition').dirty && reportForm.get('dueDiligenceBasicInformationVO.childrenCondition').errors">产品名称必须输入</nz-form-explain>
@@ -99,7 +99,7 @@
                                 </nz-form-item>
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="folkHasKnow">家人是否知晓</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="folkHasKnow">家人是否知晓</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="folkHasKnow" id="folkHasKnow">
                                                 <nz-option nzValue="0" nzLabel="知晓且支持"></nz-option>
@@ -109,42 +109,42 @@
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="folkHasKnowRemark">备注</nz-form-label>
+                                        <nz-form-label [nzSm]="5"  nzFor="folkHasKnowRemark">备注</nz-form-label>
                                         <nz-form-control [nzSm]="19">
                                             <input type="text" nz-input formControlName="folkHasKnowRemark" id="folkHasKnowRemark">
                                         </nz-form-control>
                                     </nz-form-item>
                                 </div>
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="userPhone">联系方式</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="userPhone">联系方式</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="userPhone" id="userPhone">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.userPhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.userPhone').errors">产品名称必须输入</nz-form-explain>
                                     </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="unitPhone">单位联系方式</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="unitPhone">单位联系方式</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="unitPhone" id="unitPhone">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.unitPhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.unitPhone').errors">产品名称必须输入</nz-form-explain>
                                     </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="matePhone">配偶联系方式</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="matePhone">配偶联系方式</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="matePhone" id="matePhone">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.matePhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.matePhone').errors">产品名称必须输入</nz-form-explain>
                                     </nz-form-control>
                                 </nz-form-item>
                                  <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="companyName">公司名称</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyName">公司名称</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="companyName" id="companyName">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.companyName').dirty && reportForm.get('dueDiligenceBasicInformationVO.companyName').errors">产品名称必须输入</nz-form-explain>
                                     </nz-form-control>
                                 </nz-form-item>
                                  <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="companyAddress">公司地址</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyAddress">公司地址</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <input type="text" nz-input formControlName="companyAddress" id="companyAddress">
                                         <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.companyAddress').dirty && reportForm.get('dueDiligenceBasicInformationVO.companyAddress').errors">产品名称必须输入</nz-form-explain>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="c-fold-content">
                                  <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="companyAddressHasReal">公司地址是否属实</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyAddressHasReal">公司地址是否属实</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="companyAddressHasReal" id="companyAddressHasReal">
                                             <nz-option nzValue="0" nzLabel="否"></nz-option>
@@ -171,7 +171,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="workingTime">工作/经营时间</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="workingTime">工作/经营时间</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="月">
                                             <input nz-input formControlName="workingTime" id="workingTime">
@@ -181,7 +181,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="industry">所属行业</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="industry">所属行业</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="industry" id="industry">
                                             <nz-option nzValue="0" nzLabel="制造业"></nz-option>
@@ -193,7 +193,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="workingSeniority">从业时间</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="workingSeniority">从业时间</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="年">
                                             <input nz-input formControlName="workingSeniority" id="workingSeniority">
@@ -203,7 +203,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="share">在公司所占股份</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="share">在公司所占股份</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="%">
                                             <input nz-input formControlName="share" id="share">
@@ -213,7 +213,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="hasSocialSecurity">是否缴社保</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="hasSocialSecurity">是否缴社保</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="hasSocialSecurity" id="hasSocialSecurity">
                                             <nz-option nzValue="0" nzLabel="否"></nz-option>
@@ -223,7 +223,7 @@
                                 </nz-form-item>
 
                                  <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="monthlyIncome">月收入</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="monthlyIncome">月收入</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="元">
                                             <input nz-input formControlName="monthlyIncome" id="monthlyIncome">
@@ -233,7 +233,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="welfare">福利待遇</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="welfare">福利待遇</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="welfare" id="welfare">
                                             <nz-option nzValue="0" nzLabel="计件"></nz-option>
@@ -255,7 +255,7 @@
                           </div>
                           <div class="c-fold-content">
                              <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="houseNumber">名下房产套数</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="houseNumber">名下房产套数</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="套">
                                             <input nz-input formControlName="houseNumber" id="houseNumber">
@@ -265,7 +265,7 @@
                                 </nz-form-item>
 
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="carNumber">名下车辆</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="carNumber">名下车辆</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-input-group nzAddOnAfter="辆">
                                             <input nz-input formControlName="carNumber" id="carNumber">
@@ -296,15 +296,15 @@
 
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="loanNumber">未结清贷款</nz-form-label>
-                                        <nz-form-control [nzSm]="19">
+                                        <nz-form-label [nzSm]="9"  nzFor="loanNumber">未结清贷款</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzOffset]='1'>
                                              <nz-input-group nzAddOnAfter="笔">
                                                 <input nz-input formControlName="loanNumber" id="loanNumber">
                                             </nz-input-group>
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="loanAmount">金额</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="loanAmount">金额</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                           <nz-form-control [nzSm]="19">
                                                 <nz-input-group nzAddOnAfter="元">
@@ -317,8 +317,8 @@
 
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="folkLoan">民间贷款</nz-form-label>
-                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-form-label [nzSm]="15"  nzFor="folkLoan">民间贷款</nz-form-label>
+                                        <nz-form-control [nzSm]="8"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="folkLoan" id="folkLoan">
                                                 <nz-option nzValue="0" nzLabel="无"></nz-option>
                                                 <nz-option nzValue="1" nzLabel="有"></nz-option>
@@ -327,7 +327,7 @@
                                     </nz-form-item>
 
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="folkLoanNumber">民间贷款笔数</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="folkLoanNumber">民间贷款笔数</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                           <nz-form-control [nzSm]="19">
                                                 <nz-input-group nzAddOnAfter="笔">
@@ -338,7 +338,7 @@
                                     </nz-form-item>
 
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="folkLoanAmount">民间贷款金额</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="folkLoanAmount">民间贷款金额</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                           <nz-form-control [nzSm]="19">
                                                 <nz-input-group nzAddOnAfter="元">
@@ -352,7 +352,7 @@
                                  <div class="c-flex-row-start" style="margin-left: 6%;">
 
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="familyFirstIncome">家庭第一收入来源</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="familyFirstIncome">家庭第一收入来源</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                           <nz-form-control [nzSm]="19">
                                                 <!-- <nz-input-group nzAddOnAfter="笔"> -->
@@ -363,7 +363,7 @@
                                     </nz-form-item>
 
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="familySecondIncome">家庭第二收入来源</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="familySecondIncome">家庭第二收入来源</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                           <nz-form-control [nzSm]="19">
                                                 <!-- <nz-input-group nzAddOnAfter="元"> -->
@@ -376,7 +376,7 @@
 
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="negativeInformation">负面信息</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="negativeInformation">负面信息</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="negativeInformation" id="negativeInformation">
                                                 <nz-option nzValue="0" nzLabel="无"></nz-option>
@@ -385,7 +385,7 @@
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="negativeInformationRemark">备注</nz-form-label>
+                                        <nz-form-label [nzSm]="5"  nzFor="negativeInformationRemark">备注</nz-form-label>
                                         <nz-form-control [nzSm]="19">
                                             <input type="text" nz-input formControlName="negativeInformationRemark" id="negativeInformationRemark">
                                         </nz-form-control>
@@ -393,8 +393,8 @@
                                 </div>
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="publicPraise">同事/亲属/邻居口碑</nz-form-label>
-                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-form-label [nzSm]="14"  nzFor="publicPraise">同事/亲属/邻居口碑</nz-form-label>
+                                        <nz-form-control [nzSm]="8"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="publicPraise" id="publicPraise">
                                                 <nz-option nzValue="0" nzLabel="好"></nz-option>
                                                 <nz-option nzValue="1" nzLabel="较好"></nz-option>
@@ -405,7 +405,7 @@
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="publicPraiseRemark">备注</nz-form-label>
+                                        <nz-form-label [nzSm]="5"  nzFor="publicPraiseRemark">备注</nz-form-label>
                                         <nz-form-control [nzSm]="19">
                                             <input type="text" nz-input formControlName="publicPraiseRemark" id="publicPraiseRemark">
                                         </nz-form-control>
@@ -414,7 +414,7 @@
 
                                 <div class="c-flex-row-start" style="margin-left: 6%;">
                                     <nz-form-item style="width: 250px">
-                                        <nz-form-label [nzSm]="11" nzRequired nzFor="loanPurpose">贷款用途</nz-form-label>
+                                        <nz-form-label [nzSm]="11"  nzFor="loanPurpose">贷款用途</nz-form-label>
                                         <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                             <nz-select name="select-error" formControlName="loanPurpose" id="loanPurpose">
                                                 <nz-option nzValue="0" nzLabel="流动资金"></nz-option>
@@ -426,7 +426,7 @@
                                         </nz-form-control>
                                     </nz-form-item>
                                     <nz-form-item>
-                                        <nz-form-label [nzSm]="5" nzRequired nzFor="loanPurposeRemark">备注</nz-form-label>
+                                        <nz-form-label [nzSm]="5"  nzFor="loanPurposeRemark">备注</nz-form-label>
                                         <nz-form-control [nzSm]="19">
                                             <input type="text" nz-input formControlName="loanPurposeRemark" id="loanPurposeRemark">
                                         </nz-form-control>
@@ -445,7 +445,7 @@
                         <div class="c-fold-content">
                             <div class="c-flex-row-start" style="margin-left: 6%;">
                                 <nz-form-item style="width: 250px">
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="addressHasReal">住址是否属实</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="addressHasReal">住址是否属实</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="addressHasReal" id="addressHasReal">
                                             <nz-option nzValue="0" nzLabel="不属实"></nz-option>
@@ -454,7 +454,7 @@
                                     </nz-form-control>
                                 </nz-form-item>
                                 <nz-form-item style="width: 250px">
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="dwellingEnvironment">居住环境</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="dwellingEnvironment">居住环境</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="dwellingEnvironment" id="dwellingEnvironment">
                                             <nz-option nzValue="0" nzLabel="良好"></nz-option>
@@ -472,13 +472,6 @@
                                         <input nz-input formControlName="inhabitantNumber" id="inhabitantNumber">
                                     </nz-form-control>
                                 </nz-form-item>
-
-                                <nz-form-item style="width: 250px">
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="inhabitant">备注</nz-form-label>
-                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
-                                        <input nz-input formControlName="inhabitant" id="inhabitant">
-                                    </nz-form-control>
-                                </nz-form-item>
                             </div>
                         </div>
                     </div>
@@ -492,7 +485,7 @@
                         </div>
                         <div class="c-fold-content">
                             <nz-form-item class='formSec'>
-                                <nz-form-label [nzSm]="11" nzRequired nzFor="loanPurposeHasReal">贷款用途合理性</nz-form-label>
+                                <nz-form-label [nzSm]="11"  nzFor="loanPurposeHasReal">贷款用途合理性</nz-form-label>
                                 <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                     <nz-select name="select-error" formControlName="loanPurposeHasReal" id="loanPurposeHasReal">
                                         <nz-option nzValue="0" nzLabel="真实合理"></nz-option>
@@ -502,7 +495,7 @@
                                 </nz-form-control>
                             </nz-form-item>
                            <nz-form-item class='formSec'>
-                                <nz-form-label [nzSm]="11" nzRequired nzFor="repayPower">还款能力</nz-form-label>
+                                <nz-form-label [nzSm]="11"  nzFor="repayPower">还款能力</nz-form-label>
                                 <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                     <nz-select name="select-error" formControlName="repayPower" id="repayPower">
                                         <nz-option nzValue="0" nzLabel="真实合理"></nz-option>
@@ -513,7 +506,7 @@
                             </nz-form-item>
 
                             <nz-form-item class='formSec'>
-                                <nz-form-label [nzSm]="11" nzRequired nzFor="settleCondition">资产负债情况</nz-form-label>
+                                <nz-form-label [nzSm]="11"  nzFor="settleCondition">资产负债情况</nz-form-label>
                                 <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                     <nz-select name="select-error" formControlName="settleCondition" id="settleCondition">
                                         <nz-option nzValue="0" nzLabel="负债比 &gt; 55%"></nz-option>
@@ -524,7 +517,7 @@
                             </nz-form-item>
 
                             <nz-form-item class='formSec'>
-                                <nz-form-label [nzSm]="11" nzRequired nzFor="creditCondition">资信调查</nz-form-label>
+                                <nz-form-label [nzSm]="11"  nzFor="creditCondition">资信调查</nz-form-label>
                                 <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                     <nz-select name="select-error" formControlName="creditCondition" id="creditCondition">
                                         <nz-option nzValue="0" nzLabel="好"></nz-option>
@@ -537,7 +530,7 @@
                             </nz-form-item>
 
                             <nz-form-item class='formSec'>
-                                <nz-form-label [nzSm]="11" nzRequired nzFor="repayWill">还款意愿</nz-form-label>
+                                <nz-form-label [nzSm]="11"  nzFor="repayWill">还款意愿</nz-form-label>
                                 <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                     <nz-select name="select-error" formControlName="repayWill" id="repayWill">
                                         <nz-option nzValue="0" nzLabel="好"></nz-option>
@@ -548,7 +541,7 @@
                             </nz-form-item>
 
                             <nz-form-item style='width:64%'>
-                                <nz-form-label [nzSm]="5" nzRequired nzFor="conclusion">特殊情况及报告结论</nz-form-label>
+                                <nz-form-label [nzSm]="5"  nzFor="conclusion">特殊情况及报告结论</nz-form-label>
                                     <nz-form-control [nzSm]="18"  [nzOffset]='1'>
                                         <textarea nz-input formControlName="conclusion" rows="4" placeholder="备注" id="conclusion"></textarea>
                                     </nz-form-control>
@@ -569,7 +562,829 @@
                             </div>
                             <div class="c-flex-row-end">
                                 <nz-form-item class='formSec'>
-                                    <nz-form-label [nzSm]="11" nzRequired nzFor="ombudsman">尽职调查专员</nz-form-label>
+                                    <nz-form-label [nzSm]="11"  nzFor="ombudsman">尽职调查专员</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="ombudsman" id="ombudsman">
+                                            <nz-option [nzValue]="item.name" [nzLabel]="item.name" *ngFor='let item of AllDueList'></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="c-flex-row-end" style="padding-bottom:40px;margin-top: 40px;">
+                            <button nz-button nzType="primary" class="c-btn-width" (click)="saveReport()">
+                                保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="c-fold-wrap" *ngIf ='type == 0'>
+                <div class="c-fold-title c-flex-row-space">
+                    <div>
+                        尽调目的
+                    </div>
+                    <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                </div>
+                <div class="c-fold-content">
+                   <div class="explain">
+                        <p>
+                            1.尽调自建房房产，拍摄门头、门牌号、房屋全貌（包括盖帽）、周围环境、内室（拍摄厨房、饭厅、卧室、客厅、卫生间、洗手台、阳台等）等合影，体现居住情况，并以房屋照片询问村委或村民核实该房产是否属于借款人本人。
+                        </p>
+                        <p>
+                            2.尽调工程承包地，拍摄工服，工具，工程地以及工地居住场所，并向工友核实借款人是否在此工作，说明具体情况并拍摄合影。
+                        </p>
+                        <p>
+                            3.补充担保人提供征信，担保函，担保函签字照，身份证正反面拍照，身份证复印件。
+                        </p>
+                   </div>
+                </div>
+                <div class="formWrap">
+                    <form nz-form [nzLayout]="'inline'" [formGroup]="reportForm2">
+                        <div class="c-fold-wrap" formGroupName='dueDiligenceBasicInformationVO'>
+                            <div class="c-fold-title c-flex-row-space">
+                                <div>
+                                    基本信息
+                                </div>
+                                <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                            </div>
+                            <div class="c-fold-content">
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="userName">姓名</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="userName" id="userName">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.userName').dirty && reportForm.get('dueDiligenceBasicInformationVO.userName').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="idNumber">身份证</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="idNumber" id="idNumber">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.idNumber').dirty && reportForm.get('dueDiligenceBasicInformationVO.idNumber').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="9"  nzFor="houseAddress">房产地址</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzOffset]='1'>
+                                            <input type="text" nz-input formControlName="houseAddress" id="houseAddress">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="houseAddressHasReal">是否真实</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="houseAddressHasReal" id="houseAddressHasReal">
+                                                <nz-option nzValue="0" nzLabel="不真实"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="真实"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="9"  nzFor="nowAddress">现住地址</nz-form-label>
+                                        <nz-form-control [nzSm]="14"  [nzOffset]='1'>
+                                            <input type="text" nz-input formControlName="nowAddress" id="nowAddress">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="nowAddressHasReal">是否真实</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="nowAddressHasReal" id="nowAddressHasReal">
+                                                <nz-option nzValue="0" nzLabel="不真实"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="真实"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="maritalCondition">婚姻状况</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="maritalCondition" id="maritalCondition">
+                                            <nz-option nzValue="0" nzLabel="已婚"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="离婚"></nz-option>
+                                            <nz-option nzValue="2" nzLabel="孀居"></nz-option>
+                                            <nz-option nzValue="3" nzLabel="单身"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>                         
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="childrenCondition">子女情况</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="childrenCondition" id="childrenCondition">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.childrenCondition').dirty && reportForm.get('dueDiligenceBasicInformationVO.childrenCondition').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="folkHasKnow">家人是否知晓</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="folkHasKnow" id="folkHasKnow">
+                                                <nz-option nzValue="0" nzLabel="知晓且支持"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="不知晓"></nz-option>
+                                                <nz-option nzValue="2" nzLabel="知晓不支持"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="5"  nzFor="folkHasKnowRemark">备注</nz-form-label>
+                                        <nz-form-control [nzSm]="19">
+                                            <input type="text" nz-input formControlName="folkHasKnowRemark" id="folkHasKnowRemark">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="userPhone">联系方式</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="userPhone" id="userPhone">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.userPhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.userPhone').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="unitPhone">单位联系方式</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="unitPhone" id="unitPhone">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.unitPhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.unitPhone').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="matePhone">配偶联系方式</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="matePhone" id="matePhone">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.matePhone').dirty && reportForm.get('dueDiligenceBasicInformationVO.matePhone').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyName">公司名称</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="companyName" id="companyName">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.companyName').dirty && reportForm.get('dueDiligenceBasicInformationVO.companyName').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyAddress">公司地址</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input type="text" nz-input formControlName="companyAddress" id="companyAddress">
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceBasicInformationVO.companyAddress').dirty && reportForm.get('dueDiligenceBasicInformationVO.companyAddress').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="c-fold-wrap" formGroupName='dueDiligenceWorkConditionVO'>
+                            <div class="c-fold-title c-flex-row-space">
+                                <div>
+                                    工作情况
+                                </div>
+                                <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                            </div>
+                            <div class="c-fold-content">
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="companyAddressHasReal">公司地址是否属实</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="companyAddressHasReal" id="companyAddressHasReal">
+                                            <nz-option nzValue="0" nzLabel="否"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="是"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="workingTime">工作/经营时间</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="月">
+                                            <input nz-input formControlName="workingTime" id="workingTime">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceWorkConditionVO.workingTime').dirty && reportForm.get('dueDiligenceWorkConditionVO.workingTime').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="industry">所属行业</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="industry" id="industry">
+                                            <nz-option nzValue="0" nzLabel="制造业"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="销售业"></nz-option>
+                                            <nz-option nzValue="2" nzLabel="服务业"></nz-option>
+                                            <nz-option nzValue="3" nzLabel="其他"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="workingSeniority">从业时间</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="年">
+                                            <input nz-input formControlName="workingSeniority" id="workingSeniority">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceWorkConditionVO.workingSeniority').dirty && reportForm.get('dueDiligenceWorkConditionVO.workingSeniority').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="share">在公司所占股份</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="%">
+                                            <input nz-input formControlName="share" id="share">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceWorkConditionVO.share').dirty && reportForm.get('dueDiligenceWorkConditionVO.share').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="hasSocialSecurity">是否缴社保</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="hasSocialSecurity" id="hasSocialSecurity">
+                                            <nz-option nzValue="0" nzLabel="否"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="是"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="monthlyIncome">月收入</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="元">
+                                            <input nz-input formControlName="monthlyIncome" id="monthlyIncome">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceWorkConditionVO.monthlyIncome').dirty && reportForm.get('dueDiligenceWorkConditionVO.monthlyIncome').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="welfare">福利待遇</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="welfare" id="welfare">
+                                            <nz-option nzValue="0" nzLabel="计件"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="底薪"></nz-option>
+                                            <nz-option nzValue="2" nzLabel="包吃"></nz-option>
+                                            <nz-option nzValue="3" nzLabel="包住"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+
+                        <div class="c-fold-wrap" formGroupName='dueDiligenceAssetsLiabilitiesVO'>
+                          <div class="c-fold-title c-flex-row-space">
+                              <div>
+                                  个人资产负债
+                              </div>
+                              <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                          </div>
+                          <div class="c-fold-content">
+                             <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="houseNumber">名下房产套数</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="套">
+                                            <input nz-input formControlName="houseNumber" id="houseNumber">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceAssetsLiabilitiesVO.houseNumber').dirty && reportForm.get('dueDiligenceAssetsLiabilitiesVO.houseNumber').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="carNumber">名下车辆</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="辆">
+                                            <input nz-input formControlName="carNumber" id="carNumber">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceAssetsLiabilitiesVO.carNumber').dirty && reportForm.get('dueDiligenceAssetsLiabilitiesVO.carNumber').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                 <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11" nzFor="carBrand">车辆型号</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="辆">
+                                            <input nz-input formControlName="carBrand" id="carBrand">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceAssetsLiabilitiesVO.carBrand').dirty && reportForm.get('dueDiligenceAssetsLiabilitiesVO.carBrand').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11" nzFor="carBrand">车辆型号</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-input-group nzAddOnAfter="辆">
+                                            <input nz-input formControlName="carBrand" id="carBrand">
+                                        </nz-input-group>
+                                        <nz-form-explain *ngIf="reportForm.get('dueDiligenceAssetsLiabilitiesVO.carBrand').dirty && reportForm.get('dueDiligenceAssetsLiabilitiesVO.carBrand').errors">产品名称必须输入</nz-form-explain>
+                                    </nz-form-control>
+                                </nz-form-item>
+
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="9"  nzFor="loanNumber">未结清贷款</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzOffset]='1'>
+                                             <nz-input-group nzAddOnAfter="笔">
+                                                <input nz-input formControlName="loanNumber" id="loanNumber">
+                                            </nz-input-group>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="loanAmount">金额</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                          <nz-form-control [nzSm]="19">
+                                                <nz-input-group nzAddOnAfter="元">
+                                                    <input nz-input formControlName="loanAmount" id="loanAmount">
+                                                </nz-input-group>
+                                            </nz-form-control>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="15"  nzFor="folkLoan">民间贷款</nz-form-label>
+                                        <nz-form-control [nzSm]="8"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="folkLoan" id="folkLoan">
+                                                <nz-option nzValue="0" nzLabel="无"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="有"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="folkLoanNumber">民间贷款笔数</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                          <nz-form-control [nzSm]="19">
+                                                <nz-input-group nzAddOnAfter="笔">
+                                                    <input nz-input formControlName="folkLoanNumber" id="folkLoanNumber">
+                                                </nz-input-group>
+                                            </nz-form-control>
+                                        </nz-form-control>
+                                    </nz-form-item>
+
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="folkLoanAmount">民间贷款金额</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                          <nz-form-control [nzSm]="19">
+                                                <nz-input-group nzAddOnAfter="元">
+                                                    <input nz-input formControlName="folkLoanAmount" id="folkLoanAmount">
+                                                </nz-input-group>
+                                            </nz-form-control>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                 <div class="c-flex-row-start" style="margin-left: 6%;">
+
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="familyFirstIncome">家庭第一收入来源</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                          <nz-form-control [nzSm]="19">
+                                                <!-- <nz-input-group nzAddOnAfter="笔"> -->
+                                                    <input nz-input formControlName="familyFirstIncome" id="familyFirstIncome">
+                                                <!-- </nz-input-group> -->
+                                            </nz-form-control>
+                                        </nz-form-control>
+                                    </nz-form-item>
+
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="familySecondIncome">家庭第二收入来源</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                          <nz-form-control [nzSm]="19">
+                                                <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                                    <input nz-input formControlName="familySecondIncome" id="familySecondIncome">
+                                                <!-- </nz-input-group> -->
+                                            </nz-form-control>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="negativeInformation">负面信息</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="negativeInformation" id="negativeInformation">
+                                                <nz-option nzValue="0" nzLabel="无"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="有"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="5"  nzFor="negativeInformationRemark">备注</nz-form-label>
+                                        <nz-form-control [nzSm]="19">
+                                            <input type="text" nz-input formControlName="negativeInformationRemark" id="negativeInformationRemark">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="14"  nzFor="publicPraise">同事/亲属/邻居口碑</nz-form-label>
+                                        <nz-form-control [nzSm]="8"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="publicPraise" id="publicPraise">
+                                                <nz-option nzValue="0" nzLabel="好"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="较好"></nz-option>
+                                                <nz-option nzValue="2" nzLabel="一般"></nz-option>
+                                                <nz-option nzValue="3" nzLabel="较差"></nz-option>
+                                                <nz-option nzValue="4" nzLabel="差"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="5"  nzFor="publicPraiseRemark">备注</nz-form-label>
+                                        <nz-form-control [nzSm]="19">
+                                            <input type="text" nz-input formControlName="publicPraiseRemark" id="publicPraiseRemark">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <div class="c-flex-row-start" style="margin-left: 6%;">
+                                    <nz-form-item style="width: 250px">
+                                        <nz-form-label [nzSm]="11"  nzFor="loanPurpose">贷款用途</nz-form-label>
+                                        <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                            <nz-select name="select-error" formControlName="loanPurpose" id="loanPurpose">
+                                                <nz-option nzValue="0" nzLabel="流动资金"></nz-option>
+                                                <nz-option nzValue="1" nzLabel="购买原料"></nz-option>
+                                                <nz-option nzValue="2" nzLabel="固定资产投资"></nz-option>
+                                                <nz-option nzValue="3" nzLabel="项目工款"></nz-option>
+                                                <nz-option nzValue="4" nzLabel="其他"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="5"  nzFor="loanPurposeRemark">备注</nz-form-label>
+                                        <nz-form-control [nzSm]="19">
+                                            <input type="text" nz-input formControlName="loanPurposeRemark" id="loanPurposeRemark">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                          </div>
+                      </div>
+
+                      <div class="c-fold-wrap" formGroupName='dueDiligenceSurveyAddressVO'>
+                        <div class="c-fold-title c-flex-row-space">
+                            <div>
+                                住址考察
+                            </div>
+                            <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                        </div>
+                        <div class="c-fold-content">
+                            <div class="c-flex-row-start" style="margin-left: 6%;">
+                                <nz-form-item style="width: 250px">
+                                    <nz-form-label [nzSm]="11"  nzFor="addressHasReal">住址是否属实</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="addressHasReal" id="addressHasReal">
+                                            <nz-option nzValue="0" nzLabel="不属实"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="属实"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item style="width: 250px">
+                                    <nz-form-label [nzSm]="11"  nzFor="dwellingEnvironment">居住环境</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <nz-select name="select-error" formControlName="dwellingEnvironment" id="dwellingEnvironment">
+                                            <nz-option nzValue="0" nzLabel="良好"></nz-option>
+                                            <nz-option nzValue="1" nzLabel="一般"></nz-option>
+                                            <nz-option nzValue="2" nzLabel="较差"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+
+                             <div class="c-flex-row-start" style="margin-left: 6%;">
+                                <nz-form-item style="width: 250px">
+                                    <nz-form-label [nzSm]="11" nzFor="inhabitantNumber">常住人口</nz-form-label>
+                                    <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                        <input nz-input formControlName="inhabitantNumber" id="inhabitantNumber">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-fold-wrap" formGroupName='dueDiligenceCompanyReconnaissanceVO'>
+                        <div class="c-fold-title c-flex-row-space">
+                            <div>
+                                公司考察
+                            </div>
+                            <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                        </div>
+                        <div class="c-fold-content">
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="hasMechanicalEquipment">重大机器设备</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="hasMechanicalEquipment" id="hasMechanicalEquipment">
+                                        <nz-option nzValue="0" nzLabel="无"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="有"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="hasSeasonality">淡旺季</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="hasSeasonality" id="hasSeasonality">
+                                        <nz-option nzValue="0" nzLabel="无"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="有"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="homesUsing">开机率</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <input nz-input formControlName="homesUsing" id="homesUsing">
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="mainRepertory">主要库存货品 </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <input nz-input formControlName="mainRepertory" id="mainRepertory">
+                                </nz-form-control>
+                            </nz-form-item>
+                            
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="mechanicalEquipmentNumber">重大机型数量  </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <input nz-input formControlName="mechanicalEquipmentNumber" id="mechanicalEquipmentNumber">
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="mechanicalEquipmentType">主要机型</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <input nz-input formControlName="mechanicalEquipmentType" id="mechanicalEquipmentType">
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="monthUtilities">月均水电费</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="monthUtilities" id="monthUtilities">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="otherAssetRemark">其他资产说明</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="otherAssetRemark" id="otherAssetRemark">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="power">机器功率 </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="power" id="power">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="repertoryNumber">库存量 </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="repertoryNumber" id="repertoryNumber">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="seasonalityDistribution">淡旺季分布 </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="seasonalityDistribution" id="seasonalityDistribution">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="workRate">开工率 </nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="workRate" id="workRate">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="workSiteNature">办公产地</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="workSiteNature" id="workSiteNature">
+                                        <nz-option nzValue="0" nzLabel="自有"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="租用"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="亲属产权"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+
+                    <div class="c-fold-wrap" formGroupName='dueDiligenceCompanyOperationConditionVO'>
+                        <div class="c-fold-title c-flex-row-space">
+                            <div>
+                                公司运营情况
+                            </div>
+                            <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                        </div>
+                        <div class="c-fold-content">
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="appreciationTax">增值税</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="appreciationTax" id="appreciationTax">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="businessTax">营业税</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="businessTax" id="businessTax">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="mainManageProject">主要经营项目</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="mainManageProject" id="mainManageProject">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="monthTurnover">月营业额</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="monthTurnover" id="monthTurnover">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="otherAmount">其他税</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="otherAmount" id="otherAmount">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="preTaxProfit">每月税前利润</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="preTaxProfit" id="preTaxProfit">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="productCost">生产成本</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="productCost" id="productCost">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="receiveRepayAmount">借款还款金额</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="receiveRepayAmount" id="receiveRepayAmount">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="receiveType">收款方式</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                                        <input nz-input formControlName="receiveType" id="receiveType">
+                                    <!-- </nz-input-group> -->
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="rentCost">租金</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="rentCost" id="rentCost">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="salaryCost">工资成本</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="salaryCost" id="salaryCost">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                             <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11" nzFor="sellCost">销售成本</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-input-group nzAddOnAfter="元">
+                                        <input nz-input formControlName="sellCost" id="sellCost">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+
+
+                    <div class="c-fold-wrap" formGroupName='dueDiligenceComprehensiveAssessmentVO'>
+                        <div class="c-fold-title c-flex-row-space">
+                            <div>
+                                综合评价
+                            </div>
+                            <i class="anticon anticon-up-square-o c-arrow-ico" (click)='switchTab($event)'></i>
+                        </div>
+                        <div class="c-fold-content">
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="loanPurposeHasReal">贷款用途合理性</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="loanPurposeHasReal" id="loanPurposeHasReal">
+                                        <nz-option nzValue="0" nzLabel="真实合理"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="不真实合理"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="无法判断"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                           <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="repayPower">还款能力</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="repayPower" id="repayPower">
+                                        <nz-option nzValue="0" nzLabel="真实合理"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="不真实合理"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="无法判断"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="settleCondition">资产负债情况</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="settleCondition" id="settleCondition">
+                                        <nz-option nzValue="0" nzLabel="负债比 &gt; 55%"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="负债比 &lt; 55%"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="无法判断"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="creditCondition">资信调查</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="creditCondition" id="creditCondition">
+                                        <nz-option nzValue="0" nzLabel="好"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="较好"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="一般"></nz-option>
+                                        <nz-option nzValue="3" nzLabel="较差"></nz-option>
+                                        <nz-option nzValue="4" nzLabel="差"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item class='formSec'>
+                                <nz-form-label [nzSm]="11"  nzFor="repayWill">还款意愿</nz-form-label>
+                                <nz-form-control [nzSm]="12"  [nzOffset]='1'>
+                                    <nz-select name="select-error" formControlName="repayWill" id="repayWill">
+                                        <nz-option nzValue="0" nzLabel="好"></nz-option>
+                                        <nz-option nzValue="1" nzLabel="一般"></nz-option>
+                                        <nz-option nzValue="2" nzLabel="差"></nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item style='width:64%'>
+                                <nz-form-label [nzSm]="5"  nzFor="conclusion">特殊情况及报告结论</nz-form-label>
+                                    <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+                                        <textarea nz-input formControlName="conclusion" rows="4" placeholder="备注" id="conclusion"></textarea>
+                                    </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+
+
+                    <div class="" formGroupName = 'dueDiligenceComprehensiveAssessmentVO'>
+                            <div class="textWrap">
+                                <span style="line-height: 39px;">本人与借款人于</span>
+                                <nz-form-item style="width: 250px;margin-left: 16px;">
+                                    <nz-form-control [nzSm]="24">
+                                        <input type="date" nz-input formControlName="interviewTime" id="interviewTime">
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <span style="line-height: 39px;">进行面谈, 并就该贷款进行了相应的解释说明. 借款人提供的信息真实有效. 本人对各项信息已经进行了审慎的调查、核实、分析、整理和审定，并对风险情况已进行了完全披露。同时，借款人对本贷款的含义以及相应的法律责任已全部通晓并充分理解。 本人已经对借款人提供材料的真实有效性进行核实， 如果有协助借款人提供伪造材料，歪曲事实，本人愿承担相应的法律后果.</span>
+                            </div>
+                            <div class="c-flex-row-end">
+                                <nz-form-item class='formSec'>
+                                    <nz-form-label [nzSm]="11"  nzFor="ombudsman">尽职调查专员</nz-form-label>
                                     <nz-form-control [nzSm]="12"  [nzOffset]='1'>
                                         <nz-select name="select-error" formControlName="ombudsman" id="ombudsman">
                                             <nz-option [nzValue]="item.name" [nzLabel]="item.name" *ngFor='let item of AllDueList'></nz-option>

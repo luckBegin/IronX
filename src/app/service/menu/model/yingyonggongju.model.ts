@@ -1,5 +1,5 @@
 import { MenuItemModel } from '../menu-item.model' ;
-let prefix_url = 'util'
+let prefix_url = 'tools/tools'
 export const yingyonggongju : MenuItemModel[] = [
 	{
 		id : 1 , 

@@ -9,6 +9,8 @@ import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
 import { DepartService } from '../../service/depart/depart.service';
 import { ProductService } from '../../service/product/product.service';
+
+import{ OrderSevice } from '../../service/order/order.service'
 let __this ;
 const pass = {
 	name : "通过" ,
@@ -58,7 +60,8 @@ const detail = {
 const reback = {
 	name : "退回订单" ,
 	fn : function(item){
-
+		__this.orderBack = true ;
+		__this.selectOrder = item ;
 	}
 };
 
@@ -126,6 +129,7 @@ export class VerifyComponent implements OnInit{
 		private router : Router,
 		private departSer : DepartService ,
 		private proSer : ProductService ,
+		private orderSer : OrderSevice
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -138,7 +142,13 @@ export class VerifyComponent implements OnInit{
 		this.validateForm = this.fb.group({
 			"rejectionReason" : [null , [Validators.required]] ,
 			"opinion" : [ null ]
-		})
+		});
+		this.bakckForm = this.fb.group({
+			destOrderStatus:[null],
+			opinion:[null],
+			orderStatus:[null],
+		});
+
 	};
 	validateForm : FormGroup ;
 	searchModel : PrecheckSearchModel = new PrecheckSearchModel();
@@ -308,6 +318,28 @@ export class VerifyComponent implements OnInit{
 					}else{
 						this.msg.error("获取处理人列表出错,原因:" + res['msg']) ;
 					}
+				}
+			)
+	};
+
+	bakckForm : FormGroup;
+	orderBack : boolean = false ;
+	selectOrder : object ;
+
+	backSure(){
+		let id = this.selectOrder['id'] ; 
+		let postData = this.bakckForm.value ;
+		postData['orderStatus'] = this.selectOrder['status'] ;
+		this.orderSer.orderBack(id,postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功") ;
+						this.getList() ;
+						this.orderBack = false ; 
+					}else{
+						this.msg.error('操作失败,原因:' +res['msg']);
+					};
 				}
 			)
 	}

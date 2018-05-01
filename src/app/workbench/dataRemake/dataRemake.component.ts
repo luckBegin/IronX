@@ -460,28 +460,19 @@ export class DataRemakeComponent implements OnInit{
 		this.imgUploads.splice( idx , 1 ) ;
 	};
 
-	priveChange(parent,item,model){
-		let val = this.validForm.controls['clientInfoInputVO']['value'][model] ;
-		if(val){
-			let id = val.split(",")[1] ;
-			this[item] = this[parent][id]['child'] ;
+	priveChange($event , parent,item){
+		if($event){
+			let id = $event.split(",")[1] ;
+			this[item] = this[parent][id]['child'] ? this[parent][id]['child'] : [] ;
+			// debugger ;
+			// let addr = this.validForm.controls['clientInfoInputVO'].value['registerDetailAddress'] ;
+
+			// addr = addr?addr:"" ;
+			// addr += $event.split(",")[0] ;
+			// this.validForm.controls['clientInfoInputVO'].patchValue({
+			// 	"registerDetailAddress" : addr
+			// });
 		};
-		// let val = this.postModel.clientInfoInputVO[model] ;
-		// if(val){
-		// 	let id = val.split(",")[1] ;
-		// 	this[item] = this[parent][id]['child'] ;
-
-		// 	let province = this.postModel.clientInfoInputVO['registerProvince'];
-		// 	let proName = province?province.split(",")[0]:"" ;
-
-		// 	let city = this.postModel.clientInfoInputVO['registerCity'];
-		// 	let cityName = city?city.split(",")[0]:"" ;
-
-		// 	let county = this.postModel.clientInfoInputVO['registerCounty'] ;
-		// 	let countName = county?county.split(",")[0]:"" ;
-
-		// 	this.postModel.clientInfoInputVO['registerDetailAddress'] = proName + cityName + countName ;
-		// };
 	};
 
 	submitCheck(){
@@ -507,6 +498,7 @@ export class DataRemakeComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.msg.success("提交成功");
+						this.router.navigate(['/workbench/profile']);
 					}else{
 						this.msg.error("提交失败，原因:" + res['msg']) ;
 					};

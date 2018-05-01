@@ -7,7 +7,8 @@ import { ProductService } from '../../service/product/product.service'
 import { FormBuilder,FormGroup,Validators , FormControl , FormArray} from '@angular/forms';
 import { dataFormat } from '../../format/dateFormat';
 import { ValueTransformer } from '@angular/compiler/src/util';
-import { GLOBAL } from '../../global/global_settion'
+import { GLOBAL } from '../../global/global_settion' ;
+import { WorkbenchAll } from '../../service/workbench/all.service'
 declare var $: any; 
 let __this  ;
 @Component({
@@ -24,6 +25,7 @@ export class ProfileTransComponent implements OnInit{
 		private fb : FormBuilder ,
 		private routerInfo : ActivatedRoute ,
 		private proSer : ProductService ,
+		private allSer : WorkbenchAll
 	){};
 
 	checkInfo : object ;
@@ -31,8 +33,9 @@ export class ProfileTransComponent implements OnInit{
 		__this = this ;
 		this.orderId = this.routerInfo.snapshot.params['id'] ; 
 		this.getAllImg() ;
+		this.orderInfo = this.sgo.get("checkInfo")
 	};
-
+	orderInfo : object ;
 	orderId : number ;
 	imgUploads : object[] = [] ;
 	getAllImg(){
@@ -92,6 +95,25 @@ export class ProfileTransComponent implements OnInit{
 		});
 
 		this.imgUploads[idx]['active'] = !this.imgUploads[idx]['active'] ;
+	};
+
+	profileTrans(){
+		let orderId = this.orderId
+		let obj = {
+			"orderStatus" : this.orderInfo['status'],
+			"opinion" : "" ,
+		}
+		this.allSer.pass( orderId , obj)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功") ;
+						this.router.navigate(['/workbench/wait']) ;
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
 	}
 };
 

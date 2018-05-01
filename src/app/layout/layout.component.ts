@@ -31,11 +31,31 @@ export class LayoutComponent implements OnInit {
     }
 
     ngOnInit(){
+      let __this = this ;
+      setInterval( () => {
+        let date = new Date() ;
+
+        let str = '当前时间 : ' ;
+
+        str += date.getFullYear() +"年" ;
+        str += fixZero(date.getMonth() + 1 ) + "月" ; 
+
+        str += fixZero(date.getDate())+"日  " ;
+
+        str += fixZero(date.getHours()) + ":" +fixZero(date.getMinutes()) + ":" +fixZero(date.getSeconds()) ; 
+
+        __this.dateTime = str ;
+      }, 1000); 
+      // let menu_arr = [1,2,3,4,5,6,7,8,9] ;
+      // this.menuList = this.s_menu.getMenu(menu_arr) ;
+      // this.sideMenu = this.menuList[0]['data'] ;
+
+      // console.log(this.menuList) ;
+      // this.loginInfo = this.sgo.get("loginInfo") ;
 
       let menu_arr = [1,2,3,4,5,6,7,8,9] ;
       this.menuList = this.s_menu.getMenu(menu_arr) ;
-      this.sideMenu = this.menuList[0]['data'] ;
-
+      this.sideMenu = this.menuList
       this.loginInfo = this.sgo.get("loginInfo") ;
     };
 
@@ -95,4 +115,10 @@ export class LayoutComponent implements OnInit {
       this.msg.notifySuccess("操作成功","当前用户已退出登陆") ;
       this.router.navigate(['/login']) ;
     };
+
+    dateTime : string ;
 };
+
+const fixZero = (data) => {
+  return data >= 10 ? data : "0" + data ;
+}

@@ -51,7 +51,8 @@ export class ConfigComponent implements OnInit{
 					Validators.pattern(/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/)
 				]
 			),
-			"remark" : [null]
+			"remark" : [null] ,
+			"imagePath" : [null]
 		});
 	};
 	tableData : Object = {
@@ -175,15 +176,36 @@ export class ConfigComponent implements OnInit{
 			repaymentMode : _map[method],
 			loanDeadline : this.productInfo.loanDeadline,
 			loanLimit : this.productInfo.loanLimit,
-			remark : this.productInfo.remark
+			remark : this.productInfo.remark ,
+			imagePath : this.productInfo.imagePath
 		});
 	};
 
 	makeNew(){
 		let data = this.validateForm.value ;
+		data['id'] = this.productInfo.id ;
 		data['annualInterestRate'] = data['annualInterestRate'] / 100 ;
 		data['overdueFine'] = data['overdueFine'] / 100 ;
-		this.proSer.createPro(data)
+
+		var formData = new FormData() ;
+		formData.append("productName" , data['productName']);
+		formData.append("annualInterestRate" , data['annualInterestRate']);
+		formData.append("interestPenalty" , data['interestPenalty']);
+		formData.append("overdueFine" , data['overdueFine']);
+		formData.append("repaymentMode" , data['repaymentMode']);
+		formData.append("loanDeadline" , data['loanDeadline']);
+		formData.append("loanLimit" , data['loanLimit']);
+		formData.append("remark" , data['remark']);
+
+		let file = document.querySelector("#files")['files'][0] ;
+
+		if(!file){
+			this.msg.warn("请选择产品封面") ;
+			return ;
+		};
+		formData.append("file" , file)  ;
+
+		this.proSer.createPro(formData)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
@@ -231,21 +253,22 @@ export class ConfigComponent implements OnInit{
 		formData.append("remark" , data['remark']);
 
 		let file = document.querySelector("#files")['files'][0] ;
+		if(file)
 			formData.append("file" , file)  ;
-
-		console.log(formData) ;
+		else
+			formData.append("imagePath",data['imagePath'])
 		
-		// this.proSer.editPro(formData)
-		// 	.subscribe(
-		// 		res => {
-		// 			if(res['success'] == true){
-		// 				this.msg.success("保存成功") ;
-		// 				this.infoBoxShow = false ;
-		// 				this.getData() ;
-		// 			}else{
-		// 				this.msg.error("保存失败,原因:" + res['msg']) ;
-		// 			};
-		// 		}
-		// 	)
+		this.proSer.editPro(formData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("保存成功") ;
+						this.infoBoxShow = false ;
+						this.getData() ;
+					}else{
+						this.msg.error("保存失败,原因:" + res['msg']) ;
+					};
+				}
+			)
 	}
 }

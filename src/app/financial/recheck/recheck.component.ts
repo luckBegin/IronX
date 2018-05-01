@@ -7,6 +7,7 @@ import { EmitService } from '../../service/event-emit.service';
 import { Router } from '@angular/router' ;
 import { SessionStorageService } from '../../service/storage/session_storage' ;
 import { SearchModel } from './search.model';
+import { validateConfig } from '@angular/router/src/config';
 
 let __this ;
 declare var $ : any ;
@@ -34,7 +35,8 @@ export class RecheckComponent implements OnInit{
 
 		this.getData() ;
 		this.verifyFrorm = this.fb.group({
-			realRepaymentDate : [null , [Validators.required]]
+			realRepaymentDate : [null , [Validators.required]], 
+			id : [null ,[Validators.required]]
 		})
 		__this = this ;
 	} ;
@@ -111,6 +113,9 @@ export class RecheckComponent implements OnInit{
 						__this.orderInfo = item ;
 						__this.boxShow = true ;
 						__this.verifyFrorm.reset() ;
+						__this.verifyFrorm.patchValue({
+							id : item['id']
+						});
 					}
 				}
 			]
@@ -143,12 +148,12 @@ export class RecheckComponent implements OnInit{
 	boxShow : boolean = false ;
 	makeSure(){
 		let obj = this.verifyFrorm.value;
-		let id = this.orderInfo['id'] ;
-		this.finSer.verify(id , obj['realRepaymentDate'])
+		console.log(obj) ;
+		this.finSer.verify(obj)
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.msg.error("操作成功") ;
+						this.msg.success("操作成功") ;
 					}else{
 						this.msg.error("操作失败,原因" + res['msg']) ;
 					}

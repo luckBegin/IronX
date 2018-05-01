@@ -5,12 +5,13 @@ import { HttpClient , HttpParams } from "@angular/common/http" ;
 import { MsgService } from '../service/msg/msg.service' ;
 import { SessionStorageService } from '../service/storage/session_storage';
 import { Router } from '@angular/router' ;
+// <video autoplay="autoplay" loop="loop">  
+// <source  src="./assets/video/bg.mp4" type="video/mp4" >; 
+// </video>
 @Component({
 	selector : "app-login" ,
 	template : `
-		<video autoplay="autoplay" loop="loop">  
-			<source  src="./assets/video/bg.mp4" type="video/mp4" >; 
-		</video>
+
 		<div class="c-flex-row-center wrap">
 			<div class="formWrap">
 				<h4 class='title'>
@@ -63,6 +64,7 @@ import { Router } from '@angular/router' ;
 			justify-content: flex-start;
 			align-items: center;
 			padding: 20px 10px;
+			background: rgba(0, 0, 0, 0.38);
         }
         .formWrap::after{
 			position: absolute;
@@ -78,7 +80,8 @@ import { Router } from '@angular/router' ;
 			border-radius:3px;
         }
         .wrap{
-        	height:100%;
+			height:100%;
+			background : url(../assets/img/bg_login.jpg) round ;
         }
         .formSection{
         	position:relative ;
@@ -87,7 +90,6 @@ import { Router } from '@angular/router' ;
 			line-height: 35px;
 			margin-left: 10%;
 		    margin-bottom: 20px;
-
         }
         .input{
 			width: 100%;

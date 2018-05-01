@@ -75,14 +75,8 @@ export class CheckComponent implements OnInit {
         }
       )
   };
-
-  makeLook(idx) {
-    $(`.showImg:eq(${idx})`).viewer({
-      inline: false,
-      viewed: function () {
-        $(`.showImg:eq(${idx})`).viewer('zoomTo', 1);
-      }
-    });
+  imgUrl : string ;
+  makeLook(idx , url ) {
   };
 
   dealRecord: object[];

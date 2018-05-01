@@ -154,4 +154,26 @@ export class OrderSevice{
 			headers : header
 		});
 	};
+
+	makeLoan(obj : object , orderId : number | string){
+		let url = GLOBAL.API.order.makeLoan  + orderId;
+
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		let para = ObjToQuery(obj) ;
+		return this.http.put(url, {} , {
+			params : para
+		});
+	}
+
+	orderBack(id : number , obj : object ) {
+		let url = GLOBAL.API.order.orderBack + id ;
+		let header = new HttpHeaders()
+			.set("Content-type" , "application/json") ;
+
+		return this.http.put(url, obj , {
+			headers : header
+		});
+	}
 };

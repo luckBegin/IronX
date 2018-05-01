@@ -1,0 +1,72 @@
+<div class="container" *ngIf='orderInfo'>
+	<div class="infoWrap">
+        <div class="info_title">
+            申请信息
+        </div>
+        <div class="info_content">
+            <div class="secItem">
+                <span>申请金额</span>
+                <span>
+                    {{orderInfo.applyMoney}} 元
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="infoWrap">
+        <div class="info_title">
+            核批金额
+        </div>
+        <div class="info_content">
+            <div class="secItem">
+                <span>核批金额</span>
+                <span>
+                    {{orderInfo.mockMoney}} 元
+                </span>
+            </div>
+            <div class="secItem">
+                <span class="title">借款期限</span>
+                <span>
+                     {{orderInfo.deadline}}期
+                </span>
+            </div>
+             <div class="secItem">
+                <span class="title">借款利率</span>
+                <span>
+                     {{orderInfo.annualInterestRate | PercentPipe }}%
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="infoWrap">
+        <div class="info_title">
+            核批金额
+        </div>
+        <div class="info_content">
+            <c-table [tableData]='tableData'>
+            </c-table>
+        </div>
+    </div>
+
+    <form nz-form [nzLayout]="'inline'" [formGroup]="thirdForm">
+        <div class="c-flex-row-start c-flex-auto-wrap">
+            <nz-form-item class='formContent'>
+                <nz-form-label [nzSm]="7" nzRequired nzFor="loanDate">放款时间</nz-form-label>
+                <nz-form-control [nzSm]="16"  [nzOffset]='1'>
+                    <!-- <nz-input-group nzAddOnAfter="元"> -->
+                        <input type="date" nz-input formControlName="loanDate" id="loanDate" >
+                    <!-- </nz-input-group> -->
+                    <nz-form-explain *ngIf="thirdForm.get('loanDate').dirty && thirdForm.get('loanDate').errors">放款时间不能为空</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </form>
+    <div class="btnGroup c-flex-row-start">
+        <!-- <button nz-button nzType="primary" class="c-btn-width usr_cancel" (click)='showRefuse()'>
+            拒绝
+        </button> -->
+        <!-- <button nz-button nzType="primary" class="c-btn-width" (click)="pass()"> -->
+        <button nz-button nzType="primary" class="c-btn-width" (click)="submit()">
+            确认放款
+        </button>
+    </div>
+</div>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../layout/layout.component' ;
 import { LoginComponent } from '../login/login.component';
-import { RouteguardService } from './route-guard'
+import { RouteguardService } from './route-guard';
 const routes: Routes = [
     {
         path: '',
@@ -26,6 +26,9 @@ const routes: Routes = [
             },{
                 path : "afterLoan" ,
                 loadChildren : "app/afterLoan/afterLoan.module#AfterLoanModule"
+            },{
+                path : 'tools' , 
+                loadChildren : "app/tools/tools.module#ToolsModule"
             }
         ],
         // canActivate : [RouteguardService]

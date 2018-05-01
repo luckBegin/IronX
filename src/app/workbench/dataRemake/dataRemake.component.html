@@ -15,7 +15,7 @@
 					[ngClass] = '{"proList_active" : proList_active == idx}'
 					(click) = 'selectPro(item , idx)'
 				>
-					<img src="./assets/img/card.png" alt="" class="c-img-res">
+					<img [src]="item.imagePath?item.imagePath:'./assets/img/card.png'" alt="" class="c-img-res" style="height: 145px;">
 					<div class="cardInfo">
 						<div class="info_title">
 							{{item.productName}}
@@ -195,7 +195,7 @@
 												formControlName="registerProvince"
 												style="width: 120px;margin-right: 20px;" 
 												nzAllowClear nzPlaceHolder="所在省份"
-												(ngModelChange) = 'priveChange("enum_province","enum_city","registerProvince")'
+												(ngModelChange) = 'priveChange($event , "enum_province","enum_city","registerProvince")'
 											>
 												<nz-option 
 													*ngFor = 'let item of enum_province;let idx = index'
@@ -210,7 +210,7 @@
 												style="width: 120px;margin-right: 20px;" 
 												nzAllowClear nzPlaceHolder="所在城市" 
 												*ngIf ='enum_city && enum_city.length > 0'
-												(ngModelChange) = 'priveChange("enum_city","enum_area","registerCity")'
+												(ngModelChange) = 'priveChange($event ,"enum_city","enum_area","registerCity")'
 											>
 												<nz-option 
 													*ngFor = 'let item of enum_city;let idx = index'

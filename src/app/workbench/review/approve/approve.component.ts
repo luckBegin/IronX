@@ -327,6 +327,8 @@ export class ApproveComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
+						this.msg.success("操作成功") ;
+						this.router.navigate(['/workbench/approve/first']) ;
 						// this.current = 1 ;
 					}else{
 						this.msg.error("提交失败, 原因: " + res['msg']) ;
@@ -565,8 +567,9 @@ export class ApproveComponent implements OnInit{
 					if(res['success'] == true){
 						if(res['data']){
 							for(let keys in res['data']){
-								res['data'][keys] = res['data'][keys] + "" ;
-							}
+								if(res['data'][keys])
+									res['data'][keys] = res['data'][keys] + "" ;
+							};
 							this.reportForm.patchValue(res['data']) ;
 						}
 					}else{
@@ -630,5 +633,9 @@ export class ApproveComponent implements OnInit{
 					};
 				}
 			)
+	};
+
+	makeLook( idx : string , index : string){
+
 	};
 };

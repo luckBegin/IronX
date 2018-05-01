@@ -94,6 +94,7 @@ export class ReApproveComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.msg.success("操作成功") ;
+						this.router.navigate(['/workbench/approve/second']) ;
 					}else{
 						this.msg.error("操作失败,原因:" + res['msg']) ;
 					};

@@ -29,6 +29,7 @@ import {OrderSevice} from '../service/order/order.service';
 import {FinancialService} from '../service/financial/financial.service';
 import {AfterLoanService} from '../service/afterLoan/afterLoan.service';
 import { ToolService } from '../service/tool/tool.service'
+import { MenuRemoteServce } from '../service/menu_remote/menu.service'
 
 import {LoginComponent} from '../login/login.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -69,7 +70,8 @@ const services = [
   OrderSevice,
   FinancialService,
   AfterLoanService,
-  ToolService
+  ToolService ,
+  MenuRemoteServce
 ];
 
 const workbench_services = [

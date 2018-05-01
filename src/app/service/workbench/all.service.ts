@@ -32,7 +32,7 @@ export class WorkbenchAll{
 		return this.http.get(url) ;
 	};
 
-	pass(id : string , obj : object ){
+	pass(id : string | number  , obj : object ){
 		let url = GLOBAL.API.workbench.pass +id; 
 
 		let header = new HttpHeaders()

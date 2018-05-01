@@ -7,7 +7,7 @@
 			style="margin-top: 0px;margin-bottom: 0px" 
 		>
 			<span title>
-				<i [className]="items.ico"></i>
+				<i [className]="items.ico" style="color:#fff"></i>
 				<span>{{items.title}}</span>
 			</span>
 		</li>
@@ -23,13 +23,36 @@
 				<span>{{items.title}}</span>
 			</span>
 			<ul>
-				<li 
-					nz-menu-item
-					*ngFor = 'let item of items.childs'
-					(click) = 'urlLink(item)'
-				>
-					{{item.title}}
-				</li>
+				<div *ngFor = 'let item of items.childs'>
+					<li 
+						nz-menu-item
+						(click) = 'urlLink(item)'
+						*ngIf = '!item.childs'
+					>
+						{{item.title}}
+					</li>
+					<li 
+						nz-submenu
+						*ngIf = 'item.childs'
+						style="margin-top: 0px;margin-bottom: 0px;margin-left: -25px"
+						class="itemMenu" 
+					>
+						<span title>
+							<i [className]="items.ico" style="color:#fff"></i>
+							<span>{{item.title}}</span>
+						</span>
+						<ul>
+							<li 
+								nz-menu-item
+								(click) = 'urlLink(item2)'
+								*ngFor = 'let item2 of item.childs'
+							>
+								{{item2.title}}
+							</li>
+						</ul>
+					</li>
+
+				</div>
 			</ul>
 		</li>
 	</div>

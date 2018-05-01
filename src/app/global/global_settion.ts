@@ -78,9 +78,13 @@ const order = {
 	allImg : host  + "/order/ordersource/",
 	postReport : host + "/dueDiligence" ,
 	lastCheck : host + "/flow/saveLastCheck" ,
+	makeLoan : host + "/flow/confirm/loan/" ,
+	orderBack : host +"/flow/unConfirmRollbackStatus/" ,
 }
 const role = {
-	getRoleList : host + "/system/role/getAllRole"
+	getRoleList : host + "/system/role/getAllRole" ,
+	delRole : host + "" ,
+	editRole : host + "/system/role/update" ,
 };
 const financial = {
 	getRecheck : host + "/manage/financial/repayments/nonePay" ,
@@ -94,13 +98,27 @@ const afterLoan = {
 	uploadExcel : host + "/loanAfter/repaymentPlan/import" ,
 	exportExcel : host + "/loanAfter/repaymentManage/export" ,
 	addRecord : host + "/loanAfter/repaymentPlan" ,
+	getCollect :host + "/loanAfter/chaseDebt" ,
+	exportCollect : host  + "/loanAfter/chaseDebt/export" ,
+	sued : host + "/loanAfter/chaseDebt/prosecute/",
+	sueList : host + "/loanAfter/prosecute" ,
+	sueExcel :host + "/loanAfter/prosecute/export",
+	makeSue : host + "/loanAfter/prosecute/operate/" ,
 }
 const download = {
 	img : host + "/order/output/toZip/"
 }
 const tool = {
 	clac : host + "/application/tool/interest" ,
-}
+	siteList : host + "/application/tool/webSites" ,
+
+	delSite : host +"/application/tool/webSite/" ,
+	createSite :host + "/application/tool/webSite" ,
+};
+const menu = {
+	getAllMenu : host + "/system/menu/getAllMenuTree" ,
+	roleMenu : host + "/system/menu/getMenusByRoles"
+};
 export const GLOBAL = {
 	API : {
 		workbench : workbench ,
@@ -115,6 +133,7 @@ export const GLOBAL = {
 		financial: financial ,
 		afterLoan : afterLoan,
 		download : download,
-		tool : tool 
+		tool : tool ,
+		menu : menu 
 	}
 }

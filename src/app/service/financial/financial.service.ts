@@ -17,13 +17,9 @@ export class FinancialService{
 		})
 	};
 
-	verify(id : number , data : Date){
-		let url = GLOBAL.API.financial.verify + id ;
-		let header = new HttpHeaders()
-			.set("Content-type" , "application/json")
-		return this.http.patch(url , {
-			realRepaymentDate : data
-		})
+	verify(obj : object){
+		let url = GLOBAL.API.financial.verify + obj['id'] + "?realRepaymentDate=" + obj['realRepaymentDate']
+		return this.http.patch(url , {});
 	};
 
 	getLoanList(obj : object){

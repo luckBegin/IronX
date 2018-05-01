@@ -1313,8 +1313,11 @@
 		<button nz-button nzType="primary" class="c-btn-width usr_cancel" (click)='showRefuse()'>
 			拒绝
 		</button>
-		<button nz-button nzType="primary" class="c-btn-width" (click)="nextStep()">
+		<button nz-button nzType="primary" class="c-btn-width" (click)="nextStep()" *ngIf='current < 3'>
 			下一步
+		</button>
+		<button nz-button nzType="primary" class="c-btn-width" (click)="nextStep()" *ngIf = 'current >=3 '> 
+			保存
 		</button>
 	</div>
 </div>

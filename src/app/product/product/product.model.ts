@@ -8,4 +8,5 @@ export class ProductModel{
 	remark? : any = '' ;
 	repaymentMode : any = '' ;
 	id? : any ;
+	imagePath : any ;
 }

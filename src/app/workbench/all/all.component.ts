@@ -222,14 +222,14 @@ export class AllComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						let map = {
-							name : "name" ,
-							id : "id"
-						} ;
-						this.departList = DateReflect(map , res['data']) ;
+						let obj = res['data'] ;
+						recursion(res['data']);
+						let arr = [] ; 
+						makeDepart(res['data'] , arr) ;
+						this.departList = arr ;
 					}else{
-						this.msg.warn("获取部门数据失败,原因:" + res['msg']) ;
-					};
+						this.msg.error("获取部门结构信息出错,原因:" + res['msg']) ;
+					}
 				}
 			)
 	};
@@ -359,4 +359,27 @@ export class AllComponent implements OnInit{
 		// 		}
 		// 	)
 	};
+};
+const recursion = function(obj){
+	obj.forEach( (item,index) => {
+		item['title'] = item.name ;
+		item['key'] = item.id ;
+
+		if(item.children){
+			recursion(item.children);
+		};
+	});
+};
+
+const makeDepart = function(obj ,tar){
+	obj.forEach( (item,index) => {
+		let _obj = {
+			value : item.name ,
+			id : item.id
+		};
+		tar.push(_obj) ;
+		if(item.children){
+			makeDepart(item.children , tar);
+		};
+	});
 };

@@ -78,4 +78,21 @@ export class Userservice{
 		let url = GLOBAL.API.usr.getAllDue;
 		return this.http.get(url) ;
 	};
+
+	delRole(id : string | number){
+		let url = GLOBAL.API.role.delRole + id ;
+
+		return this.http.delete(url) ;
+	};
+
+	editRole(obj : object){
+		let url = GLOBAL.API.role.editRole ;
+
+		let header = new HttpHeaders()
+		.set("Content-type" , "application/json");
+
+		return this.http.put(url ,obj , {
+			headers : header
+		});
+	}
 };

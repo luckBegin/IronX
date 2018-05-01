@@ -11,7 +11,9 @@ import { ProductService } from '../../../service/product/product.service' ;
 import { Userservice } from '../../../service/user/user.service'
 import { SessionStorageService } from '../../../service/storage/session_storage'
 import { DateReflect } from '../../../service/date-reflect' ;
+import { FormGroup, FormBuilder } from '@angular/forms';
 
+import{ OrderSevice } from '../../../service/order/order.service'
 let __this ;
 const pass = {
 	name : "通过" ,
@@ -32,7 +34,8 @@ const refues = {
 const cancel = {
 	name : "客户取消" ,
 	fn : function(item){
-
+		__this.selectItem = item ; 
+		__this.cancelModel = true ;
 	}
 };
 
@@ -61,7 +64,8 @@ const detail = {
 const reback = {
 	name : "退回订单" ,
 	fn : function(item){
-
+		__this.orderBack = true ;
+		__this.selectOrder = item ;
 	}
 };
 
@@ -123,11 +127,21 @@ export class  SecondComponent implements OnInit{
 		private service : WorkbenchAll,
 		private msg : MsgService ,
 		private sgo : SessionStorageService ,
-		private router : Router
+		private router : Router ,
+		private fb : FormBuilder ,
+		private orderSer : OrderSevice
 	){};
 
 	ngOnInit(){
 		this.getData() ;
+
+		this.bakckForm = this.fb.group({
+			destOrderStatus:[null],
+			opinion:[null],
+			orderStatus:[null],
+		});
+
+		
 		__this = this ;
 	};
 
@@ -177,4 +191,46 @@ export class  SecondComponent implements OnInit{
 		this.searchModel = new FirstSearchModel();
 		this.getData() ;
 	}
+
+	
+	bakckForm : FormGroup;
+	orderBack : boolean = false ;
+	selectOrder : object ;
+
+	backSure(){
+		let id = this.selectOrder['id'] ; 
+		let postData = this.bakckForm.value ;
+		postData['orderStatus'] = this.selectOrder['status'] ;
+		this.orderSer.orderBack(id,postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功") ;
+						this.getData() ;
+						this.orderBack = false ; 
+					}else{
+						this.msg.error('操作失败,原因:' +res['msg']);
+					};
+				}
+			)
+	}
+
+	selectItem : object ;
+	cancelModel :boolean = false ;
+	cancel(){
+		let id = this.selectItem['id'];
+		this.service.cancel(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.cancelModel = false ;
+						this.msg.notifySuccess("操作成功",'该订单已标记为客户取消');
+						this.getData();
+					}else{
+						this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+					};
+				}
+			)
+	};
+
 };

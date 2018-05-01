@@ -46,4 +46,49 @@ export class AfterLoanService{
 			headers : header
 		})
 	}
+
+	getCollect(obj : object){
+        let url = GLOBAL.API.afterLoan.getCollect;
+        let para = ObjToQuery(obj) ;
+		return this.http.get(url , {
+            params : para
+        });
+	};
+
+	getCollectExcel(obj : object) : string{
+		let url = GLOBAL.API.afterLoan.exportCollect +"?" ;
+			url += ObjToQueryString(obj) ;
+		return url ;
+	};
+
+	sued(id){
+		let url = GLOBAL.API.afterLoan.sued  + id ;
+		return this.http.patch(url , {}) ;
+	}
+
+	getSue(obj : object){
+        let url = GLOBAL.API.afterLoan.getCollect;
+        let para = ObjToQuery(obj) ;
+		return this.http.get(url , {
+            params : para
+        });
+	};
+	sueExcel(obj : object) : string{
+		let url = GLOBAL.API.afterLoan.sueExcel +"?" ;
+			url += ObjToQueryString(obj) ;
+		return url ;
+	}
+
+	makeSue(id , state){
+		let url =  GLOBAL.API.afterLoan.makeSue + id + "?stateCode=" + state ;
+		return this.http.patch(url , {}) ;
+	}
+
+	sueList(obj : object){
+        let url = GLOBAL.API.afterLoan.sueList;
+        let para = ObjToQuery(obj) ;
+		return this.http.get(url , {
+            params : para
+        });
+	};
 };

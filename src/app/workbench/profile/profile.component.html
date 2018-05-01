@@ -1,0 +1,175 @@
+<div class="c-content-wrap">
+	<div class="c-search-wrap">
+		<div class="c-search-row c-flex-auto-wrap c-flex-row-start">
+			<div class="c-search-item">
+				<input  nz-input type="date" [(ngModel)] = 'searchModel.min'>
+			</div>
+			<div class="c-search-item">
+				<input  nz-input type="date" [(ngModel)] = 'searchModel.max'>
+			</div>
+			
+			<div class="c-search-item">
+				<input nz-input placeholder="申请人姓名" [(ngModel)]="searchModel.proposerName">
+			</div>
+		</div>
+		<div class="c-search-row c-flex-row-start c-flex-auto-wrap">
+			<div class="c-search-item">
+				<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择网点"  [(ngModel)]="searchModel.departmentId" >
+					<nz-option 
+						*ngFor = 'let item of optionDeapart;'
+						[nzValue]="item.id.toString()" 
+						[nzLabel]="item.value"
+					>
+					</nz-option>
+				</nz-select>
+			</div>
+
+			<div class="c-search-item">
+				<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择产品" [(ngModel)]="searchModel.productId" >
+					<nz-option 
+						*ngFor = 'let item of proList;'
+						[nzValue]="item.id.toString()" 
+						[nzLabel]="item.productName"
+					>
+					</nz-option>
+				</nz-select>
+			</div>
+
+			<div class="c-search-item">
+				<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择客户经理" [(ngModel)]="searchModel.createUser" >
+					<nz-option 
+						*ngFor = 'let item of managerList;'
+						[nzValue]="item.id.toString()" 
+						[nzLabel]="item.name"
+					>
+					</nz-option>
+				</nz-select>
+			</div>
+
+			<div class="c-search-item">
+				<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择处理人" [(ngModel)]="searchModel.modifyUser" >
+					<nz-option 
+						*ngFor = 'let item of dealUser;'
+						[nzValue]="item.id.toString()" 
+						[nzLabel]="item.name"
+					>
+					</nz-option>
+				</nz-select>
+			</div>
+		</div>
+		<div class="c-search-row c-flex-row-start c-flex-auto-wrap">
+			<div class="c-search-btn">
+				 <button nz-button nzType="primary" (click)='reset()'>重置</button>
+			</div>
+			<div>
+				 <button (click) = 'search()' nz-button nzType="primary"><i class="anticon anticon-search"></i>搜索</button>
+			</div>
+		</div>
+	</div>
+	<c-table [tableData]='tableData'>
+	</c-table>
+	<div class="c-pag">
+		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+	</div>
+</div>
+
+<nz-modal [(nzVisible)]="passModel" [nzTitle]="passTitle" [nzContent]="passContent" [nzFooter]="passFooter" (nzOnCancel)="passModel = false">
+  <ng-template #passTitle>
+  	确认预审通过
+  </ng-template>
+
+  <ng-template #passContent>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div>
+  			<h4>
+  				确认通过
+  			</h4>
+  			<p>
+  				通过之后,将立即进入资料补录阶段
+  			</p>
+  		</div>
+  	</div>
+  </ng-template>
+
+  <ng-template #passFooter>
+    <button nz-button nzType="default" (click)="passModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="pass()">通过</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="refuseModel" [nzTitle]="refuseTitle" [nzContent]="refuseContent" [nzFooter]="refuseFotter" (nzOnCancel)="refuseModel = false">
+  <ng-template #refuseTitle>
+  	确认预审拒绝
+  </ng-template>
+
+  <ng-template #refuseContent>
+  		<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+			<nz-form-item class='formSec'>
+<!-- 				  "0": "进件信息造假",
+    "1": "进件资料造假",
+    "2": "经营异常",
+    "3": "法院纠纷",
+    "4": "负面信息",
+    "5": "同行进件",
+    "6": "偿贷能力不足/负债搞/隐形负债超纲",
+    "7": "不符合进件大纲",
+    "8": "综合评分不足",
+    "9": "风险行业",
+    "10": "客户取消" -->
+				<nz-form-label [nzSm]="5" nzRequired nzFor="rejectionReason">拒绝原因</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<nz-select name="select-error" formControlName="rejectionReason" id="rejectionReason">
+						<nz-option nzValue="0" nzLabel="进件信息造假"></nz-option>
+						<nz-option nzValue="1" nzLabel="进件资料造假"></nz-option>
+						<nz-option nzValue="2" nzLabel="经营异常"></nz-option>
+						<nz-option nzValue="3" nzLabel="法院纠纷"></nz-option>
+						<nz-option nzValue="4" nzLabel="负面信息"></nz-option>
+						<nz-option nzValue="5" nzLabel="同行进件"></nz-option>
+						<nz-option nzValue="6" nzLabel="偿贷能力不足/负债搞/隐形负债超纲"></nz-option>
+						<nz-option nzValue="7" nzLabel="不符合进件大纲"></nz-option>
+						<nz-option nzValue="8" nzLabel="综合评分不足"></nz-option>
+						<nz-option nzValue="9" nzLabel="风险行业"></nz-option>
+						<nz-option nzValue="10" nzLabel="客户取消"></nz-option>
+					</nz-select>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="opinion">审批意见</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<textarea nz-input formControlName="opinion" rows="4" placeholder="备注" id="opinion"></textarea>
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+  </ng-template>
+
+  <ng-template #refuseFotter>
+    <button nz-button nzType="default" (click)="refuseModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="refuse()">拒绝</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="cancelModel" [nzTitle]="refuseTitle" [nzContent]="cancelContent" [nzFooter]="cancelFotter" (nzOnCancel)="cancelModel = false">
+  <ng-template #cancelTitle>
+  	确认客户取消
+  </ng-template>
+
+  <ng-template #cancelContent>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div>
+  			<h4>
+  				确认客户取消
+  			</h4>
+  			<p>
+  				一旦客户取消,数据将不可恢复
+  			</p>
+  		</div>
+  	</div>
+  </ng-template>
+
+  <ng-template #cancelFotter>
+    <button nz-button nzType="default" (click)="cancelModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="cancel()">客户取消</button>
+  </ng-template>
+</nz-modal>

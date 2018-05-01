@@ -1,0 +1,125 @@
+<nz-tabset [nzSelectedIndex] = 'current'>
+	<nz-tab nzTitle="利息计算器" >
+		<div style="padding:20px 50px">
+			<form nz-form [nzLayout]="'inline'" [formGroup]="thirdForm">
+				<div class="c-flex-row-start c-flex-auto-wrap">
+
+					<nz-form-item class='formContent'>
+						<nz-form-label [nzSm]="7" nzRequired nzFor="productId">贷款产品</nz-form-label>
+						<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+							<nz-select name="select-error" formControlName="productId" id="productId" (ngModelChange) = 'choseChange($event)'>
+								<nz-option *ngFor='let item of proList' [nzValue]="item.id" [nzLabel]="item.productName"></nz-option>
+							</nz-select>
+						</nz-form-control>
+					</nz-form-item>
+
+					<nz-form-item class='formContent'>
+						<nz-form-label [nzSm]="7" nzRequired nzFor="agreeMoney">核批金额</nz-form-label>
+						<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+							<nz-input-group nzAddOnAfter="元">
+								<input nz-input formControlName="agreeMoney" id="agreeMoney" (change)='choseChange()'>
+							</nz-input-group>
+							<nz-form-explain *ngIf="thirdForm.get('agreeMoney').dirty && thirdForm.get('agreeMoney').errors">借款期限必须为6的倍数</nz-form-explain>
+						</nz-form-control>
+					</nz-form-item>
+					<nz-form-item class='formContent'>
+						<nz-form-label [nzSm]="7" nzRequired nzFor="deadLine">借款期限</nz-form-label>
+						<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+							<nz-input-group nzAddOnAfter="期">
+								<input nz-input formControlName="deadLine" id="deadLine" (change)='choseChange()' readonly='true'>
+							</nz-input-group>
+							<nz-form-explain *ngIf="thirdForm.get('deadLine').dirty && thirdForm.get('deadLine').errors">借款期限必须为6的倍数</nz-form-explain>
+						</nz-form-control>
+					</nz-form-item>
+
+					<nz-form-item class='formContent'>
+						<nz-form-label [nzSm]="7" nzRequired nzFor="annualInterestRate">还款方式</nz-form-label>
+						<nz-form-control [nzSm]="16"  [nzOffset]='1'>
+							<nz-input-group nzAddOnAfter="%">
+								<input nz-input formControlName="annualInterestRate" id="annualInterestRate" readonly='true'>
+							</nz-input-group>
+							<nz-form-explain *ngIf="thirdForm.get('annualInterestRate').dirty && thirdForm.get('annualInterestRate').errors">借款期限必须为6的倍数</nz-form-explain>
+						</nz-form-control>
+					</nz-form-item>
+				</div>
+			</form>
+
+			<c-table [tableData]='tableData'>
+
+			</c-table>
+		</div>		
+	</nz-tab>
+
+	<nz-tab nzTitle="查询网址">
+		<div style="padding:20px 50px">
+			<button nz-button nzType="primary" style="border-radius: 0px" (click)='addNew()'>
+				<i class="anticon anticon-plus"></i>
+				新增
+			</button>
+			<c-table [tableData]='tableData2'>
+			</c-table>
+		</div>
+	</nz-tab>
+</nz-tabset>
+
+
+<nz-modal [(nzVisible)]="infoBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="infoBoxShow = false">
+	<ng-template #modalTitle>
+		<span *ngIf='!editMark'>新增产品</span>
+		<span *ngIf='editMark'>编辑产品</span>
+	</ng-template>
+
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="siteName">名称</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<input nz-input formControlName="siteName" id="siteName">
+					<nz-form-explain *ngIf="validateForm.get('siteName').dirty && validateForm.get('siteName').errors">名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="siteAddress">地址</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+						<input nz-input formControlName="siteAddress" id="siteAddress">
+					<nz-form-explain *ngIf="validateForm.get('siteAddress').dirty && validateForm.get('siteAddress').errors">须以http://或者https://开头,且不能为空</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="5" nzFor="remark">备注</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<input nz-input formControlName="remark" id="remark">
+				</nz-form-control>
+			</nz-form-item>
+
+		</form>
+	</ng-template>
+	<ng-template #modalFooter>
+		<button nz-button nzType="primary" *ngIf='!editMark' [disabled]="!validateForm.valid" (click)='makeNew()'>确定</button>
+		<button nz-button nzType="primary" *ngIf='editMark' [disabled]="!validateForm.valid" (click)='save()'>保存</button>
+		<button nz-button nzType="default" (click)='infoBoxShow = false'>关闭</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal
+	[(nzVisible)]="delMark"
+	nzTitle="确认删除"
+	nzOkText="确定"
+	nzCancelText="取消"
+	(nzOnOk)="delProduct()"
+	(nzOnCancel)="delMark = !delMark"
+>
+		<div class="c-flexStart">
+			<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+			<div>
+				<h4>
+					确认删除？
+				</h4>
+				<p>
+					一旦删除,该数据将不可恢复
+				</p>
+			</div>
+		</div>
+</nz-modal>

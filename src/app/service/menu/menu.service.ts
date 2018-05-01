@@ -10,43 +10,51 @@ import { caiwuguanli } from './model/caiwuguanli.model' ;
 const menuList = {
 	1 : { 
 		title : "工作台" ,
-		data:gongzuotai ,
-		type : "menu" 
+		childs:gongzuotai ,
+		type : "menu",
+		ico : "anticon anticon-plus-square-o" ,
 	} ,
 	2 : {
 		title : "客户管理",
-		data : kehuguanli,
-		type : "menu" 
+		childs : kehuguanli,
+		type : "menu" ,
+		ico : "anticon anticon-plus-square-o" ,
 	} ,
 	3 : {
 		title : "贷后管理" ,
-		data: daihouguanli ,
+		childs: daihouguanli ,
 		type : "menu" ,
+		ico : "anticon anticon-plus-square-o" ,
 	} ,
 	4 : {
 		title : "财务管理" ,
-		data: caiwuguanli ,
+		childs: caiwuguanli ,
 		type : "menu" ,
+		ico : "anticon anticon-plus-square-o" ,
 	} ,
-	5 : {
-		title:"数据统计",
-		data:shujutongji ,
-		type:"menu"
-	} ,
+	// 5 : {
+	// 	title:"数据统计",
+	// 	childs:shujutongji ,
+	// 	type:"menu",
+	// ico : "anticon anticon-plus-square-o" ,
+	// } ,
 	6 : {
 		title:"权限中心" ,
-		data:quanxianzhongxin,
+		childs:quanxianzhongxin,
 		type:"menu" ,
+		ico : "anticon anticon-plus-square-o" ,
 	},
 	7 : { 
 		title :"配置中心" ,
-		data : peizhizhongxin ,
+		childs : peizhizhongxin ,
 		type : 'menu' ,
+		ico : "anticon anticon-plus-square-o" ,
 	},
 	8 : {
 		title : "应用工具" ,
-		data : yingyonggongju ,
-		type : 'dropdown'
+		childs : yingyonggongju ,
+		type : 'dropdown',
+		ico : "anticon anticon-plus-square-o" ,
 	}
 };
 Injectable()

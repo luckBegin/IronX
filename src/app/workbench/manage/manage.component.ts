@@ -7,6 +7,7 @@ import { PrecheckSearchModel } from './precheck-search.model' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage'
+import{ OrderSevice } from '../../service/order/order.service'
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -20,7 +21,8 @@ export class ManageComponent implements OnInit{
 		private routerInfo : ActivatedRoute ,
 		private fb : FormBuilder ,
 		private sgo : SessionStorageService ,
-		private router : Router 
+		private router : Router,
+		private orderSer : OrderSevice
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -30,6 +32,13 @@ export class ManageComponent implements OnInit{
 			"rejectionReason" : [null , [Validators.required]] ,
 			"opinion" : [ null ]
 		})
+
+		this.bakckForm = this.fb.group({
+			destOrderStatus:[null],
+			opinion:[null],
+			orderStatus:[null],
+		});
+		
 	};
 	validateForm : FormGroup ;
 	searchModel : PrecheckSearchModel = new PrecheckSearchModel();
@@ -47,6 +56,11 @@ export class ManageComponent implements OnInit{
 					__this.sgo.set("orderInfo" , data) ;
 					__this.router.navigate(["/workbench/income"]);
 				};
+
+				if($event == '退回订单'){
+					__this.orderBack = true ;
+					__this.selectOrder = data ;
+				}
 			}} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
@@ -149,4 +163,27 @@ export class ManageComponent implements OnInit{
 				}
 			)
 	}
+
+	bakckForm : FormGroup;
+	orderBack : boolean = false ;
+	selectOrder : object ;
+
+	backSure(){
+		let id = this.selectOrder['id'] ; 
+		let postData = this.bakckForm.value ;
+		postData['orderStatus'] = this.selectOrder['status'] ;
+		this.orderSer.orderBack(id,postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功") ;
+						this.getList() ;
+						this.orderBack = false ; 
+					}else{
+						this.msg.error('操作失败,原因:' +res['msg']);
+					};
+				}
+			)
+	}
+
 };

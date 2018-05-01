@@ -41,130 +41,163 @@
 			<div class="c-pag">
 				<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="stuffSearch.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
 			</div>
-</div>
+		</div>
 	</nz-tab>
 	<nz-tab nzTitle="网点结构">
-		<div *ngIf='treeInfo'>
-			<nz-tree [(ngModel)]="treeInfo">
+		<div *ngIf='treeInfo' style="padding: 20px 40px 170px 20px;">
+			<nz-tree 
+				[(ngModel)]="treeInfo"  
+				[nzShowLine] = 'true' 
+				(nzContextMenu) = 'hideMenu()' 
+				(nzClick)='showMenu($event) ' 
+				(nzExpandChange)='hideMenu()'
+				[nzDefaultExpandAll] = 'true' 
+			>
 			</nz-tree>
 		</div>
 	</nz-tab>
 	<nz-tab nzTitle="角色管理">
-
+		<c-table [tableData]='tableData_role'>
+		</c-table>
 	</nz-tab>
 </nz-tabset>
+<div class="menu" #menu>
+	<ul>
+		<li (click)='addItem()'>添加</li>
+		<li (click)='editItem()'>编辑</li>
+		<li (click)='removeItem()'>删除</li>
+		<li (click) = 'hideMenu()'>关闭</li>
+	</ul>
+</div>
 
+<nz-modal 
+	[(nzVisible)]="refuseModel" 
+	[nzTitle]="refuseTitle" 
+	[nzContent]="refuseContent" 
+	[nzFooter]="refuseFotter" 
+	(nzOnCancel)="refuseModel = false"
+>
+<ng-template #refuseTitle>
+		确认删除节点
+	</ng-template>
 
-<nz-modal [(nzVisible)]="stuffBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="stuffBoxShow = false">
+	<ng-template #refuseContent>
+		<div class="c-flexStart">
+			<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+			<div>
+				<h4>
+					确认删除
+				</h4>
+				<p>
+					一旦删除,数据不可恢复
+				</p>
+			</div>
+		</div>
+	</ng-template>
+
+	<ng-template #refuseFotter>
+		<button nz-button nzType="default" (click)="refuseModel = false">取消</button>
+		<button nz-button nzType="primary" (click)="deleteNode()">删除</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="infoBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="infoBoxShow = false">
 	<ng-template #modalTitle>
-		<span *ngIf='!editMark'>新增员工</span>
-		<span *ngIf='editMark'>编辑员工</span>
+		<span *ngIf='!editMark'>新增网点</span>
+		<span *ngIf='editMark'>编辑网点</span>
 	</ng-template>
 
 	<ng-template #modalContent>
-		<form nz-form [nzLayout]="'inline'" [formGroup]="stuffForm">
+		<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
 			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="username">用户名</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<input nz-input formControlName="username" id="username">
-					<nz-form-explain *ngIf="stuffForm.get('username').dirty && stuffForm.get('username').errors">用户名必须输入</nz-form-explain>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="parentName">父级网点</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<input nz-input formControlName="parentName" id="parentName" readonly='true'>
 				</nz-form-control>
 			</nz-form-item>
 
 			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="name">真实姓名</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<input nz-input formControlName="name" id="name">
-					<nz-form-explain *ngIf="stuffForm.get('name').dirty && stuffForm.get('name').errors">真实姓名必须输入</nz-form-explain>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="telephone">手机号</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<input nz-input formControlName="telephone" id="telephone">
-					<nz-form-explain *ngIf="stuffForm.get('telephone').dirty && stuffForm.get('telephone').errors">手机号必须输入,或输入不正确</nz-form-explain>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="idCard">身份证号码</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<input nz-input formControlName="idCard" id="idCard">
-					<nz-form-explain *ngIf="stuffForm.get('idCard').dirty && stuffForm.get('idCard').errors">身份证必须输入,或输入不正确</nz-form-explain>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="password">登录密码</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<div class="c-flex-row-start">
-						<input nz-input formControlName="password" id="password" style="margin-right: 10px">
-						<button nz-button nzType="primary" (click) = 'randomPass(8)'>随机密码</button>
-					</div>
-					<nz-form-explain *ngIf="stuffForm.get('password').dirty && stuffForm.get('password').errors">身份证必须输入</nz-form-explain>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="departmentId">所属网点</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="departmentId" id="departmentId">
-						<nz-option 
-							*ngFor = 'let item of optionDeapart;'
-							[nzValue]="item.id.toString()" 
-							[nzLabel]="item.value"
-						>
-						</nz-option>
-					</nz-select>
-					<nz-form-explain *ngIf="stuffForm.get('departmentId').dirty && stuffForm.get('departmentId').errors">所属网点必须选择</nz-form-explain>
-				</nz-form-control>
-			</nz-form-item>
-
-			<nz-form-item class='formSec'>
-				<nz-form-label [nzSm]="6" nzRequired nzFor="roleIds">所属角色</nz-form-label>
-				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
-					<nz-select nzMode="tags" style="width: 100%;" nzPlaceHolder="请选择所属角色" id='roleIds' formControlName="roleIds">
-						<nz-option *ngFor="let option of roleList" [nzLabel]="option.nameZh" [nzValue]="option.id.toString()">
-						</nz-option>
-					</nz-select>
-					<nz-form-explain *ngIf="stuffForm.get('roleIds').dirty && stuffForm.get('roleIds').errors">所属角色必须选择</nz-form-explain>
+				<nz-form-label [nzSm]="5" nzRequired nzFor="name">网点名称</nz-form-label>
+				<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<!-- <nz-input-group nzAddOnAfter="%"> -->
+						<input nz-input formControlName="name" id="name">
+					<!-- </nz-input-group> -->
+					<nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">网点名称不能为空</nz-form-explain>
 				</nz-form-control>
 			</nz-form-item>
 		</form>
 	</ng-template>
+
 	<ng-template #modalFooter>
-		<button nz-button nzType="primary" *ngIf='!stuffEditMark' [disabled]="!stuffForm.valid" (click)='makeNewStuff()'>确定</button>
-		<button nz-button nzType="primary" *ngIf='stuffEditMark' [disabled]="!stuffForm.valid" (click)='save()'>保存</button>
-		<button nz-button nzType="default" (click)='stuffBoxShow = false'>关闭</button>
+		<button nz-button nzType="primary" *ngIf='!editMark' [disabled]="!validateForm.valid" (click)='makeNew()'>确定</button>
+		<button nz-button nzType="primary" *ngIf='editMark' [disabled]="!validateForm.valid" (click)='save()'>保存</button>
+		<button nz-button nzType="default" (click)='infoBoxShow = false'>关闭</button>
 	</ng-template>
 </nz-modal>
 
-<nz-modal
-	[(nzVisible)]="freezeMark"
-	nzTitle="确认操作"
-	nzOkText="确定"
-	nzCancelText="取消"
-	(nzOnOk)="freeOper()"
-	(nzOnCancel)="freezeMark = !freezeMark"
+<nz-modal 
+	[(nzVisible)]="delRole" 
+	[nzTitle]="refuseTitle2" 
+	[nzContent]="refuseContent2" 
+	[nzFooter]="refuseFotter2" 
+	(nzOnCancel)="delRole = false"
 >
-  	<div class="c-flexStart" *ngIf='stuffInfo'>
-  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
-  		<div *ngIf = 'stuffInfo.status == 1'>
-  			<h4>
-  				确认冻结？
-  			</h4>
-  			<p>
-  				一旦冻结,该账户将不可登录
-  			</p>
-  		</div>
-  		<div *ngIf = 'stuffInfo.status != 1'>
-  			<h4>
-  				确认解冻？
-  			</h4>
-  			<p>
-  				一旦解冻,该账户将可登录
-  			</p>
-  		</div>
-  	</div>
+<ng-template #refuseTitle2>
+		确认删除该角色
+	</ng-template>
+
+	<ng-template #refuseContent2>
+		<div class="c-flexStart">
+			<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+			<div>
+				<h4>
+					确认删除
+				</h4>
+				<p>
+					一旦删除,数据不可恢复
+				</p>
+			</div>
+		</div>
+	</ng-template>
+
+	<ng-template #refuseFotter2>
+		<button nz-button nzType="default" (click)="delRole = false">取消</button>
+		<button nz-button nzType="primary" (click)="delRoleFn()">删除</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal 
+	[(nzVisible)]="editRole" 
+	[nzTitle]="refuseTitle3" 
+	[nzContent]="refuseContent3" 
+	[nzFooter]="refuseFotter3" 
+	(nzOnCancel)="editRole = false"
+>
+<ng-template #refuseTitle3>
+		编辑该角色
+	</ng-template>
+
+	<ng-template #refuseContent3>
+		<nz-form-item class='formSec'>
+			<nz-form-label [nzSm]="5" nzRequired nzFor="roleName">角色名</nz-form-label>
+			<nz-form-control [nzSm]="18"  [nzOffset]='1'>
+					<input nz-input id="roleName" [(ngModel)] = 'roleModel.nameZh'>
+			</nz-form-control>
+		</nz-form-item>
+
+
+		<nz-tree
+			[(ngModel)]="menuTree"
+			[nzCheckable]="true"
+			[nzDefaultExpandAll]="true"
+			(nzCheckBoxChange) = 'choseMenu($event)'
+			[nzDefaultCheckedKeys] = 'expandKey'
+		>
+		</nz-tree>
+	</ng-template>
+
+	<ng-template #refuseFotter3>
+		<button nz-button nzType="default" (click)="editRole = false">取消</button>
+		<button nz-button nzType="primary" (click)="editRoleFn()">保存</button>
+	</ng-template>
 </nz-modal>

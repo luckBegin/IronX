@@ -1,0 +1,316 @@
+<div class="c-content-wrap">
+	<div class="tabSwitch">
+		<div class="searchGroup">
+			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
+				<div class="c-search-item">
+					<input type="date">
+				</div>
+				<div class="c-search-item">
+					<input type="date">
+				</div>
+				<div class="c-search-item">
+					<input nz-input placeholder="申请人姓名">
+				</div>
+			</div>
+			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
+
+				<!-- 网点 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.departmentId" nzAllowClear nzPlaceHolder="网点">
+						<nz-option *ngFor = 'let item of departList' [nzValue]="item.id" [nzLabel]="item.name">
+						</nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 产品名称 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.productId" nzAllowClear nzPlaceHolder="产品名称">
+						<nz-option *ngFor = 'let item of productList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 客户经理 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.createUser" nzAllowClear nzPlaceHolder="客户经理">
+						<nz-option *ngFor = 'let item of userManagerList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 节点流程 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;"  nzAllowClear nzPlaceHolder="流程节点">
+						<nz-option *ngFor = 'let item of processList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+
+				<!-- 处理人 -->
+				<div class="c-search-item">
+					<nz-select style="width: 120px;" [(ngModel)]="searchModel.modifyUser" nzAllowClear nzPlaceHolder="处理人">
+						<nz-option *ngFor = 'let item of dealUserList' [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+					</nz-select>
+				</div>
+			</div>
+			<div class="c-flex-row-start c-flex-auto-wrap">
+				<div class="c-search-btn">
+					 <button nz-button nzType="primary" (click)='reset()'>重置</button>
+				</div>
+				<div>
+					 <button (click) = 'search()' nz-button nzType="primary"><i class="anticon anticon-search"></i>搜索</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="c-flex-row-start">
+		<!-- <button nz-button nzType="primary" style="border-radius: 0px;margin-right: 20px;" (click)='importSingle()'>
+			<i class="anticon anticon-plus"></i>
+			导入
+		</button>
+		<div class="fileWrap">
+			<button id="importAll" nz-button nzType="primary" style="border-radius: 0px;" (click)='importAll()'>
+				<i class="anticon anticon-plus"></i>
+				导入excel
+			</button>
+			<input type="file" id="excelFile" (change) = 'fileChange($event)'>
+		</div> -->
+		<button nz-button nzType="primary" style="border-radius: 0px;margin-right: 20px;" (click)='exportExcel()'>
+			<i class="anticon anticon-plus"></i>
+			导出
+		</button>
+	</div>
+	<c-table [tableData]='tableData'>
+	</c-table>
+	<div class="c-pag">
+		<nz-pagination (nzPageIndexChange)='pageChange($event , "page")' (nzPageSizeChange) = 'pageChange($event , "size")' [nzPageIndex]="searchModel.currentPage"  [nzTotal]="totalSize" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+	</div>
+</div>
+
+<nz-modal
+	[(nzVisible)]="delMark"
+	nzTitle="操作"
+	nzOkText="确定"
+	nzCancelText="取消"
+	(nzOnOk)="delOrder()"
+	(nzOnCancel)="delMark = !delMark"
+>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div *ngIf='sueMark == false'>
+  			<h4>
+				确认起诉
+  			</h4>
+  			<p>
+				确认起诉
+  			</p>
+		</div>
+		<div *ngIf='sueMark == true '>
+			<h4>
+				移交起诉
+			</h4>
+			<p>
+				移交起诉
+			</p>
+		</div>
+  	</div>
+</nz-modal>
+
+<nz-modal [nzWidth]='800' [(nzVisible)]="infoBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="infoBoxShow = false">
+	<ng-template #modalTitle>
+		<span *ngIf='!editMark'>导入</span>
+		<span *ngIf='editMark'>编辑</span>
+	</ng-template>
+
+	<ng-template #modalContent>
+		<form class="c-flex-auto-wrap c-flex-row-start" nz-form [nzLayout]="'inline'" [formGroup]="submitForm" (ngSubmit)="submitForm()">
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="orderNumber">订单编号</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="orderNumber" id="orderNumber">
+					<nz-form-explain *ngIf="submitForm.get('orderNumber').dirty && submitForm.get('orderNumber').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="proposerName">申请人</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="proposerName" id="proposerName">
+					<nz-form-explain *ngIf="submitForm.get('proposerName').dirty && submitForm.get('proposerName').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="idNumber">身份证</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="idNumber" id="idNumber">
+					<nz-form-explain *ngIf="submitForm.get('idNumber').dirty && submitForm.get('idNumber').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="phoneNumber">手机号</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="phoneNumber" id="phoneNumber">
+					<nz-form-explain *ngIf="submitForm.get('phoneNumber').dirty && submitForm.get('phoneNumber').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="clientManager">客户经理</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="clientManager" id="clientManager">
+					<nz-form-explain *ngIf="submitForm.get('clientManager').dirty && submitForm.get('clientManager').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="branchName">所属网点</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="branchName" id="branchName">
+						<nz-option 
+							*ngFor = 'let item of optionDeapart;'
+							[nzValue]="item.id" 
+							[nzLabel]="item.value"
+						>
+						</nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="submitForm.get('branchName').dirty && submitForm.get('branchName').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="productName">产品名称</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择产品" formControlName="productName" id="productName">
+						<nz-option 
+							*ngFor = 'let item of proList;'
+							[nzValue]="item.id" 
+							[nzLabel]="item.value"
+						>
+						</nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="submitForm.get('productName').dirty && submitForm.get('productName').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="applyAmount">借款金额</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="applyAmount" id="applyAmount">
+					<nz-form-explain *ngIf="submitForm.get('applyAmount').dirty && submitForm.get('applyAmount').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="ratifyAmount">审批金额</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input nz-input formControlName="ratifyAmount" id="ratifyAmount">
+					<nz-form-explain *ngIf="submitForm.get('ratifyAmount').dirty && submitForm.get('ratifyAmount').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzFor="enterDate">进件时间</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="date" nz-input formControlName="enterDate" id="enterDate">
+					<nz-form-explain *ngIf="submitForm.get('enterDate').dirty && submitForm.get('enterDate').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="currentBalance">当月应还金额</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="currentBalance" id="currentBalance">
+					<nz-form-explain *ngIf="submitForm.get('currentBalance').dirty && submitForm.get('currentBalance').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="interestPenalty">罚息</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="interestPenalty" id="interestPenalty">
+					<nz-form-explain *ngIf="submitForm.get('interestPenalty').dirty && submitForm.get('interestPenalty').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="overdueFine">滞纳金</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="overdueFine" id="overdueFine">
+					<nz-form-explain *ngIf="submitForm.get('overdueFine').dirty && submitForm.get('overdueFine').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="loanDate">放款日期</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="date" nz-input formControlName="loanDate" id="loanDate">
+					<nz-form-explain *ngIf="submitForm.get('loanDate').dirty && submitForm.get('loanDate').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="totalPeriods">总期数</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="totalPeriods" id="totalPeriods">
+					<nz-form-explain *ngIf="submitForm.get('totalPeriods').dirty && submitForm.get('totalPeriods').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="currentPeriods">当前期数</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="currentPeriods" id="currentPeriods">
+					<nz-form-explain *ngIf="submitForm.get('currentPeriods').dirty && submitForm.get('currentPeriods').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="planRepaymentDate">计划还款日期</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="date" nz-input formControlName="planRepaymentDate" id="planRepaymentDate">
+					<nz-form-explain *ngIf="submitForm.get('planRepaymentDate').dirty && submitForm.get('planRepaymentDate').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="realRepaymentDate">实际还款日期</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="date" nz-input formControlName="realRepaymentDate" id="realRepaymentDate">
+					<nz-form-explain *ngIf="submitForm.get('realRepaymentDate').dirty && submitForm.get('realRepaymentDate').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>			
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="hasDue">是否逾期</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="hasDue" id="hasDue">
+						<nz-option [nzValue] = '1' [nzLabel]='"是"'></nz-option>
+						<nz-option [nzValue] = '0' [nzLabel]='"否"'></nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="submitForm.get('hasDue').dirty && submitForm.get('hasDue').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>		
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="dueDay">逾期天数</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<input type="text" nz-input formControlName="dueDay" id="dueDay">
+					<nz-form-explain *ngIf="submitForm.get('dueDay').dirty && submitForm.get('dueDay').errors">产品名称必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="repayStatus">还款状态</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="repayStatus" id="repayStatus">
+						<nz-option [nzValue] = '0' [nzLabel]='"未还"'></nz-option>
+						<nz-option [nzValue] = '1' [nzLabel]='"逾期未还"'></nz-option>
+						<nz-option [nzValue] = '2' [nzLabel]='"逾期已还"'></nz-option>
+						<nz-option [nzValue] = '3' [nzLabel]='"已还"'></nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="submitForm.get('repayStatus').dirty && submitForm.get('repayStatus').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>	
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="9" nzRequired nzFor="hasClean">是否结清</nz-form-label>
+				<nz-form-control [nzSm]="14"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="hasClean" id="hasClean">
+						<nz-option [nzValue] = '0' [nzLabel]='"否"'></nz-option>
+						<nz-option [nzValue] = '1' [nzLabel]='"是"'></nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="submitForm.get('hasClean').dirty && submitForm.get('hasClean').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>						
+		</form>
+	</ng-template>
+	<ng-template #modalFooter>
+		<button nz-button nzType="primary" *ngIf='!editMark' (click)='makeNew()'>确定</button>
+		<button nz-button nzType="primary" *ngIf='editMark' (click)='save()'>保存</button>
+		<button nz-button nzType="default" (click)='infoBoxShow = false'>关闭</button>
+	</ng-template>
+</nz-modal>
+<!-- [disabled]="!submitForm.valid" -->
+<!--  [disabled]="!submitForm.valid" -->

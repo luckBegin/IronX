@@ -3,8 +3,8 @@ import { RouteRoutingModule } from './routes-routing.module';
 import { ShareModule } from '../share/share.module';
 @NgModule({
     imports: [
-    	RouteRoutingModule ,
-    	ShareModule,
+        ShareModule,
+        RouteRoutingModule
     ],
     exports : [RouteRoutingModule]
 })

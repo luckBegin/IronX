@@ -9,7 +9,7 @@ import { Userservice } from '../../service/user/user.service' ;
 import { Router } from '@angular/router' ;
 import { NzTreeNode } from 'ng-zorro-antd';
 import { StuffModel } from './stuffModel' ;
-
+import { MenuRemoteServce } from '../../service/menu_remote/menu.service'
 let __this ;
 @Component({
 	selector : "app-usrManager" ,
@@ -24,7 +24,8 @@ export class OrgComponent implements OnInit{
 		private emit : EmitService,
 		private router : Router ,
 		private sgo : SessionStorageService ,
-		private usrSer : Userservice
+		private usrSer : Userservice ,
+		private menuRemote : MenuRemoteServce
 	){};
 
 	ngOnInit(){
@@ -39,8 +40,14 @@ export class OrgComponent implements OnInit{
 
 		this.buildStuffForm() ;
 		this.getRoleList() ;
-
+		this.getAllMenu() ;
 		__this = this ;
+
+		this.validateForm = this.fb.group({
+			"name":[null , [Validators.required]],
+			"parentId": [null , [Validators.required]],
+			"parentName" : [null]
+		});
 	};
 
 	treeInfo : NzTreeNode[] ;
@@ -56,19 +63,20 @@ export class OrgComponent implements OnInit{
 						let arr = [] ; 
 						makeDepart(res['data'] , arr) ;
 						this.optionDeapart = arr ;
+
+						this.treeInfo = [new NzTreeNode(res['data'][0])] ;
 					}else{
 						this.msg.error("获取部门结构信息出错,原因:" + res['msg']) ;
 					}
 				}
 			)
 	};
-	roleList : object[] ;
 	getRoleList(){
 		this.usrSer.getRoleList()
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.roleList = res['data'] ;
+						this.tableData_role['data']= res['data'] ;
 					}else{
 						this.msg.error("获取角色信息出错,原因:" + res['msg']) ;
 					}
@@ -247,13 +255,228 @@ export class OrgComponent implements OnInit{
 				)
 		};
 	};
+
+	selectItem : object ;
+	showMenu($event){
+		let el = <Element>document.querySelector('.menu') ;
+		el['style'].top = $event.event.screenY - 209 + 'px' ;
+		el['style'].left = $event.event.screenX + 70 + 'px' ;
+		el['style'].display = 'block' ;
+
+		this.selectItem = $event.node ;
+		console.log($event) ;
+	};
+	hideMenu(){
+		let el = <Element>document.querySelector('.menu') ;
+		el['style'].display= 'none';
+	};
+
+	refuseModel : boolean = false ;
+	removeItem(){
+		this.hideMenu() ;
+		this.refuseModel = true ;
+	};
+	deleteNode(){
+		let id = this.selectItem['key'] ;
+
+		this.departSer.delete(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功");
+						this.refuseModel = false ;
+						this.getDepart();
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+
+	validateForm : FormGroup ;
+	infoBoxShow : boolean = false ;
+	editMark : boolean ;
+	addItem(){
+		this.hideMenu() ;
+		this.infoBoxShow = true ;
+		this.editMark = false; 
+		this.validateForm.reset() ;
+		this.validateForm.patchValue({
+			'parentId' : this.selectItem['key'],
+			'parentName' : this.selectItem['title']
+		});
+	};
+	editItem(){
+		this.hideMenu() ;
+		this.infoBoxShow = true ;
+		this.editMark = true; 
+		this.validateForm.reset() ;
+		this.validateForm.patchValue({
+			'parentId' : this.selectItem['parentNode']['key'],
+			'parentName' : this.selectItem['parentNode']['title'] ,
+			"name" : this.selectItem['title']
+		});
+	}
+	makeNew(){
+		let val = this.validateForm.value ;
+		this.departSer.add(val)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功");
+						this.infoBoxShow = false ;
+						this.getDepart();
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+	save(){
+		let val = this.validateForm.value ;
+		this.departSer.edit(val , this.selectItem['key'])
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功");
+						this.infoBoxShow = false ;
+						this.getDepart();
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+
+	selectRole : object; 
+	tableData_role : Object = {
+		showIndex : true,
+		tableTitle : [
+			{ name : "角色"  , type:"text" ,reflect : "nameZh"},
+			{ name : "人数"  , type:"text" ,reflect : "employeeCount"},
+
+		] ,
+		data : [],
+		btnGroup : {
+			title : "操作" ,
+			data : [
+				{
+					textColor : "#80accf",
+					name : "编辑",
+					ico : "anticon anticon-edit" ,
+					bindFn : function(item){
+						__this.selectRole = item ;
+
+						__this.roleModel['nameZh'] = item['nameZh'] ;
+						__this.roleModel['name'] = item['name'] ;
+						__this.roleModel['id'] = item['id'] ;
+
+						__this.getRoleMenu(item.id) ;
+					}
+				},
+				{
+					textColor : "#f62121",
+					name : "删除",
+					ico: "anticon anticon-delete" ,
+					bindFn : function(item){
+						__this.selectRole = item ;
+						__this.delRole = true ;
+					}
+				}
+			]
+		}
+	};
+	delRole : boolean = false ; 
+	editRole : boolean = false ;
+	delRoleFn(){
+		let id = this.selectRole['id'] ;
+		this.usrSer.delRole(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功");
+						this.delRole = false ;
+						this.getRoleList();
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	};
+
+	menuTree : NzTreeNode[] ;
+	getAllMenu(){
+		this.menuRemote.getAllMenu()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let obj = res['data']
+						makeMenu(obj) ;
+						let _obj = [] ;
+						for(let keys in obj){
+							_obj.push( new NzTreeNode(obj[keys])) ;
+						};
+						this.menuTree = _obj ;
+					}else{
+						this.msg.error("获取操作菜单,原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
+	roleModel : object = {
+		name : "" ,
+		nameZh : "" , 
+		menuIds : [],
+	};
+	choseMenu($event){
+		let id = $event.node.key ;
+		let idx = this.roleModel['menuIds'].indexOf(id) ;
+		if(idx > -1){
+			this.roleModel['menuIds'].splice(idx , 1) ;
+		}else{
+			this.roleModel['menuIds'].push(id) ;
+		};
+	};
+	expandKey : number[];
+	getRoleMenu(id){
+		this.menuRemote.getRoleMenu(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						__this.editRole = true ;
+						let _arr = [] ;
+						makeMenus(res['data'] , _arr) ;
+
+						this.expandKey = _arr ;
+
+						this.roleModel['menuIds'] = _arr ;
+					}else{
+						this.msg.error("获取角色操作菜单失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
+	editRoleFn(){
+		let postData = this.roleModel ;
+		this.usrSer.editRole(postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功");
+						this.editRole = false ;
+						this.getRoleList();
+					}else{
+						this.msg.error("操作失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
 };
 
 const recursion = function(obj){
 	obj.forEach( (item,index) => {
 		item['title'] = item.name ;
 		item['key'] = item.id ;
-
 		if(item.children){
 			recursion(item.children);
 		};
@@ -269,6 +492,28 @@ const makeDepart = function(obj ,tar){
 		tar.push(_obj) ;
 		if(item.children){
 			makeDepart(item.children , tar);
+		};
+	});
+};
+
+
+const makeMenu = function(obj){
+	obj.forEach( (item,index) => {
+
+		item.title = item.name ; 
+		item.key = item.id ;
+		if(item.children){
+			makeMenu(item.children);
+		};
+	});
+};
+
+const makeMenus= function(obj ,tar){
+	obj.forEach( (item,index) => {
+		let _obj = item.id
+		tar.push(_obj) ;
+		if(item.children){
+			makeMenus(item.children , tar);
 		};
 	});
 };

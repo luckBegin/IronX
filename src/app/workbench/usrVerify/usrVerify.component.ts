@@ -90,10 +90,12 @@ export class UsrVerifyComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						_info['imgs'][_info['imgs'].length -1]['url'] = res['data'][0]['url'];
-						_info['imgs'][_info['imgs'].length -1]['id'] = res['data'][0]['id'];
-						_info['imgs'][_info['imgs'].length -1]['size'] = size ;
-						_info['imgs'][_info['imgs'].length -1]['name'] = tar.name ;
+						if(res['data']){
+							_info['imgs'][_info['imgs'].length -1]['url'] = res['data'][0]['url'];
+							_info['imgs'][_info['imgs'].length -1]['id'] = res['data'][0]['id'];
+							_info['imgs'][_info['imgs'].length -1]['size'] = size ;
+							_info['imgs'][_info['imgs'].length -1]['name'] = tar.name ;
+						}
 					};
 				}
 			);
@@ -157,6 +159,7 @@ export class UsrVerifyComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						this.msg.success("操作成功");
+						this.router.navigate(['/workbench/verify']) ;
 					}else{
 						this.msg.error("操作失败,原因:" + res['msg']) ;
 					}

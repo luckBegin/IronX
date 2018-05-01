@@ -1,5 +1,18 @@
 <div class="c-content-wrap">
 	<div class="c-search-wrap">
+		<div class="c-search-row c-flex-auto-wrap c-flex-row-start">
+			<div class="c-search-item">
+				<input  nz-input type="date" [(ngModel)] = 'searchModel.min'>
+			</div>
+			<div class="c-search-item">
+				<input  nz-input type="date" [(ngModel)] = 'searchModel.max'>
+			</div>
+			
+			<div class="c-search-item">
+				<input nz-input placeholder="申请人姓名" [(ngModel)]="searchModel.proposerName">
+			</div>
+		</div>
+
 		<div class="c-search-row c-flex-row-start c-flex-auto-wrap">
 			<div class="c-search-item">
 				<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择网点"  [(ngModel)]="searchModel.departmentId" >
@@ -43,18 +56,6 @@
 					>
 					</nz-option>
 				</nz-select>
-			</div>
-		</div>
-		<div class="c-search-row c-flex-auto-wrap c-flex-row-start">
-			<div class="c-search-item">
-				<input  nz-input type="date" [(ngModel)] = 'searchModel.min'>
-			</div>
-			<div class="c-search-item">
-				<input  nz-input type="date" [(ngModel)] = 'searchModel.max'>
-			</div>
-			
-			<div class="c-search-item">
-				<input nz-input placeholder="申请人姓名" [(ngModel)]="searchModel.proposerName">
 			</div>
 		</div>
 		<div class="c-search-row c-flex-row-start c-flex-auto-wrap">

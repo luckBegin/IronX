@@ -15,4 +15,36 @@ export class ToolService{
 			params : para
 		})
 	}
+
+	getSideList(){
+		let url = GLOBAL.API.tool.siteList ;
+		return this.http.get(url) ;
+	}
+	delSite( id :number | string){
+		let url = GLOBAL.API.tool.delSite + id ;
+		return this.http.delete(url) ;
+	}
+	createSite(object : object){
+		let url = GLOBAL.API.tool.createSite ;
+
+		let header = new HttpHeaders()
+		.set("Content-type" , "application/json") ;
+
+
+		return this.http.post(url , object , {
+			headers : header
+		})
+	}
+	editSite(object : object){
+		let url = GLOBAL.API.tool.createSite ;
+
+		let header = new HttpHeaders()
+		.set("Content-type" , "application/json") ;
+
+
+		return this.http.put(url , object , {
+			headers : header
+		})
+	}
+
 };

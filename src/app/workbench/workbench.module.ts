@@ -19,7 +19,9 @@ import { VerifyComponent } from './verify/verify.component';
 import { UsrVerifyComponent } from './usrVerify/usrVerify.component';
 import { TransformComponent } from './transform/transform.component'
 import { SureComponent } from './sure/sure.component'
-import { ProfileTransComponent } from './profileTrans/profileTrans.component'
+import { ProfileTransComponent } from './profileTrans/profileTrans.component';
+import { ProfileComponent } from './profile/profile.component' 
+import { MakeLoanComponent } from './makeLoan/makeLoan.component'   
 const compoents = [
 	IntoComponent ,
 	AllComponent,
@@ -38,7 +40,9 @@ const compoents = [
 	UsrVerifyComponent,
 	TransformComponent,
 	SureComponent,
-	ProfileTransComponent
+	ProfileTransComponent,
+	ProfileComponent ,
+	MakeLoanComponent
 ];
 
 const routes  : Routes = [
@@ -101,6 +105,12 @@ const routes  : Routes = [
 	},{
 		path : "profileTrans/:id" ,
 		component : ProfileTransComponent
+	},{
+		path : 'profile' ,
+		component : ProfileComponent
+	},{
+		path : "makeLoan/:id" , 
+		component : MakeLoanComponent
 	}
 ];
 @NgModule({
