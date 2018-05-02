@@ -5,21 +5,29 @@ import {WorkbenchAll} from '../../../service/workbench/all.service';
 import {MsgService} from '../../../service/msg/msg.service';
 import {OrderSevice} from '../../../service/order/order.service';
 import {decisionFormat} from '../../../format/DecisionFormat';
+import { ActivatedRoute } from '@angular/router';
 
+import { MenuService } from '../../../service/menu/menu.service' ;
+import { MenuRemoteServce } from '../../../service/menu_remote/menu.service' ;
+import { FormGroup, FormBuilder } from '@angular/forms';
 declare var $: any;
-
 @Component({
   selector: "",
   templateUrl: './check.component.html',
   styleUrls: ['./check.component.less']
 })
 export class CheckComponent implements OnInit {
-  constructor(private sgo: SessionStorageService,
-              private router: Router,
-              private workSer: WorkbenchAll,
-              private msg: MsgService,
-              private orderSer: OrderSevice) {
-  };
+  constructor(
+      private sgo: SessionStorageService,
+      private router: Router,
+      private workSer: WorkbenchAll,
+      private msg: MsgService,
+      private orderSer: OrderSevice,
+      private routerInfo : ActivatedRoute,
+      private menu : MenuService ,
+      private menuRemote : MenuRemoteServce,
+      private fb : FormBuilder
+    ){};
 
   ngOnInit() {
     this.checkInfo = this.sgo.get("checkInfo");
@@ -27,8 +35,23 @@ export class CheckComponent implements OnInit {
     this.getImgs();
     this.getDealRecord();
     this.getAntiFraudObj();
+
+    this.routerInfo.queryParams
+      .subscribe(
+        para => {
+          this.orderState = para['state'] ;
+          this.getButtonPermission() ;
+        }
+      );
+      this.bakckForm = this.fb.group({
+        destOrderStatus:[null],
+        opinion:[null],
+        orderStatus:[null],
+      });
+
   };
 
+  orderState : number ;
   checkInfo: object;
   orderInfo: object;
 
@@ -77,6 +100,7 @@ export class CheckComponent implements OnInit {
   };
   imgUrl : string ;
   makeLook(idx , url ) {
+
   };
 
   dealRecord: object[];
@@ -98,22 +122,211 @@ export class CheckComponent implements OnInit {
   antiFraudObj: object;
 
   getAntiFraudObj() {
-    let clientId = this.checkInfo['customer_id'];
+    let clientId = this.checkInfo['customerId'];
     this.orderSer.getAntiFraud(clientId)
       .subscribe(
         res => {
           if (res['success'] == true) {
             this.antiFraudObj = res['data'];
-            this.antiFraudObj['resultDescString'] = JSON.parse(this.antiFraudObj['resultDescString']);
-            this.tableData['data'] = this.antiFraudObj['resultDescString']['ANTIFRAUD']['risk_items'];
-            console.log(this.antiFraudObj)
+            if(res['data']){
+              this.antiFraudObj['resultDescString'] = JSON.parse(this.antiFraudObj['resultDescString']);
+              this.tableData['data'] = this.antiFraudObj['resultDescString']['ANTIFRAUD']['risk_items']; 
+            };
           } else {
             this.msg.error("获取反欺诈信息出错,原因:" + res['msg'])
           }
         }
       )
-  }
+  };
 
+  makeCheck(){
+      let orderId = this.checkInfo['id'];
+
+      if(this.orderState == 2){
+        this.router.navigate(["/workbench/dataRemake", orderId]);
+      };
+
+      if(this.orderState == 4){
+        this.router.navigate(['/workbench/approveOrder' , orderId]);
+      };
+
+      if(this.orderState == 5){
+        this.router.navigate(['/workbench/reApproveOrder' , orderId]);
+      };
+
+      if(this.orderState == 6){
+        this.router.navigate(['/workbench/finalCheck' , orderId]);
+      };
+
+      if(this.orderState == 7){
+        this.sgo.set("orderInfo" , this.checkInfo) ;
+        this.router.navigate(["/workbench/income"]);
+      };
+
+      if(this.orderState == 8){
+        this.router.navigate(['/workbench/usrVerify' , orderId]);
+      };
+
+      if(this.orderState == 9){
+        this.router.navigate(['/workbench/profileTrans' ,orderId]);
+      };
+
+      if(this.orderState == 10){
+        this.router.navigate(['/workbench/makeLoan' , orderId]);
+      };
+  };
+  backNode : object[] = [] ;
+  orderBack : boolean  = false ;
+  reBack(){
+
+    let _arr  ;
+    if(this.orderState == 4){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"}
+      ];
+    };
+
+    if(this.orderState == 5){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"}
+      ]
+    };
+
+    if(this.orderState == 6){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"},
+        {"value" : '5' ,'name' : "复审阶段"}
+      ]
+    };
+    
+    if(this.orderState == 7){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"}
+      ]
+    };
+
+    if(this.orderState == 8){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"},
+        {"value" : '5' ,'name' : "复审阶段"},
+        {"value" : '6' ,'name' : "终审阶段"}
+      ]
+    };
+
+    if(this.orderState == 9){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"},
+        {"value" : '5' ,'name' : "复审阶段"},
+        {"value" : '6' ,'name' : "终审阶段"},
+        {"value" : '8' ,'name' : "客户确认阶段"}
+      ]
+    };
+    
+    if(this.orderState == 10){
+      _arr = [
+        {"value" : '2' ,'name' : "补录阶段"},
+        {"value" : '4' ,'name' : "初审阶段"},
+        {"value" : '5' ,'name' : "复审阶段"},
+        {"value" : '6' ,'name' : "终审阶段"},
+        {"value" : '8' ,'name' : "客户确认阶段"},
+        {"value" : '9' ,'name' : "资料移交阶段"}
+      ]
+    }
+    this.backNode = _arr ;
+		this.orderBack = true ;
+  };
+
+  backSure(){
+		let id = this.orderInfo['orderVO']['id'] ;
+		let postData = this.bakckForm.value ;
+		postData['orderStatus'] = this.orderInfo['orderVO']['status'] ;
+		this.orderSer.orderBack(id,postData)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+            this.msg.success("操作成功") ;
+            window.history.back() ;
+						// this.get() ;
+						// this.orderBack = false ; 
+					}else{
+						this.msg.error('操作失败,原因:' +res['msg']);
+					};
+				}
+			)
+  };
+
+  cancelModel : boolean = false ;
+  usrChanel(){
+    this.cancelModel = true ;
+  };
+
+   cancel(){
+    let id = this.orderInfo['orderVO']['id'] ;
+    this.workSer.cancel(id)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            this.cancelModel = false ;
+            this.msg.notifySuccess("操作成功",'该订单已标记为客户取消');
+            window.history.back() ;
+          }else{
+            this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+          };
+        }
+      )
+  };
+
+  lock(){
+    let id = this.orderInfo['orderVO']['id'] ;
+    this.orderSer.lock(id)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            this.msg.success("操作成功") ;
+          }else{
+            this.msg.error("操纵失败,原因:" + res['msg']) ;
+          }
+        }
+      )
+  };
+  unlock(){
+    let id = this.orderInfo['orderVO']['id'] ;
+    this.orderSer.unlock(id)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            this.msg.success("操作成功") ;
+          }else{
+            this.msg.error("操纵失败,原因:" + res['msg']) ;
+          }
+        }
+      )
+  }
+  buttonPermission : string[] = [] ;
+  bakckForm : FormGroup ;
+  getButtonPermission(){
+    let menuId = this.menu.getMenuIdByState(this.orderState) ;
+    this.menuRemote.getButton(menuId)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            if(res['data']){
+              res['data'].forEach (item => {
+                this.buttonPermission.push(item.id) ;
+              })
+            }
+          }else{
+            this.msg.error("获取权限按钮失败,原因:" + res['msg']) ;
+          }
+          console.log(res) ;
+        }
+      )
+  };
   tableData: Object = {
     showIndex: false,
     tableTitle: [

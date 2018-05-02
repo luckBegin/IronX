@@ -83,7 +83,6 @@ export class ReApproveComponent implements OnInit{
 		this.refuseModel = true ;
 	};
 	pass(){
-		debugger ;
 		if(!this.secondForm.valid){
 			this.msg.warn("请填写每项信息") ;
 			return ;

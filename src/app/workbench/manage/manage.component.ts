@@ -7,7 +7,9 @@ import { PrecheckSearchModel } from './precheck-search.model' ;
 import { FormBuilder,FormGroup,Validators , FormControl } from '@angular/forms';
 import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage'
-import{ OrderSevice } from '../../service/order/order.service'
+import{ OrderSevice } from '../../service/order/order.service';
+import { MenuService } from '../../service/menu/menu.service' ;
+
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -22,7 +24,8 @@ export class ManageComponent implements OnInit{
 		private fb : FormBuilder ,
 		private sgo : SessionStorageService ,
 		private router : Router,
-		private orderSer : OrderSevice
+		private orderSer : OrderSevice ,
+		private menu : MenuService
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -46,23 +49,31 @@ export class ManageComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["查看详细" , "马上尽调","退回订单", "客户取消" , '处理记录'] , 
-			fn:function($event,data){
-				__this.selectItem = data ;
-				if($event == '客户取消'){
-					__this.cancelModel = true ;
-				};
-				if($event == '马上尽调'){
-					__this.sgo.set("orderInfo" , data) ;
-					__this.router.navigate(["/workbench/income"]);
-				};
+			// { name : "操作" , type:"selectArr", reflect : "qudao" , data : ["查看详细" , "马上尽调","退回订单", "客户取消" , '处理记录'] , 
+			// fn:function($event,data){
+			// 	__this.selectItem = data ;
+			// 	if($event == '客户取消'){
+			// 		__this.cancelModel = true ;
+			// 	};
+			// 	if($event == '马上尽调'){
+			// 		__this.sgo.set("orderInfo" , data) ;
+			// 		__this.router.navigate(["/workbench/income"]);
+			// 	};
 
-				if($event == '退回订单'){
-					__this.orderBack = true ;
-					__this.selectOrder = data ;
-				}
-			}} ,
-			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
+			// 	if($event == '退回订单'){
+			// 		__this.orderBack = true ;
+			// 		__this.selectOrder = data ;
+			// 	}
+			// }} ,
+			{ name : "订单编号"  , type:"text" ,reflect : "orderNo", color:"#1890ff" , fn : item => {
+				let state = item.status ; 
+				if(state){
+					__this.sgo.set("checkInfo" , item) ;
+					__this.menu.profileCheck(item.id , item.status)  ;
+				}else{
+					__this.msg.warn("检测不到该订单的状态码,请联系系统管理员") ;
+				};
+			}},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},

@@ -17,5 +17,10 @@ export class MenuRemoteServce{
     getRoleMenu( id : string | number){
         let url = GLOBAL.API.menu.roleMenu + "?roleIds=" + id ;
         return this.http.get(url) ;
-    }
+	};
+	
+	getButton( menuId : number | string){
+		let url = GLOBAL.API.menu.getButtonList + menuId ;
+		return this.http.get(url) ;
+	}
 };

@@ -80,6 +80,8 @@ const order = {
 	lastCheck : host + "/flow/saveLastCheck" ,
 	makeLoan : host + "/flow/confirm/loan/" ,
 	orderBack : host +"/flow/unConfirmRollbackStatus/" ,
+	lock : host + "/order/lock/" ,
+	unlock : host + "/order/unlock/"
 }
 const role = {
 	getRoleList : host + "/system/role/getAllRole" ,
@@ -117,7 +119,8 @@ const tool = {
 };
 const menu = {
 	getAllMenu : host + "/system/menu/getAllMenuTree" ,
-	roleMenu : host + "/system/menu/getMenusByRoles"
+	roleMenu : host + "/system/menu/getMenusByRoles" ,
+	getButtonList : host + "/system/menu/getButtonByMenu/" ,
 };
 export const GLOBAL = {
 	API : {

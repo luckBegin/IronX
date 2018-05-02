@@ -175,5 +175,15 @@ export class OrderSevice{
 		return this.http.put(url, obj , {
 			headers : header
 		});
+	};
+
+	lock(orderId : number){
+		let url = GLOBAL.API.order.lock + orderId;
+		return this.http.put(url , {})
+	};
+
+	unlock(orderId :number ){
+		let url = GLOBAL.API.order.unlock + orderId ;
+		return this.http.put(url , {}) ;
 	}
 };

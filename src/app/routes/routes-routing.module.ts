@@ -31,7 +31,7 @@ const routes: Routes = [
                 loadChildren : "app/tools/tools.module#ToolsModule"
             }
         ],
-        // canActivate : [RouteguardService]
+        canActivate : [RouteguardService]
     },{
         path : "login" ,
         component : LoginComponent

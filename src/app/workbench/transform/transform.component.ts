@@ -9,7 +9,8 @@ import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
 import { DepartService } from '../../service/depart/depart.service';
 import { ProductService } from '../../service/product/product.service';
-import{ OrderSevice } from '../../service/order/order.service'
+import{ OrderSevice } from '../../service/order/order.service';
+import { MenuService } from '../../service/menu/menu.service'
 let __this ;
 const pass = {
 	name : "通过" ,
@@ -130,8 +131,8 @@ export class TransformComponent implements OnInit{
 		private router : Router,
 		private departSer : DepartService ,
 		private proSer : ProductService ,
-		private orderSer : OrderSevice
-		
+		private orderSer : OrderSevice ,
+		private menu : MenuService
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -159,11 +160,19 @@ export class TransformComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
-				let _idx = $event.split(",") ;
-				operData[_idx[0]].oper[_idx[1]].fn(data) ;
-			}} ,
-			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
+			// { name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
+			// 	let _idx = $event.split(",") ;
+			// 	operData[_idx[0]].oper[_idx[1]].fn(data) ;
+			// }} ,
+			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" , color:"#1890ff" , fn : item => {
+				let state = item.status ; 
+				if(state){
+					__this.sgo.set("checkInfo" , item) ;
+					__this.menu.profileCheck(item.id , item.status)  ;
+				}else{
+					__this.msg.warn("检测不到该订单的状态码,请联系系统管理员") ;
+				};
+			}},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},

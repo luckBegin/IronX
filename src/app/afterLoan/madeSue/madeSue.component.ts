@@ -124,7 +124,7 @@ export class MadeSueComponent implements OnInit{
 	};
 
 	getData(){
-		this.loanSer.getCollect(this.searchModel)
+		this.loanSer.sueList(this.searchModel)
 			.subscribe(
 				res => {
 					if(res['success'] == true){

@@ -9,6 +9,7 @@ import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
 import { DepartService } from '../../service/depart/depart.service';
 import { ProductService } from '../../service/product/product.service';
+import { MenuRemoteServce } from '../../service/menu_remote/menu.service' ;
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -25,6 +26,7 @@ export class PrecheckComponent implements OnInit{
 		private router : Router,
 		private departSer : DepartService ,
 		private proSer : ProductService ,
+		private menuRemote : MenuRemoteServce ,
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -37,7 +39,7 @@ export class PrecheckComponent implements OnInit{
 		this.validateForm = this.fb.group({
 			"rejectionReason" : [null , [Validators.required]] ,
 			"opinion" : [ null ]
-		})
+		});
 	};
 	validateForm : FormGroup ;
 	searchModel : PrecheckSearchModel = new PrecheckSearchModel();
@@ -58,7 +60,15 @@ export class PrecheckComponent implements OnInit{
 					__this.cancelModel = true ;
 				}
 			}} ,
-			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
+			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" , color:"#1890ff" , fn : item => {
+				let state = item.status ; 
+				if(state){
+					__this.sgo.set("checkInfo" , item) ;
+					__this.menu.profileCheck(item.id , item.status)  ;
+				}else{
+					__this.msg.warn("检测不到该订单的状态码,请联系系统管理员") ;
+				};
+			}},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
@@ -210,7 +220,7 @@ export class PrecheckComponent implements OnInit{
 					}
 				}
 			)
-	}
+	};
 };
 const recursion = function(obj){
 	obj.forEach( (item,index) => {

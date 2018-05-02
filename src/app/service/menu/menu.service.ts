@@ -7,6 +7,7 @@ import { quanxianzhongxin } from './model/quanxianzhongxin.model' ;
 import { peizhizhongxin } from './model/peizhizhongxin.model' ;
 import { yingyonggongju } from './model/yingyonggongju.model' ;
 import { caiwuguanli } from './model/caiwuguanli.model' ;
+import { Router } from '@angular/router' ;
 const menuList = {
 	1 : { 
 		title : "工作台" ,
@@ -57,8 +58,11 @@ const menuList = {
 		ico : "anticon anticon-plus-square-o" ,
 	}
 };
-Injectable()
+@Injectable()
 export class MenuService {
+	constructor(
+		private router : Router
+	){}
 	getMenu : Function  = ( ids ) : any[] =>{
 		let _arr = [] ;
 
@@ -69,4 +73,25 @@ export class MenuService {
 		
 		return _arr ;
 	};
+
+	profileCheck( orderId : number | string , state : number | string){
+		this.router.navigate(['/workbench/check/' , orderId], {
+			queryParams : {state : state}
+		})
+	};
+
+	getMenuIdByState(state : number | string){
+		let map = {
+			"2" : 3 ,
+			"4" : 12 ,
+			"5" : 13 ,
+			"6" : 14 ,
+			"7" : 15 ,
+			"8" : 16 ,
+			"9" : 17 ,
+			"10" : 18
+		};
+
+		return map[state]
+	}
 };

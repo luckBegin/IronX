@@ -29,6 +29,7 @@ export class LoginInterceptor implements HttpInterceptor {
       }, err => {
         let code = err['status'] ;
         if(code == 404){
+          // alert("系统检测到404") ;
           // this.router.navigate(['/login']) ;
         }
       })
