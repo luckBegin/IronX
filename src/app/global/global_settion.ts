@@ -1,6 +1,6 @@
 const host = 'http://151.28ms.com:8189' ;
 // const host = 'http://151.28ms.com:8088' ;
-// const host = 'http://192.168.0.133:8083' ;
+// const host = 'http://192.168.0.122:8083' ;
 const workbench = {
 	orderList : host + '/order/getStatus' ,
 	orderType : host + "/order/undisposedOrders" ,
@@ -81,7 +81,8 @@ const order = {
 	makeLoan : host + "/flow/confirm/loan/" ,
 	orderBack : host +"/flow/unConfirmRollbackStatus/" ,
 	lock : host + "/order/lock/" ,
-	unlock : host + "/order/unlock/"
+	unlock : host + "/order/unlock/" ,
+	delTelRecord : host + "/audit/phoneAudit/record/"
 }
 const role = {
 	getRoleList : host + "/system/role/getAllRole" ,

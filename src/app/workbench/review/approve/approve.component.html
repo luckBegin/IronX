@@ -348,21 +348,21 @@
 								<nz-form-label [nzSm]="11" nzRequired nzFor="name">姓名</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 									<input type="text" nz-input formControlName="name" id="name">
-									<nz-form-explain *ngIf="telCheckForm.get('name').dirty && telCheckForm.get('name').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('name').dirty && telCheckForm.get('name').errors">姓名必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 							<nz-form-item class='formSec'>
 								<nz-form-label [nzSm]="11" nzRequired nzFor="idCard">身份证号码</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 									<input type="text" nz-input formControlName="idCard" id="idCard" (change)='idCardChange($event)'>
-									<nz-form-explain *ngIf="telCheckForm.get('idCard').dirty && telCheckForm.get('idCard').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('idCard').dirty && telCheckForm.get('idCard').errors">身份证号码必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 							<nz-form-item class='formSec'>
 								<nz-form-label [nzSm]="11" nzRequired nzFor="chineseZodiac">生肖</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 									<input type="text" nz-input formControlName="chineseZodiac" id="chineseZodiac">
-									<nz-form-explain *ngIf="telCheckForm.get('chineseZodiac').dirty && telCheckForm.get('idCard').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('chineseZodiac').dirty && telCheckForm.get('idCard').errors">生肖必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 							<nz-form-item class='formSec'>
@@ -380,14 +380,14 @@
 								<nz-form-label [nzSm]="11" nzRequired nzFor="accountAddress">户口详细地址</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 									<input type="text" nz-input formControlName="accountAddress" id="accountAddress">
-									<nz-form-explain *ngIf="telCheckForm.get('accountAddress').dirty && telCheckForm.get('accountAddress').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('accountAddress').dirty && telCheckForm.get('accountAddress').errors">户口详细地址必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 							<nz-form-item class='formSec'>
 								<nz-form-label [nzSm]="11" nzRequired nzFor="nowAddress">现居住地</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 									<input type="text" nz-input formControlName="nowAddress" id="nowAddress">
-									<nz-form-explain *ngIf="telCheckForm.get('nowAddress').dirty && telCheckForm.get('nowAddress').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('nowAddress').dirty && telCheckForm.get('nowAddress').errors">现居住地必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 							<div class="c-flex-row-start" style="margin-left: 6%;">
@@ -424,7 +424,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input nz-input formControlName="applyAmount" id="applyAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('applyAmount').dirty && telCheckForm.get('applyAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('applyAmount').dirty && telCheckForm.get('applyAmount').errors">申请金额必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -434,17 +434,17 @@
 									<nz-input-group nzAddOnAfter="期">
 										<input nz-input formControlName="loanPeriod" id="loanPeriod">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('loanPeriod').dirty && telCheckForm.get('loanPeriod').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('loanPeriod').dirty && telCheckForm.get('loanPeriod').errors">借款期限必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
 							<nz-form-item class='formSec'>
 								<nz-form-label [nzSm]="11" nzRequired nzFor="loanUse">借款用途</nz-form-label>
 								<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-									<nz-input-group nzAddOnAfter="期">
-										<input nz-input formControlName="loanUse" id="loanPeriod">
-									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('loanUse').dirty && telCheckForm.get('loanUse').errors">产品名称必须输入</nz-form-explain>
+									<!-- <nz-input-group nzAddOnAfter="期"> -->
+										<input nz-input formControlName="loanUse" id="loanUse">
+									<!-- </nz-input-group> -->
+									<nz-form-explain *ngIf="telCheckForm.get('loanUse').dirty && telCheckForm.get('loanUse').errors">借款用途必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 						</div>
@@ -787,7 +787,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="employeeSocialInsuranceAmount" id="employeeSocialInsuranceAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('employeeSocialInsuranceAmount').dirty && telCheckForm.get('employeeSocialInsuranceAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('employeeSocialInsuranceAmount').dirty && telCheckForm.get('employeeSocialInsuranceAmount').errors">社保必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -906,7 +906,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="employeeSocialInsuranceAmount" id="employeeSocialInsuranceAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('employeeSocialInsuranceAmount').dirty && telCheckForm.get('employeeSocialInsuranceAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('employeeSocialInsuranceAmount').dirty && telCheckForm.get('employeeSocialInsuranceAmount').errors">社保金额成本必须输入</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1178,7 +1178,7 @@
 									<nz-input-group nzAddOnAfter="元">
 										<input type="text" nz-input formControlName="totalNoneCreditLiabilityAmount" id="totalNoneCreditLiabilityAmount">
 									</nz-input-group>
-									<nz-form-explain *ngIf="telCheckForm.get('totalNoneCreditLiabilityAmount').dirty && telCheckForm.get('totalNoneCreditLiabilityAmount').errors">产品名称必须输入</nz-form-explain>
+									<nz-form-explain *ngIf="telCheckForm.get('totalNoneCreditLiabilityAmount').dirty && telCheckForm.get('totalNoneCreditLiabilityAmount').errors">不能为空</nz-form-explain>
 								</nz-form-control>
 							</nz-form-item>
 
@@ -1364,71 +1364,92 @@
 
 
 <nz-modal [(nzVisible)]="telRecordAddModel" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="telRecordAddModel = false">
-		<ng-template #modalTitle>
-			<span *ngIf='!editMark'>添加电核记录</span>
-			<span *ngIf='editMark'>编辑电核记录</span>
-		</ng-template>
-	
-		<ng-template #modalContent>
-			<form nz-form [nzLayout]="'inline'" [formGroup]="telRecordForm">
-				<nz-form-item class='formSec_form'>
-					<nz-form-label [nzSm]="11" nzRequired nzFor="contactName">联系人</nz-form-label>
-					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<input nz-input formControlName="contactName" id="contactName">
-						<nz-form-explain *ngIf="telRecordForm.get('contactName').dirty && telRecordForm.get('contactName').errors">不能为空</nz-form-explain>
+	<ng-template #modalTitle>
+		<span *ngIf='!editMark'>添加电核记录</span>
+		<span *ngIf='editMark'>编辑电核记录</span>
+	</ng-template>
+
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'" [formGroup]="telRecordForm">
+			<nz-form-item class='formSec_form'>
+				<nz-form-label [nzSm]="11" nzRequired nzFor="contactName">联系人</nz-form-label>
+				<nz-form-control [nzSm]="12"  [nzOffset]='1'>
+					<input nz-input formControlName="contactName" id="contactName">
+					<nz-form-explain *ngIf="telRecordForm.get('contactName').dirty && telRecordForm.get('contactName').errors">不能为空</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec_form'>
+				<nz-form-label [nzSm]="11" nzRequired nzFor="contactPhoneNumber">电话</nz-form-label>
+				<nz-form-control [nzSm]="12"  [nzOffset]='1'>
+					<input nz-input formControlName="contactPhoneNumber" id="contactPhoneNumber">
+					<nz-form-explain *ngIf="telRecordForm.get('contactPhoneNumber').dirty && telRecordForm.get('contactPhoneNumber').errors">不能为空</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec_form'>
+				<nz-form-label [nzSm]="11" nzRequired nzFor="contactRelation">关系</nz-form-label>
+				<nz-form-control [nzSm]="12"  [nzOffset]='1'>
+					<nz-select name="select-error" formControlName="contactRelation" id="contactRelation">
+						<nz-option nzValue="0" nzLabel="父母"></nz-option>
+						<nz-option nzValue="1" nzLabel="子女"></nz-option>
+						<nz-option nzValue="2" nzLabel="配偶"></nz-option>
+						<nz-option nzValue="3" nzLabel="兄弟姐妹"></nz-option>
+						<nz-option nzValue="4" nzLabel="亲戚"></nz-option>
+						<nz-option nzValue="5" nzLabel="朋友"></nz-option>
+						<nz-option nzValue="6" nzLabel="同学"></nz-option>
+						<nz-option nzValue="7" nzLabel="同事"></nz-option>
+						<nz-option nzValue="8" nzLabel="其他"></nz-option>
+					</nz-select>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec_form'>
+				<nz-form-label [nzSm]="11" nzRequired nzFor="phoneAuditTime">电核时间</nz-form-label>
+				<nz-form-control [nzSm]="12"  [nzOffset]='1'>
+					<input type="date" nz-input formControlName="phoneAuditTime" id="phoneAuditTime">
+					<nz-form-explain *ngIf="telRecordForm.get('phoneAuditTime').dirty && telRecordForm.get('phoneAuditTime').errors">不能为空</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item class='formSec_form'>
+				<nz-form-label [nzSm]="11" nzRequired nzFor="hasPutThrough">是否拨通</nz-form-label>
+				<nz-form-control [nzSm]="12"  [nzOffset]='1'>
+					<nz-select name="select-error" formControlName="hasPutThrough" id="hasPutThrough">
+						<nz-option nzValue="0" nzLabel="否"></nz-option>
+						<nz-option nzValue="1" nzLabel="是"></nz-option>
+					</nz-select>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item style="width: 100%;">
+				<nz-form-label [nzSm]="4" nzFor="remark">备注</nz-form-label>
+					<nz-form-control [nzSm]="19"  [nzOffset]='1'>
+						<textarea nz-input formControlName="remark" rows="4" placeholder="备注" id="remark"></textarea>
 					</nz-form-control>
-				</nz-form-item>
-				<nz-form-item class='formSec_form'>
-					<nz-form-label [nzSm]="11" nzRequired nzFor="contactPhoneNumber">电话</nz-form-label>
-					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<input nz-input formControlName="contactPhoneNumber" id="contactPhoneNumber">
-						<nz-form-explain *ngIf="telRecordForm.get('contactPhoneNumber').dirty && telRecordForm.get('contactPhoneNumber').errors">不能为空</nz-form-explain>
-					</nz-form-control>
-				</nz-form-item>
-				<nz-form-item class='formSec_form'>
-					<nz-form-label [nzSm]="11" nzRequired nzFor="contactRelation">关系</nz-form-label>
-					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-select name="select-error" formControlName="contactRelation" id="contactRelation">
-							<nz-option nzValue="0" nzLabel="父母"></nz-option>
-							<nz-option nzValue="1" nzLabel="子女"></nz-option>
-							<nz-option nzValue="2" nzLabel="配偶"></nz-option>
-							<nz-option nzValue="3" nzLabel="兄弟姐妹"></nz-option>
-							<nz-option nzValue="4" nzLabel="亲戚"></nz-option>
-							<nz-option nzValue="5" nzLabel="朋友"></nz-option>
-							<nz-option nzValue="6" nzLabel="同学"></nz-option>
-							<nz-option nzValue="7" nzLabel="同事"></nz-option>
-							<nz-option nzValue="8" nzLabel="其他"></nz-option>
-						</nz-select>
-					</nz-form-control>
-				</nz-form-item>
-				<nz-form-item class='formSec_form'>
-					<nz-form-label [nzSm]="11" nzRequired nzFor="phoneAuditTime">电核时间</nz-form-label>
-					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<input type="date" nz-input formControlName="phoneAuditTime" id="phoneAuditTime">
-						<nz-form-explain *ngIf="telRecordForm.get('phoneAuditTime').dirty && telRecordForm.get('phoneAuditTime').errors">不能为空</nz-form-explain>
-					</nz-form-control>
-				</nz-form-item>
-				<nz-form-item class='formSec_form'>
-					<nz-form-label [nzSm]="11" nzRequired nzFor="hasPutThrough">是否拨通</nz-form-label>
-					<nz-form-control [nzSm]="12"  [nzOffset]='1'>
-						<nz-select name="select-error" formControlName="hasPutThrough" id="hasPutThrough">
-							<nz-option nzValue="0" nzLabel="否"></nz-option>
-							<nz-option nzValue="1" nzLabel="是"></nz-option>
-						</nz-select>
-					</nz-form-control>
-				</nz-form-item>
-				<nz-form-item style="width: 100%;">
-					<nz-form-label [nzSm]="4" nzFor="remark">备注</nz-form-label>
-						<nz-form-control [nzSm]="19"  [nzOffset]='1'>
-							<textarea nz-input formControlName="remark" rows="4" placeholder="备注" id="remark"></textarea>
-						</nz-form-control>
-				</nz-form-item>
-			</form>
-		</ng-template>
-	
-		<ng-template #modalFooter>
-			<button nz-button nzType="primary" *ngIf='!editMark' [disabled]="!telRecordForm.valid" (click)='makeNewTelRec()'>确定</button>
-			<button nz-button nzType="primary" *ngIf='editMark' [disabled]="!telRecordForm.valid" (click)='saveTelRec()'>保存</button>
-			<button nz-button nzType="default" (click)='telRecordAddModel = false'>关闭</button>
-		</ng-template>
-	</nz-modal>
+			</nz-form-item>
+		</form>
+	</ng-template>
+
+	<ng-template #modalFooter>
+		<button nz-button nzType="primary" *ngIf='!editMark' [disabled]="!telRecordForm.valid" (click)='makeNewTelRec()'>确定</button>
+		<button nz-button nzType="primary" *ngIf='editMark' [disabled]="!telRecordForm.valid" (click)='saveTelRec()'>保存</button>
+		<button nz-button nzType="default" (click)='telRecordAddModel = false'>关闭</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal
+	[(nzVisible)]="telRecordDelMark"
+	nzTitle="确认删除"
+	nzOkText="确定"
+	nzCancelText="取消"
+	(nzOnOk)="delTelRecord()"
+	(nzOnCancel)="telRecordDelMark = !telRecordDelMark"
+>
+  	<div class="c-flexStart">
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div>
+  			<h4>
+  				确认删除？
+  			</h4>
+  			<p>
+  				一旦删除,该数据将不可恢复
+  			</p>
+  		</div>
+  	</div>
+</nz-modal>

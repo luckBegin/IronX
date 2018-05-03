@@ -9,7 +9,7 @@ import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage';
 import { DepartService } from '../../service/depart/depart.service';
 import { ProductService } from '../../service/product/product.service';
-import { MenuRemoteServce } from '../../service/menu_remote/menu.service' ;
+import { MenuService } from '../../service/menu/menu.service' ;
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -26,7 +26,7 @@ export class PrecheckComponent implements OnInit{
 		private router : Router,
 		private departSer : DepartService ,
 		private proSer : ProductService ,
-		private menuRemote : MenuRemoteServce ,
+		private menu : MenuService ,
 	){} ;
 	ngOnInit(){
 		__this = this ;
@@ -47,19 +47,19 @@ export class PrecheckComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"selectArr", reflect : "qudao" , data : ["通过" , "拒绝" , "客户取消"] , 
-			fn:function($event,data){
-				__this.selectItem = data ;
-				if($event == '通过'){
-					__this.passModel = true ;
-				};
-				if($event == '拒绝'){
-					__this.refuseModel = true ;
-				};
-				if($event == '客户取消'){
-					__this.cancelModel = true ;
-				}
-			}} ,
+			// { name : "操作" , type:"selectArr", reflect : "qudao" , data : ["通过" , "拒绝" , "客户取消"] , 
+			// fn:function($event,data){
+			// 	__this.selectItem = data ;
+			// 	if($event == '通过'){
+			// 		__this.passModel = true ;
+			// 	};
+			// 	if($event == '拒绝'){
+			// 		__this.refuseModel = true ;
+			// 	};
+			// 	if($event == '客户取消'){
+			// 		__this.cancelModel = true ;
+			// 	}
+			// }} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo" , color:"#1890ff" , fn : item => {
 				let state = item.status ; 
 				if(state){
@@ -72,7 +72,9 @@ export class PrecheckComponent implements OnInit{
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
-			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
+			{ name : "进件时间"  , type:"text" ,reflect : "createTime" , filter : item => {
+				return dataFormat(item['createTime']) ;
+			}},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
 		] ,

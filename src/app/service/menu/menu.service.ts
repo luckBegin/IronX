@@ -82,6 +82,7 @@ export class MenuService {
 
 	getMenuIdByState(state : number | string){
 		let map = {
+			"1" : 2 ,
 			"2" : 3 ,
 			"4" : 12 ,
 			"5" : 13 ,
@@ -91,7 +92,6 @@ export class MenuService {
 			"9" : 17 ,
 			"10" : 18
 		};
-
-		return map[state]
-	}
+		return map[state] ;
+	};
 };

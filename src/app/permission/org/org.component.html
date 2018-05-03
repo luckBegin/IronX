@@ -201,3 +201,155 @@
 		<button nz-button nzType="primary" (click)="editRoleFn()">保存</button>
 	</ng-template>
 </nz-modal>
+
+<nz-modal [(nzVisible)]="stuffBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="stuffBoxShow = false">
+	<ng-template #modalTitle>
+		<span *ngIf='!editMark'>新增员工</span>
+		<span *ngIf='editMark'>编辑员工</span>
+	</ng-template>
+
+	<ng-template #modalContent>
+		<form nz-form [nzLayout]="'inline'" [formGroup]="stuffForm">
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="username">用户名</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<input nz-input formControlName="username" id="username">
+					<nz-form-explain *ngIf="stuffForm.get('username').dirty && stuffForm.get('username').errors">用户名必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="name">真实姓名</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<input nz-input formControlName="name" id="name">
+					<nz-form-explain *ngIf="stuffForm.get('name').dirty && stuffForm.get('name').errors">真实姓名必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="telephone">手机号</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<input nz-input formControlName="telephone" id="telephone">
+					<nz-form-explain *ngIf="stuffForm.get('telephone').dirty && stuffForm.get('telephone').errors">手机号必须输入,或输入不正确</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="idCard">身份证号码</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<input nz-input formControlName="idCard" id="idCard">
+					<nz-form-explain *ngIf="stuffForm.get('idCard').dirty && stuffForm.get('idCard').errors">身份证必须输入,或输入不正确</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="password">登录密码</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<div class="c-flex-row-start">
+						<input nz-input formControlName="password" id="password" style="margin-right: 10px">
+						<button nz-button nzType="primary" (click) = 'randomPass(8)'>随机密码</button>
+					</div>
+					<nz-form-explain *ngIf="stuffForm.get('password').dirty && stuffForm.get('password').errors">身份证必须输入</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="departmentId">所属网点</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择所属网点" formControlName="departmentId" id="departmentId">
+						<nz-option 
+							*ngFor = 'let item of optionDeapart;'
+							[nzValue]="item.id.toString()" 
+							[nzLabel]="item.value"
+						>
+						</nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="stuffForm.get('departmentId').dirty && stuffForm.get('departmentId').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="roleIds">所属角色</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<nz-select nzMode="tags" style="width: 100%;" nzPlaceHolder="请选择所属角色" id='roleIds' formControlName="roleIds">
+						<nz-option *ngFor="let option of roleList" [nzLabel]="option.nameZh" [nzValue]="option.id.toString()">
+						</nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="stuffForm.get('roleIds').dirty && stuffForm.get('roleIds').errors">所属角色必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+		</form>
+	</ng-template>
+	<ng-template #modalFooter>
+		<button nz-button nzType="primary" *ngIf='!stuffEditMark' [disabled]="!stuffForm.valid" (click)='makeNewStuff()'>确定</button>
+		<button nz-button nzType="primary" *ngIf='stuffEditMark' [disabled]="!stuffForm.valid" (click)='save()'>保存</button>
+		<button nz-button nzType="default" (click)='stuffBoxShow = false'>关闭</button>
+	</ng-template>
+</nz-modal>
+
+<nz-modal
+	[(nzVisible)]="freezeMark"
+	nzTitle="确认操作"
+	nzOkText="确定"
+	nzCancelText="取消"
+	(nzOnOk)="freeOper()"
+	(nzOnCancel)="freezeMark = !freezeMark"
+>
+  	<div class="c-flexStart" *ngIf='stuffInfo'>
+  		<i class="anticon anticon-info-circle-o c-warnInfo"></i>
+  		<div *ngIf = 'stuffInfo.status == 1'>
+  			<h4>
+  				确认冻结？
+  			</h4>
+  			<p>
+  				一旦冻结,该账户将不可登录
+  			</p>
+  		</div>
+  		<div *ngIf = 'stuffInfo.status != 1'>
+  			<h4>
+  				确认解冻？
+  			</h4>
+  			<p>
+  				一旦解冻,该账户将可登录
+  			</p>
+  		</div>
+  	</div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="resetPassMark" [nzTitle]="passTitle" [nzContent]="passContent" [nzFooter]="passFooter" (nzOnCancel)="resetPassMark = false">
+	<ng-template #passTitle>
+		重置密码
+	</ng-template>
+
+	<ng-template #passContent>
+		<div  class="checkWrap">
+			<div class="changeTitle">
+				选择以下方式修改密码
+			</div>
+			<div  class="info">
+				<div  class="info_left">
+					<label nz-checkbox [(ngModel)]='checked' (ngModelChange)='makeType("1")'>设为默认</label>
+				</div>
+				<div  class="info_right">
+					<span >
+						默认密码为【sd123456】
+					</span>
+				</div>
+			</div>
+			<div  class="info">
+				<div  class="info_left">
+					<label nz-checkbox [(ngModel)]='checked2' (ngModelChange) = 'makeType("2")'>手动设置</label>
+				</div>
+				<div  class="info_right">
+					<input nz-input type="text" style="width: 120px" [(ngModel)] = 'newPass'>
+					<!-- <span style="margin-left: 10">6位以上字母和数字组合</span> -->
+				</div>
+			</div>
+		</div>
+	</ng-template>
+
+	<ng-template #passFooter>
+		<button nz-button nzType="primary"  (click)='changePassNew()'>确定</button>
+		<button nz-button nzType="default" (click)='passMark = false'>关闭</button>
+	</ng-template>
+</nz-modal>

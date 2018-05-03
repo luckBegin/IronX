@@ -485,6 +485,14 @@ export class ApproveComponent implements OnInit{
 						__this.editMark = true ;
 						__this.selectTelRecord = item ;
 					}
+				},{
+					textColor : "#f62121",
+					name : "删除",
+					ico: "anticon anticon-delete" ,
+					bindFn : function(item){
+						__this.selectTelRecord = item ;
+						__this.telRecordDelMark = true ;
+					}
 				}
 			]
 		}
@@ -616,7 +624,6 @@ export class ApproveComponent implements OnInit{
 				res => {
 					if(res['success'] == true){
 						let obj = {} ;
-						
 						for(let keys in res['data']){
 							let val = res['data'][keys] ;
 							if(typeof val != 'object'){
@@ -635,7 +642,25 @@ export class ApproveComponent implements OnInit{
 			)
 	};
 
+	telRecordDelMark : boolean = false ;
+	delTelRecord(){
+		let id = this.selectTelRecord['id'] ;
+		this.orderSer.delTelRecord(id)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("删除成功") ;
+						this.getTelRecord() ;
+						this.telRecordDelMark = false ;
+					}else{
+						this.msg.error("删除失败,原因:"+ res['msg'])
+					}
+				}
+			)
+	};
+
 	makeLook( idx : string , index : string){
 
 	};
+
 };

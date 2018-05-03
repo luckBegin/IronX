@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MenuService } from '../../../service/menu/menu.service' ;
 import { MenuRemoteServce } from '../../../service/menu_remote/menu.service' ;
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder ,Validators} from '@angular/forms';
 declare var $: any;
 @Component({
   selector: "",
@@ -49,12 +49,16 @@ export class CheckComponent implements OnInit {
         orderStatus:[null],
       });
 
+      this.validateForm = this.fb.group({
+        "rejectionReason" : [null , [Validators.required]] ,
+        "opinion" : [ null ]
+      });
   };
 
   orderState : number ;
   checkInfo: object;
   orderInfo: object;
-
+  validateForm : FormGroup
   getOrderInfo() {
     let id = this.checkInfo['id'];
     this.workSer.getOderInfo(id)
@@ -72,7 +76,12 @@ export class CheckComponent implements OnInit {
   };
 
   imgList: object[];
-
+  passShow(){
+    this.passModel = true ;
+  }
+  refuseShow(){
+    this.refuseModel = true ;
+  }
   getImgs() {
     let id = this.checkInfo['id'];
     this.orderSer.getImg(id)
@@ -340,4 +349,48 @@ export class CheckComponent implements OnInit {
     ],
     data: [],
   };
+  passModel : boolean = false ;
+
+  pass():void {
+    let id = this.orderInfo['orderVO']['id'] ;
+    let obj = {
+      orderStatus:this.orderInfo['orderVO']['status'] ,
+      opinion : "" 
+    }
+    this.workSer.pass(id , obj)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            this.passModel = false ;
+            this.msg.notifySuccess("操作成功" , '该订单已通过预审');
+            window.history.back() ;
+
+            // this.get() ;
+          }else{
+            this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+          };
+        }
+      )
+  };
+  refuseModel : boolean = false ;
+
+  refuse(){
+    let id = this.orderInfo['orderVO']['id'] ;
+    let obj = this.validateForm.value ; 
+    obj['orderId'] = id ;
+    this.workSer.refuse(obj)
+      .subscribe(
+        res => {
+          if(res['success'] == true){
+            this.refuseModel = false ;
+            this.msg.notifySuccess("操作成功" , '该订单已拒绝');
+            // this.getList();
+            window.history.back() ;
+          }else{
+            this.msg.notifyErr("操作失败",'请检测网络是否连接正常') ;
+          };
+        }
+      )
+  };
+
 };

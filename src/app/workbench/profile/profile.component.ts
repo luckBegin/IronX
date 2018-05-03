@@ -164,7 +164,9 @@ export class ProfileComponent implements OnInit{
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
-			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
+			{ name : "进件时间"  , type:"text" ,reflect : "createTime" , filter : item => {
+				return dataFormat(item['createTime']) ;
+			}},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
 		] ,

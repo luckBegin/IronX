@@ -9,7 +9,8 @@ import { EmitService } from '../../service/event-emit.service' ;
 import { SessionStorageService } from '../../service/storage/session_storage'
 import{ OrderSevice } from '../../service/order/order.service';
 import { MenuService } from '../../service/menu/menu.service' ;
-
+import { DepartService } from '../../service/depart/depart.service';
+import { ProductService } from '../../service/product/product.service';
 let __this ;
 @Component({
 	selector : "app-all" ,
@@ -25,12 +26,18 @@ export class ManageComponent implements OnInit{
 		private sgo : SessionStorageService ,
 		private router : Router,
 		private orderSer : OrderSevice ,
-		private menu : MenuService
+		private menu : MenuService,
+		private departSer : DepartService ,
+		private proSer : ProductService ,
 	){} ;
 	ngOnInit(){
 		__this = this ;
 
-		this.getList() ;
+		this.getList() ;		
+		this.getDepart() ;
+		this.getProlist() ;
+		this.getManager() ;
+		this.getDealUser() ;
 		this.validateForm = this.fb.group({
 			"rejectionReason" : [null , [Validators.required]] ,
 			"opinion" : [ null ]
@@ -77,14 +84,18 @@ export class ManageComponent implements OnInit{
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
-			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
+			{ name : "进件时间"  , type:"text" ,reflect : "createTime" , filter : item => {
+				return dataFormat(item['createTime']) ;
+			}},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
 			{ name : "产品名称"  , type:"text" ,reflect : "productName"},
 			{ name : "申请金额"  , type:"text" ,reflect : "applyMoney"},
 			{ name : "审批金额"  , type:"text" ,reflect : "agreeMoney"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
 			{ name : "流程节点"  , type:"text" ,reflect : "statusDesc"},
-			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime"},
+			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime" , filter : item => {
+				return dataFormat(item['modifyTime']) ;
+			}},
 			{ name : "处理人"  , type:"text" ,reflect : "modifyUser"},
 		] ,
 		data : [],
@@ -195,6 +206,88 @@ export class ManageComponent implements OnInit{
 					};
 				}
 			)
-	}
+	};
 
+	optionDeapart : object[] ;
+	getDepart(){
+		this.departSer.getDepart()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let obj = res['data'] ;
+						recursion(res['data']);
+						let arr = [] ; 
+						makeDepart(res['data'] , arr) ;
+						this.optionDeapart = arr ;
+					}else{
+						this.msg.error("获取部门结构信息出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+	proList : object[] ; 
+	getProlist(){
+		this.proSer.getList()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.proList = res['data'] ;
+					}else{
+						this.msg.error("获取产品信息出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+	managerList : object[] ;
+	getManager(){
+		this.service.gettUserManage()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.managerList = res['data'] ;
+					}else{
+						this.msg.error("获取客户经理出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+	dealUser : object[] ;
+	getDealUser(){
+		this.service.getDealUser()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.dealUser = res['data'] ;
+					}else{
+						this.msg.error("获取处理人列表出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+};
+
+const recursion = function(obj){
+	obj.forEach( (item,index) => {
+		item['title'] = item.name ;
+		item['key'] = item.id ;
+
+		if(item.children){
+			recursion(item.children);
+		};
+	});
+};
+
+const makeDepart = function(obj ,tar){
+	obj.forEach( (item,index) => {
+		let _obj = {
+			value : item.name ,
+			id : item.id
+		};
+		tar.push(_obj) ;
+		if(item.children){
+			makeDepart(item.children , tar);
+		};
+	});
 };

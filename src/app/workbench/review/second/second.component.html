@@ -18,21 +18,26 @@
 		<div class="searchGroup">
 			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
 				<div class="c-search-item">
-					<input type="date">
+					<input  nz-input type="date" [(ngModel)] = 'searchModel.min'>
 				</div>
 				<div class="c-search-item">
-					<input type="date">
+					<input  nz-input type="date" [(ngModel)] = 'searchModel.max'>
 				</div>
+				
 				<div class="c-search-item">
-					<input nz-input placeholder="申请人姓名">
+					<input nz-input placeholder="申请人姓名" [(ngModel)]="searchModel.proposerName">
 				</div>
 			</div>
 			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
 
 				<!-- 网点 -->
 				<div class="c-search-item">
-					<nz-select style="width: 120px;" [(ngModel)]="searchModel.departmentId" nzAllowClear nzPlaceHolder="网点">
-						<nz-option *ngFor = 'let item of departList' [nzValue]="item.id" [nzLabel]="item.name">
+					<nz-select style="width: 120px;" nzShowSearch nzAllowClear nzPlaceHolder="选择网点"  [(ngModel)]="searchModel.departmentId" >
+						<nz-option 
+							*ngFor = 'let item of departList;'
+							[nzValue]="item.id.toString()" 
+							[nzLabel]="item.value"
+						>
 						</nz-option>
 					</nz-select>
 				</div>

@@ -132,8 +132,7 @@ export class RepayComponent implements OnInit{
 						__this.editMark = true ;
 						__this.editForm(item) ;
 					}
-				},
-				{
+				},{
 					textColor : "#f62121",
 					name : "删除订单",
 					ico: "anticon anticon-delete" ,

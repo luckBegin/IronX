@@ -118,6 +118,7 @@ export class OrgComponent implements OnInit{
 				if($event == '重置密码'){
 					__this.resetPassMark = true ;
 					__this.stuffInfo = data ;
+					__this.newPass = '' ;
 				};
 
 			}} ,
@@ -470,7 +471,40 @@ export class OrgComponent implements OnInit{
 					};
 				}
 			)
-	}
+	};
+
+	passMark : boolean = false ;
+	checked : boolean = true ;
+	checked2 : boolean = false ;
+	newPass : string = '' ;
+	changePassNew(){
+		let id = this.stuffInfo['id']
+		let newPassword =  '' ;
+		if(this.checked == true){
+			newPassword = 'sd123456'
+		};
+		if(this.checked2 == true && !this.newPass){
+			this.msg.error("新密码不能为空") ;
+			return ;
+		};
+		if(this.checked2 == true && this.newPass){
+			newPassword = this.newPass ;
+		};
+
+		this.usrSer.changePass(id , newPassword)
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.msg.success("操作成功,请重新登录") ;
+						this.sgo.remove(['loginInfo']) ;
+						this.router.navigate(['/login']) ;
+					}else{
+						this.msg.error("操作失败,原因" + res['msg']) ;
+					};
+					this.passMark = false; 
+				}
+			);
+	};
 };
 
 const recursion = function(obj){

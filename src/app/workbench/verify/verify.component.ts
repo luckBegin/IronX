@@ -159,10 +159,10 @@ export class VerifyComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
-				let _idx = $event.split(",") ;
-				operData[_idx[0]].oper[_idx[1]].fn(data) ;
-			}} ,
+			// { name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
+			// 	let _idx = $event.split(",") ;
+			// 	operData[_idx[0]].oper[_idx[1]].fn(data) ;
+			// }} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo", color:"#1890ff" , fn : item => {
 				let state = item.status ; 
 				if(state){

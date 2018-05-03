@@ -185,5 +185,10 @@ export class OrderSevice{
 	unlock(orderId :number ){
 		let url = GLOBAL.API.order.unlock + orderId ;
 		return this.http.put(url , {}) ;
+	};
+
+	delTelRecord(id : number){
+		let url = GLOBAL.API.order.delTelRecord  + id ;
+		return this.http.delete(url , {} );
 	}
 };

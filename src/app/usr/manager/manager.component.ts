@@ -25,7 +25,11 @@ export class ManagerComponent implements OnInit{
 			{ name : "姓名"  , type:"text" ,reflect : "userName"},
 			{ name : "性别"  , type:"text" ,reflect : "gender" , filter : function(val){
 				if(val['gender']){
-					return val['gender'];
+					let map = {
+						1 : "女" ,
+						0 : "男"
+					}
+					return map[val['gender']];
 				}else{
 					return '- -' ;
 				};

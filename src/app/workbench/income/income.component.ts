@@ -300,6 +300,30 @@ export class InComeComponent implements OnInit{
 				rentCost:[null],
 				salaryCost:[null],
 				sellCost:[null],
+			}),
+			dueDiligenceClientCompanyAssetConditionVO : this.fb.group({
+				badDebt :[null],
+				carBrand :[null],
+				carNumber :[null],
+				companyHouseMarketValue :[null],
+				companyHouseNetWorth :[null],
+				companyMachineMarketValue :[null],
+				companyMachineNetWorth :[null],
+				folkLoan :[null],
+				folkLoanAmount :[null],
+				folkLoanNumber :[null],
+				houseNumber :[null],
+				id :[null],
+				loanAmount :[null],
+				loanNumber :[null],
+				orderId :[null],
+				receivableAmount :[null],
+				receivableDate :[null],
+				repayAmount :[null],
+				repayDate :[null],
+				repertoryMarketValue :[null],
+				unclearedLoanAmount :[null],
+				unclearedLoanNumber :[null],
 			})
 		})
 	}
@@ -460,10 +484,11 @@ export class InComeComponent implements OnInit{
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.msg.success("图片删除成功");
+						this.msg.success("保存成功");
+						this.router.navigate(['/workbench/manage']) ;
 					}else{
 						this.msg.error("保存失败,原因:" +res['msg']) ;
-					}
+					};
 				}
 			);
 	};
@@ -478,29 +503,32 @@ export class InComeComponent implements OnInit{
 						this.reportInfo = res['data'][_arr(res['data'])] ;
 
 						this.type = this.reportInfo['dueDiligenceBasicInformationVO']['type'] ;
+						let orderId = this.orderInfo['id']
 						if(this.type == 1){
 							this.reportForm2.patchValue(res['data']) ;
 
 							for(let keys in this.reportInfo){
-								let control = this.reportForm2.controls[keys] ;
+								let control = this.reportForm.controls[keys] ;
 
 								if(control){
 									let data = this.reportInfo[keys] ;
 									let _data = {} ;
 									for(let keys2 in data){
 										if(data[keys2] != 'null' || data[keys2] != null){
-											_data[keys] = data[keys2] ;
+											_data[keys2] = data[keys2] ;
 										};
 									};
-									control.patchValue(this.reportInfo[keys]) ;
+									_data['orderId'] = orderId ;
+									control.patchValue(_data) ;
 								};
 							};
 							 
 						}else{
-							this.reportForm.patchValue(res['data']) ;
-							this.reportForm2.patchValue(res['data'])
+							// this.reportForm.patchValue(res['data']) ;
+							// this.reportForm2.patchValue(res['data'])
 
-							console.log(this.reportInfo)
+							// console.log(this.reportInfo)
+
 							for(let keys in this.reportInfo){
 								let control = this.reportForm2.controls[keys] ;
 
@@ -509,10 +537,11 @@ export class InComeComponent implements OnInit{
 									let _data = {} ;
 									for(let keys2 in data){
 										if(data[keys2] != 'null' || data[keys2] != null){
-											_data[keys] = data[keys2] ;
+											_data[keys2] = data[keys2] ;
 										};
 									};
-									control.patchValue(this.reportInfo[keys]) ;
+									_data['orderId'] = orderId ;
+									control.patchValue(_data) ;
 								};
 							};
 						};

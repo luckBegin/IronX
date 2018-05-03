@@ -131,11 +131,19 @@ export class  ThirdComponent implements OnInit{
 		private router : Router,
 		private fb : FormBuilder ,
 		private orderSer : OrderSevice ,
-		private menu : MenuService 
+		private menu : MenuService ,
+		private usrSer : Userservice ,
+		private departSer : DepartService ,
+		private productSer : ProductService,
 	){};
 
 	ngOnInit(){
 		this.getData() ;
+		this.getDepart();
+		this.getProduct();
+		this.getUserMgr() ;
+		this.getProcess();
+		this.getDealUserList();
 		__this = this ;
 
 		this.bakckForm = this.fb.group({
@@ -167,14 +175,18 @@ export class  ThirdComponent implements OnInit{
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
-			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
+			{ name : "进件时间"  , type:"text" ,reflect : "createTime" , filter : item => {
+				return dataFormat(item['createTime']) ;
+			}},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
 			{ name : "产品名称"  , type:"text" ,reflect : "productName"},
 			{ name : "申请金额"  , type:"text" ,reflect : "applyMoney"},
 			{ name : "审批金额"  , type:"text" ,reflect : "agreeMoney"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
 			{ name : "流程节点"  , type:"text" ,reflect : "statusDesc"},
-			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime"},
+			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime" , filter : item => {
+				return dataFormat(item['modifyTime']) ;
+			}},
 			{ name : "处理人"  , type:"text" ,reflect : "modifyUserName"},
 
 		] ,
@@ -200,7 +212,20 @@ export class  ThirdComponent implements OnInit{
 		this.searchModel = new FirstSearchModel();
 		this.getData() ;
 	}
+	search(){
+		this.getData() ;
+	};
+	pageChange($size : number , type : string) : void{
+		if(type == 'size'){
+			this.searchModel.pageSize = $size ;
+		};
 
+		if(type == 'page'){
+			this.searchModel.currentPage = $size ;
+		};
+
+		this.getData() ;
+	};
 
 	bakckForm : FormGroup;
 	orderBack : boolean = false ;
@@ -240,4 +265,126 @@ export class  ThirdComponent implements OnInit{
 				}
 			)
 	};
+
+	// select option 网点
+	departList : object[] = []; 
+	getDepart(){
+		this.departSer.getDepart()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let obj = res['data'] ;
+						recursion(res['data']);
+						let arr = [] ; 
+						makeDepart(res['data'] , arr) ;
+						this.departList = arr ;
+					}else{
+						this.msg.error("获取部门结构信息出错,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+	//select option 产品
+	productList :object[] = [] ;
+	getProduct(){
+		this.productSer.getList({})
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let map = {
+							productName : "name" ,
+							id : "id"
+						} ;
+						this.productList = DateReflect(map, res['data']) ;
+					}else{
+						this.msg.warn("获取产品数据失败,原因:" + res['msg']) ;
+					};
+				}
+			);
+	};
+
+	// select option 客户经理
+	userManagerList : object[] = [] ;
+	getUserMgr(){
+		this.usrSer.getList()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let map = {
+							name : "name" ,
+							id : "id"
+						};
+						this.userManagerList = DateReflect(map , res['data']) ;
+					}else{
+						this.msg.warn("获取客户经理失败,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+	// 流程节点
+	processList :object[] = [] ;
+	getProcess(){
+		this.service.getOrderStatus()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let _arr = [] ;
+
+						for(let keys in res['data']){
+							_arr.push({
+								id : keys ,
+								name : res['data'][keys]
+							});
+						};
+						this.processList = _arr ;
+					}else{
+						this.msg.warn("获取流程节点失败,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+
+	// 处理人
+	dealUserList : object[] = [] ;
+	getDealUserList(){
+		this.usrSer.getDealUserlist()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						let map = {
+							name : "name" ,
+							id : "id"
+						} ;
+						this.dealUserList = DateReflect(map , res['data'])
+					}else{
+						this.msg.warn("获取处理人员信息失败,原因:" + res['msg']) ;
+					}
+				}
+			)
+	};
+};
+const recursion = function(obj){
+	obj.forEach( (item,index) => {
+		item['title'] = item.name ;
+		item['key'] = item.id ;
+
+		if(item.children){
+			recursion(item.children);
+		};
+	});
+};
+
+const makeDepart = function(obj ,tar){
+	obj.forEach( (item,index) => {
+		let _obj = {
+			value : item.name ,
+			id : item.id
+		};
+		tar.push(_obj) ;
+		if(item.children){
+			makeDepart(item.children , tar);
+		};
+	});
 };

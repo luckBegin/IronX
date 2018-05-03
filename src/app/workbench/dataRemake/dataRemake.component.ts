@@ -120,7 +120,7 @@ export class DataRemakeComponent implements OnInit{
 		this.add() ;
 	}
 	createContact(){
-		let id = this.lgo.get("proInfo")['customerId'] ;
+		let id = this.lgo.get("checkInfo")['customerId'] ;
 		return this.fb.group({
 			contactName: [null , [Validators.required]] ,
 			contactPhone: [null , [Validators.required]] ,
@@ -487,7 +487,7 @@ export class DataRemakeComponent implements OnInit{
 		value.applyOrderVO['productId']  = this.proListData[this.proList_active]['id']
 		value.clientInfoInputVO['id'] = usrId ;
 		value.clientUnitInputVO['userId'] = usrId ;
-		value.clientInfoInputVO['registerProvince'] = value.clientInfoInputVO['registerProvince'].split(",")[0];
+		value.clientInfoInputVO['registerProvince'] = value.clientInfoInputVO['registerProvince']?value.clientInfoInputVO['registerProvince'].split(",")[0]:"";
 		value.clientInfoInputVO['registerCity'] = value.clientInfoInputVO['registerCity']?value.clientInfoInputVO['registerCity'].split(",")[0] : "" ;
 		value.clientInfoInputVO['registerCounty'] = value.clientInfoInputVO['registerCounty']?value.clientInfoInputVO['registerCounty'].split(",")[0] : "" ;
 		value['clientContactInputVOS'].forEach( item => {

@@ -492,10 +492,10 @@
 									<nz-form-label [nzSm]="11" nzRequired nzFor="payBackType">还款方式</nz-form-label>
 									<nz-form-control [nzSm]="12"  [nzOffset]='1'>
 										<nz-select name="select-error" formControlName="payBackType" id="payBackType">
-											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == "等额本息"'  [nzValue]="0" [nzLabel]="'等额本息'"></nz-option>
-											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == "等额本金"'  [nzValue]="1" [nzLabel]="'等额本金'"></nz-option>
-											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == "先息后本"'  [nzValue]="2" [nzLabel]="'先息后本'"></nz-option>
-											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == "等本等息"'  [nzValue]="3" [nzLabel]="'等本等息'"></nz-option>
+											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == 0'  [nzValue]="0" [nzLabel]="'等额本息'"></nz-option>
+											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == 1'  [nzValue]="1" [nzLabel]="'等额本金'"></nz-option>
+											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == 2'  [nzValue]="2" [nzLabel]="'先息后本'"></nz-option>
+											<nz-option *ngIf='proListData[proList_active]["repaymentMode"] == 3'  [nzValue]="3" [nzLabel]="'等本等息'"></nz-option>
 										</nz-select>
 										<nz-form-explain *ngIf="validForm.get('applyOrderVO.payBackType').dirty && validForm.get('applyOrderVO.payBackType').errors">还款方式必须选择</nz-form-explain>
 									</nz-form-control>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../layout/layout.component' ;
 import { LoginComponent } from '../login/login.component';
 import { RouteguardService } from './route-guard';
+import { ErrorPageComponent } from './errorPage.component'
 const routes: Routes = [
     {
         path: '',
@@ -35,10 +36,14 @@ const routes: Routes = [
     },{
         path : "login" ,
         component : LoginComponent
+    },{
+        path : "error/:code" ,
+        component : ErrorPageComponent
     }
 ];
 
 @NgModule({
+    declarations : [ErrorPageComponent] ,
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
     providers : [RouteguardService]

@@ -47,6 +47,16 @@
 
   <div class="person_info c-border" *ngIf='buttonPermission && buttonPermission.length > 0'>
 
+    <!-- 预审管理 -->
+    <div *ngIf = 'orderState == 1'>
+      <button *ngIf='buttonPermission.indexOf(37) > -1' (click)='passShow()' class="c-btn-width operBtns" nz-button nzType="primary">通过</button>
+      <button *ngIf='buttonPermission.indexOf(38) > -1' (click)='refuseShow()' class="c-btn-width operBtns" nz-button nzType="primary">拒绝</button>
+<!--       <button *ngIf='buttonPermission.indexOf(40) > -1' (click)='usrChanel()' class="c-btn-width operBtns" nz-button nzType="primary">客户取消</button> -->
+      <button *ngIf='buttonPermission.indexOf(89) > -1' (click)='lock()' class="c-btn-width operBtns" nz-button nzType="primary">锁定</button>
+      <button *ngIf='buttonPermission.indexOf(90) > -1' (click)='unlock()' class="c-btn-width operBtns" nz-button nzType="primary">解锁</button>
+    </div>
+
+
     <!-- 资料补录 -->
     <div *ngIf = 'orderState == 2'>
       <button *ngIf='buttonPermission.indexOf(39) > -1' (click)='makeCheck()' class="c-btn-width operBtns" nz-button nzType="primary">资料补录</button>
@@ -378,13 +388,13 @@
                 </div>
               </div>
             </div>
-            <div class="infoWrap">
+            <div class="infoWrap2">
               <div class="info_title">
                 身份证解析年龄: <span>{{antiFraudObj.resultDescString.INFOANALYSIS.id_age}}</span>
               </div>
             </div>
 
-            <div class="infoWrap">
+            <div class="infoWrap2">
               <div class="info_title">
                 身份证解析性别: <span>{{antiFraudObj.resultDescString.INFOANALYSIS.id_gender | GenderPipe}}</span>
               </div>
@@ -396,9 +406,9 @@
           <div class="c-header">
             <h1 class="c-header-title">反欺诈结果</h1>
           </div>
-          <div class="c-header-report-application"><span>保镖ID:{{antiFraudObj.bodyGuardId}}</span></div>
-          <div><span>决策结果:{{antiFraudObj.resultDescString.ANTIFRAUD.final_decision | FinalDecisionResult}}</span></div>
-          <div><span>风险分数:{{antiFraudObj.resultDescString.ANTIFRAUD.final_score}}</span></div>
+          <div style="padding: 5px 20px" class="c-header-report-application"><span>保镖ID:{{antiFraudObj.bodyGuardId}}</span></div>
+          <div style="padding: 5px 20px"><span>决策结果:{{antiFraudObj.resultDescString.ANTIFRAUD.final_decision | FinalDecisionResult}}</span></div>
+          <div style="padding: 5px 20px"><span>风险分数:{{antiFraudObj.resultDescString.ANTIFRAUD.final_score}}</span></div>
 
           <div>
             <div class="c-header">
@@ -508,3 +518,80 @@
 	  <button nz-button nzType="primary" (click)="cancel()">确认</button>
 	</ng-template>
   </nz-modal>
+
+
+<nz-modal [(nzVisible)]="passModel" [nzTitle]="passTitle" [nzContent]="passContent" [nzFooter]="passFooter" (nzOnCancel)="passModel = false">
+  <ng-template #passTitle>
+    确认预审通过
+  </ng-template>
+
+  <ng-template #passContent>
+    <div class="c-flexStart">
+      <i class="anticon anticon-info-circle-o c-warnInfo"></i>
+      <div>
+        <h4>
+          确认通过
+        </h4>
+        <p>
+          通过之后,将立即进入资料补录阶段
+        </p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #passFooter>
+    <button nz-button nzType="default" (click)="passModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="pass()">通过</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="refuseModel" [nzTitle]="refuseTitle" [nzContent]="refuseContent" [nzFooter]="refuseFotter" (nzOnCancel)="refuseModel = false">
+  <ng-template #refuseTitle>
+    确认预审拒绝
+  </ng-template>
+
+  <ng-template #refuseContent>
+      <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item class='c-formSec'>
+<!--          "0": "进件信息造假",
+    "1": "进件资料造假",
+    "2": "经营异常",
+    "3": "法院纠纷",
+    "4": "负面信息",
+    "5": "同行进件",
+    "6": "偿贷能力不足/负债搞/隐形负债超纲",
+    "7": "不符合进件大纲",
+    "8": "综合评分不足",
+    "9": "风险行业",
+    "10": "客户取消" -->
+        <nz-form-label [nzSm]="5" nzRequired nzFor="rejectionReason">拒绝原因</nz-form-label>
+        <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+          <nz-select name="select-error" formControlName="rejectionReason" id="rejectionReason">
+            <nz-option nzValue="0" nzLabel="进件信息造假"></nz-option>
+            <nz-option nzValue="1" nzLabel="进件资料造假"></nz-option>
+            <nz-option nzValue="2" nzLabel="经营异常"></nz-option>
+            <nz-option nzValue="3" nzLabel="法院纠纷"></nz-option>
+            <nz-option nzValue="4" nzLabel="负面信息"></nz-option>
+            <nz-option nzValue="5" nzLabel="同行进件"></nz-option>
+            <nz-option nzValue="6" nzLabel="偿贷能力不足/负债搞/隐形负债超纲"></nz-option>
+            <nz-option nzValue="7" nzLabel="不符合进件大纲"></nz-option>
+            <nz-option nzValue="8" nzLabel="综合评分不足"></nz-option>
+            <nz-option nzValue="9" nzLabel="风险行业"></nz-option>
+            <nz-option nzValue="10" nzLabel="客户取消"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='c-formSec'>
+        <nz-form-label [nzSm]="5" nzRequired nzFor="opinion">审批意见</nz-form-label>
+        <nz-form-control [nzSm]="18"  [nzOffset]='1'>
+          <textarea nz-input formControlName="opinion" rows="4" placeholder="备注" id="opinion"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+
+  <ng-template #refuseFotter>
+    <button nz-button nzType="default" (click)="refuseModel = false">取消</button>
+    <button nz-button nzType="primary" (click)="refuse()">拒绝</button>
+  </ng-template>
+</nz-modal>

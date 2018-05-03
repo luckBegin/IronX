@@ -19,13 +19,14 @@
 		<div class="searchGroup">
 			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">
 				<div class="c-search-item">
-					<input type="date">
+					<input  nz-input type="date" [(ngModel)] = 'searchModel.min'>
 				</div>
 				<div class="c-search-item">
-					<input type="date">
+					<input  nz-input type="date" [(ngModel)] = 'searchModel.max'>
 				</div>
+				
 				<div class="c-search-item">
-					<input nz-input placeholder="申请人姓名">
+					<input nz-input placeholder="申请人姓名" [(ngModel)]="searchModel.proposerName">
 				</div>
 			</div>
 			<div class="c-flex-row-start c-flex-auto-wrap c-search-row">

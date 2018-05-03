@@ -151,22 +151,26 @@ export class AllComponent implements OnInit{
 	tableData : Object = {
 		showIndex : true,
 		tableTitle : [
-			{ name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
-				let _idx = $event.split(",") ;
-				operData[_idx[0]].oper[_idx[1]].fn(data) ;
-			}} ,
+			// { name : "操作" , type:"select", reflect : "qudao" , data : operData , fn:function($event,data , select){
+			// 	let _idx = $event.split(",") ;
+			// 	operData[_idx[0]].oper[_idx[1]].fn(data) ;
+			// }} ,
 			{ name : "订单编号"  , type:"text" ,reflect : "orderNo"},
 			{ name : "申请人"  , type:"text" ,reflect : "userName"},
 			{ name : "身份证号"  , type:"text" ,reflect : "idCard"},
 			{ name : "手机号"  , type:"text" ,reflect : "phoneNumber"},
-			{ name : "进件时间"  , type:"text" ,reflect : "createTime"},
+			{ name : "进件时间"  , type:"text" ,reflect : "createTime" , filter : item => {
+				return dataFormat(item['createTime']) ;
+			}},
 			{ name : "网点"  , type:"text" ,reflect : "departmentName"},
 			{ name : "产品名称"  , type:"text" ,reflect : "productName"},
 			{ name : "申请金额"  , type:"text" ,reflect : "applyMoney"},
 			{ name : "审批金额"  , type:"text" ,reflect : "agreeMoney"},
 			{ name : "客户经理"  , type:"text" ,reflect : "createUser"},
 			{ name : "流程节点"  , type:"text" ,reflect : "statusDesc"},
-			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime"},
+			{ name : "流转时间"  , type:"text" ,reflect : "modifyTime" , filter : item => {
+				return dataFormat(item['modifyTime']) ;
+			}},
 			{ name : "处理人"  , type:"text" ,reflect : "modifyUserName"},
 
 		] ,

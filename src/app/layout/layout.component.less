@@ -70,7 +70,31 @@
     z-index: 14;
     backface-visibility: hidden;
     border-right: 1px solid rgba(204, 204, 204, 0.43);
+    overflow-y: scroll; 
 }
+.aside::-webkit-scrollbar
+{
+    width: 5px;
+    height: 10px;
+    background-color: #F5F5F5;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+.aside::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+.aside::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #40a9ff;
+}
+
 .aside_cool{
     width: 81px !important ;
     transition: width 0.2s cubic-bezier(0.25, 0, 0.15, 1), translate 0.2s cubic-bezier(0.25, 0, 0.15, 1);
