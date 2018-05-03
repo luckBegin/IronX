@@ -9,7 +9,8 @@ import { Userservice } from '../../service/user/user.service' ;
 import { Router } from '@angular/router' ;
 import { NzTreeNode } from 'ng-zorro-antd';
 import { StuffModel } from './stuffModel' ;
-import { MenuRemoteServce } from '../../service/menu_remote/menu.service'
+import { MenuRemoteServce } from '../../service/menu_remote/menu.service' ;
+import { ProductService } from '../../service/product/product.service'
 let __this ;
 @Component({
 	selector : "app-usrManager" ,
@@ -25,7 +26,8 @@ export class OrgComponent implements OnInit{
 		private router : Router ,
 		private sgo : SessionStorageService ,
 		private usrSer : Userservice ,
-		private menuRemote : MenuRemoteServce
+		private menuRemote : MenuRemoteServce ,
+		private proSer : ProductService
 	){};
 
 	ngOnInit(){
@@ -41,6 +43,7 @@ export class OrgComponent implements OnInit{
 		this.buildStuffForm() ;
 		this.getRoleList() ;
 		this.getAllMenu() ;
+		this.getProlist();
 		__this = this ;
 
 		this.validateForm = this.fb.group({
@@ -71,12 +74,14 @@ export class OrgComponent implements OnInit{
 				}
 			)
 	};
+	roleList : object[] ;
 	getRoleList(){
 		this.usrSer.getRoleList()
 			.subscribe(
 				res => {
 					if(res['success'] == true){
-						this.tableData_role['data']= res['data'] ;
+						this.tableData_role['data']= res['data'] ; 
+						this.roleList = res['data'] ;
 					}else{
 						this.msg.error("获取角色信息出错,原因:" + res['msg']) ;
 					}
@@ -181,7 +186,8 @@ export class OrgComponent implements OnInit{
 			),
 			"password" : [null , [Validators.required]] ,
 			"departmentId" : [null , [Validators.required]] ,
-			"roleIds" : [null , [Validators.required]]
+			"roleIds" : [null , [Validators.required]] ,
+			"productIds" : [null , [Validators.required]]
 		});
 	};
 	addNewStuff(){
@@ -505,6 +511,20 @@ export class OrgComponent implements OnInit{
 				}
 			);
 	};
+
+	proList : object[] ;
+	getProlist(){
+		this.proSer.getList()
+			.subscribe(
+				res => {
+					if(res['success'] == true){
+						this.proList = res['data']
+					}else{
+						this.msg.error("获取角色操作菜单失败,原因:" + res['msg']) ;
+					};
+				}
+			)
+	}
 };
 
 const recursion = function(obj){

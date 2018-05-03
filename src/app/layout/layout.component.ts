@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core' ;
 import { MenuService } from '../service/menu/menu.service' ;
 import { Router, NavigationEnd, NavigationStart, NavigationError } from '@angular/router';
 import { SessionStorageService } from '../service/storage/session_storage'
-import { MsgService } from '../service/msg/msg.service'
+import { MsgService } from '../service/msg/msg.service' ;
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -14,7 +14,7 @@ export class LayoutComponent implements OnInit {
       private s_menu : MenuService,
       private router : Router ,
       private sgo : SessionStorageService ,
-      private msg : MsgService
+      private msg : MsgService ,
     ){
       router.events.subscribe(evt => {
             if (!this.isFetch && evt instanceof NavigationStart) {
@@ -46,6 +46,7 @@ export class LayoutComponent implements OnInit {
 
         __this.dateTime = str ;
       }, 1000); 
+
       // let menu_arr = [1,2,3,4,5,6,7,8,9] ;
       // this.menuList = this.s_menu.getMenu(menu_arr) ;
       // this.sideMenu = this.menuList[0]['data'] ;
@@ -53,8 +54,9 @@ export class LayoutComponent implements OnInit {
       // console.log(this.menuList) ;
       // this.loginInfo = this.sgo.get("loginInfo") ;
 
-      let menu_arr = [1,2,3,4,5,6,7,8,9] ;
+      let menu_arr = this.sgo.get("perArr") ;
       this.menuList = this.s_menu.getMenu(menu_arr) ;
+
       this.sideMenu = this.menuList
       this.loginInfo = this.sgo.get("loginInfo") ;
     };

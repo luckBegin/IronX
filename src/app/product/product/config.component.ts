@@ -75,6 +75,18 @@ export class ConfigComponent implements OnInit{
 				return dataFormat(val["createTime"])
 			}},
 			{ name : "备注"  , type:"text" ,reflect : "remark" },
+			{ name :"产品封面" , type :"text" ,color: "#1890ff", filter : item => {
+				let url = item.imagePath ; 
+				if(url){
+					return '查看';
+				}else{
+					return "";
+				};
+			} ,fn : item => {
+				let url = item.imagePath ; 
+				__this.proImgCover = url ; 
+				__this.coverMark = true ;
+			}}
 		] ,
 		data : [],
 		btnGroup : {
@@ -96,12 +108,14 @@ export class ConfigComponent implements OnInit{
 					bindFn : function(item){
 						__this['productInfo'] = item ;
 						__this['delMark'] = true ;
+
 					}
 				}
 			]
 		}
 	};
-
+	coverMark : boolean = false ;
+	proImgCover :string = '' ;
 	totalSize : number ;
 	searchModel : SearchModel = new SearchModel() ;
 	getData(){
@@ -168,7 +182,7 @@ export class ConfigComponent implements OnInit{
 
 		this.productInfo = itemInfo ;
 		let method = this.productInfo.repaymentMode ;
-		this.validateForm.setValue({
+		this.validateForm.patchValue({
 			productName : this.productInfo.productName,
 			annualInterestRate : this.productInfo.annualInterestRate,
 			interestPenalty : this.productInfo.interestPenalty,

@@ -5,6 +5,8 @@ import { HttpClient , HttpParams } from "@angular/common/http" ;
 import { MsgService } from '../service/msg/msg.service' ;
 import { SessionStorageService } from '../service/storage/session_storage';
 import { Router } from '@angular/router' ;
+import { MenuRemoteServce } from '../service/menu_remote/menu.service'
+
 // <video autoplay="autoplay" loop="loop">  
 // <source  src="./assets/video/bg.mp4" type="video/mp4" >; 
 // </video>
@@ -29,7 +31,7 @@ import { Router } from '@angular/router' ;
 						<i class="anticon anticon-lock icoInput"></i>
 						<input name='passWord' class='input' type="password" placeholder = '请输入密码' [(ngModel)]='passWord' />
 					</div>
-					<button (click) = 'login()' class='submitBtn' nz-button nzType="primary">登录</button>
+					<button (click) = 'login()' [nzLoading]="isLoadingOne" class='submitBtn' nz-button nzType="primary">登录</button>
 				</form>
 			</div>
 		</div>
@@ -135,14 +137,16 @@ export class LoginComponent implements OnInit{
 		private http : HttpClient ,
 		private msg : MsgService ,
 		private sgo : SessionStorageService ,
-		private router : Router
+		private router : Router,
+		private menuSer : MenuRemoteServce
+		
 	){};
 	ngOnInit() {
 
 	};
 	userName : string = '' ;
 	passWord : string = '' ;
-
+	isLoadingOne : boolean = false ;
 	login(){
 		if(!this.userName){
 			this.msg.notifyWarn("操作失败","请输入登录用户名")
@@ -152,7 +156,7 @@ export class LoginComponent implements OnInit{
 			this.msg.notifyWarn("操作失败","请输入登录密码")
 			return ;
 		};
-
+		this.isLoadingOne = true ;
 		let url = GLOBAL.API.login ;
 		let para = new HttpParams()
 			.set("username" , this.userName)
@@ -165,11 +169,39 @@ export class LoginComponent implements OnInit{
 			res => {
 				if(res['status'] == 'success'){
 					this.sgo.set("loginInfo" , res['msg']) ;
-					this.router.navigate(['/'])
+					this.getSelfMenu() ;
+					// this.router.navigate(['/'])
 				}else{
 					this.msg.notifyErr("登录失败" , res['msg']) ;
 				};
 			}
 		)
 	}
+	getSelfMenu(){
+		this.menuSer.getSelfMenu()
+		  .subscribe(
+			res => {
+			  if(res['success'] == true){
+				this.router.navigate(['/']) ;
+				let _arr = [0] ;
+				recursion(res['data'] , _arr) ;
+
+				// 用于处理菜单权限
+				this.sgo.set("perArr" , _arr) ;
+			  }else{
+				this.msg.error("获取角色权限菜单失败") ;
+				this.router.navigate(['error' , 500]);
+			  }
+			}
+		  )
+	  }
 }
+
+let recursion = function(item ,arr){
+	item.forEach( item => {
+		arr.push(item.id) ;
+		if(item.children){
+			recursion(item.children , arr) ;
+		};
+	});
+};

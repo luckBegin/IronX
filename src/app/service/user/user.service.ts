@@ -94,5 +94,5 @@ export class Userservice{
 		return this.http.put(url ,obj , {
 			headers : header
 		});
-	}
+	};
 };

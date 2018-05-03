@@ -122,6 +122,7 @@ const menu = {
 	getAllMenu : host + "/system/menu/getAllMenuTree" ,
 	roleMenu : host + "/system/menu/getMenusByRoles" ,
 	getButtonList : host + "/system/menu/getButtonByMenu/" ,
+	slefMenu : host + "/system/menu/getAllMenuTree" ,
 };
 export const GLOBAL = {
 	API : {

@@ -101,13 +101,13 @@
 	</ng-template>
 </nz-modal>
 
-<nz-modal [(nzVisible)]="infoBoxShow" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="infoBoxShow = false">
-	<ng-template #modalTitle>
+<nz-modal [(nzVisible)]="infoBoxShow" [nzTitle]="infoBoxTitle" [nzContent]="infoBoxContent" [nzFooter]="infoBoxFooter" (nzOnCancel)="infoBoxShow = false">
+	<ng-template #infoBoxTitle>
 		<span *ngIf='!editMark'>新增网点</span>
 		<span *ngIf='editMark'>编辑网点</span>
 	</ng-template>
 
-	<ng-template #modalContent>
+	<ng-template #infoBoxContent>
 		<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
 			<nz-form-item class='formSec'>
 				<nz-form-label [nzSm]="5" nzRequired nzFor="parentName">父级网点</nz-form-label>
@@ -128,7 +128,7 @@
 		</form>
 	</ng-template>
 
-	<ng-template #modalFooter>
+	<ng-template #infoBoxFooter>
 		<button nz-button nzType="primary" *ngIf='!editMark' [disabled]="!validateForm.valid" (click)='makeNew()'>确定</button>
 		<button nz-button nzType="primary" *ngIf='editMark' [disabled]="!validateForm.valid" (click)='save()'>保存</button>
 		<button nz-button nzType="default" (click)='infoBoxShow = false'>关闭</button>
@@ -265,6 +265,17 @@
 						</nz-option>
 					</nz-select>
 					<nz-form-explain *ngIf="stuffForm.get('departmentId').dirty && stuffForm.get('departmentId').errors">所属网点必须选择</nz-form-explain>
+				</nz-form-control>
+			</nz-form-item>
+
+			<nz-form-item class='formSec'>
+				<nz-form-label [nzSm]="6" nzRequired nzFor="productIds">所属产品线</nz-form-label>
+				<nz-form-control [nzSm]="17"  [nzOffset]='1'>
+					<nz-select nzMode="tags" style="width: 100%;" nzPlaceHolder="请选择所属产品线" id='productIds' formControlName="productIds">
+						<nz-option *ngFor="let option of proList" [nzLabel]="option.productName" [nzValue]="option.id.toString()">
+						</nz-option>
+					</nz-select>
+					<nz-form-explain *ngIf="stuffForm.get('productIds').dirty && stuffForm.get('productIds').errors">所属产品线</nz-form-explain>
 				</nz-form-control>
 			</nz-form-item>
 

@@ -23,4 +23,9 @@ export class MenuRemoteServce{
 		let url = GLOBAL.API.menu.getButtonList + menuId ;
 		return this.http.get(url) ;
 	}
+
+	getSelfMenu(){
+		let url = GLOBAL.API.menu.slefMenu ;
+		return this.http.get(url) ;
+	}
 };
